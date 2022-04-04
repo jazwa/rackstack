@@ -27,7 +27,7 @@ slack = 0.45            ;
 legOuterDim = [10,10,10];
 legInnerDim = [5,5,5];
 
-
+$fn=128;
 //
 module leg() {
     difference() {
@@ -69,21 +69,26 @@ leg();
     rotate(a=135, v=[1,-1,0])
     *cube(size=[100,100,100]);
 
-module frameBar() {
-    cube(size=[10,10,10], center=true);
+module frameBar(slack) {
+    cube(size=[20,20,20], center=true);
 
-    translate(v=[7.5,0,0])
-    cube(size=[5,5,5], center=true);
-    
-    translate(v=[-7.5,0,0])
-    cube(size=[5,5,5], center=true);
+    translate(v=[(20/2) + (10+slack)/2,0,0])
+    cube(size=[10+slack,10+slack,10+slack], center=true);
+
 }
+
+*frameBar(-0.6);
+translate(v=[0,30,0])
+*frameBar(-0.7);
+translate(v=[0,60,0])
+*frameBar(-0.8);
+
 
 translate(v=[0,0,5])
 rotate(a=45, v=[1,-1,0])
 *threeJoin();
 
-frameBar();
+*frameBar();
 
 oslack = 0.05;
 module old() {
@@ -103,4 +108,6 @@ module baseBar() {
     
     
 }
+
+cylinder(r1=8, r2=10, h=10);
 //old();

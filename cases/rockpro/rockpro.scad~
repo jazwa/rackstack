@@ -1,0 +1,22 @@
+
+
+
+rockProMountDeltaXY = [[0,0,0], [117.62,0,0], [117.62,71.00,0], [0,71.00,0]];
+
+
+module rockProMountPoints(cylHeight, cylRad, cylFn, center) {
+  
+  for (i=[0:3]) {
+    p = rockProMountDeltaXY[i];    
+    translate(v=[p[0], p[1], p[2]])
+    cylinder(r=cylRad, h=cylHeight, $fn=cylFn, center=center);
+  }
+  
+}
+
+
+
+
+
+
+
