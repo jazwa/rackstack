@@ -1,7 +1,7 @@
 
 
 
-rockProMountDeltaXY = [[0,0,0], [116.5,0,0], [116.5,71.0,0], [0,71.0,0]];
+rockProMountDeltaXY = [[0,0,0], [118,0,0], [118,71.0,0], [0,71.0,0]];
 
 
 module rockProMountPoints(cylHeight, cylRad1, cylRad2, cylFn, center) {
