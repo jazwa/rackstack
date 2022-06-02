@@ -10,7 +10,6 @@ boxWidth = 157.67;
 boxHeight = 27.0;
 boxLength = 101.5;
 
-
 topThickness = 1.0;
 bottomThickness = 1.0;
 
@@ -50,24 +49,25 @@ module sideHolder() {
   }
 
   module backLowerRailSegment() {
-    translate(v=[0,200.0-sideThickness,0])
+    translate(v=[0,198.0-sideThickness,0])
       cube(size=[sideSupportWidth, sideThickness, bottomThickness]);
   }
 
+  
   module backUpperRailSegment() {
-    translate(v=[0,200.0-sideThickness,boxHeight+bottomThickness])
+    translate(v=[0,198.0-sideThickness,boxHeight+bottomThickness])
       cube(size=[sideSupportWidth, sideThickness, topThickness]);
   }
 
   module frontRailMountSegment() {
     // +2 is slack
-    translate(v=[-railMountWidthDiff+2,0,0])
+    translate(v=[-railMountWidthDiff+5,0,0])
       // should technically use different totalHeight, as current totalHeight is for case holder
       cube(size=[railWidth,sideThickness,totalHeight]);
   }
 
   module backRailMountSegment() {
-    translate(v=[0,200.0-sideThickness,0])
+    translate(v=[0,198.0-sideThickness,0])
       // should technically use different totalHeight, as current totalHeight is for case holder
       frontRailMountSegment();
   }
@@ -94,7 +94,7 @@ module sideHolder() {
   }
 
   module backFace() {
-    translate(v=[0,200.0-sideThickness,0])
+    translate(v=[0,198.0-sideThickness,0])
       frontFace();
       
   }
@@ -142,10 +142,10 @@ module sideHolder() {
   // side support/hold for case
   difference() {
     translate(v=[sideSupportWidth-sideThickness,totalLength,0])
-    cube(size=[sideThickness, 200.0-totalLength, totalHeight]);
+    cube(size=[sideThickness, 198-totalLength, totalHeight]);
 
-    translate(v=[sideSupportWidth-sideThickness-eps/2,(200-totalLength)+15,5])
-      cube(size=[sideThickness+eps,(200.0-totalLength)-10+eps, totalHeight-10+eps]);
+    translate(v=[sideSupportWidth-sideThickness-eps/2,(198-totalLength)+15,5])
+      cube(size=[sideThickness+eps,(198-totalLength)-10+eps, totalHeight-10+eps]);
   }
 }
 
