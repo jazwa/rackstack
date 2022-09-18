@@ -63,7 +63,7 @@ module m4HexNutPocketNegative() {
 
 // TODO: remove test
 
-difference() {
+*difference() {
   translate(v=[0,1,0])
   cube(size=[10,12,6], center=true);
 
