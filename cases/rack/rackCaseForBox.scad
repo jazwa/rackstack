@@ -8,11 +8,12 @@ slack = 0.4;
 
 boxWidth = 157.67;
 boxHeight = 27.0;
-boxLength = 101.5;
+boxLength = 101.5+1;
 
 topThickness = 1.0;
 bottomThickness = 1.0;
 
+faceThickness = 3.0;
 sideThickness = 2.0;
 sideSupportWidth = 10;
 
@@ -23,19 +24,21 @@ totalLength = boxLength+2*sideThickness;
 
 
 railMountWidthDiff = (200.0 - (boxWidth + 2*sideThickness)) / 2.0;
+
+totalMountLength = 200.0 + 2*faceThickness + 1;
   
 module sideHolder() {
 
 
   module frontLowerCaseSegment() {
     translate(v=[0,0,0])
-      cube(size=[sideSupportWidth, sideThickness, bottomThickness]);
+      cube(size=[sideSupportWidth, faceThickness, bottomThickness]);
   }
 
   module frontUpperCaseSegment() {
     // no room for slack? :(
     translate(v=[0,0,boxHeight+bottomThickness])
-      cube(size=[sideSupportWidth, sideThickness, topThickness]);
+      cube(size=[sideSupportWidth, faceThickness, topThickness]);
   }
 
   module backLowerCaseSegment() {
@@ -49,25 +52,25 @@ module sideHolder() {
   }
 
   module backLowerRailSegment() {
-    translate(v=[0,198.0-sideThickness,0])
-      cube(size=[sideSupportWidth, sideThickness, bottomThickness]);
+    translate(v=[0,200.0+1,0])
+      cube(size=[sideSupportWidth, faceThickness, bottomThickness]);
   }
 
   
   module backUpperRailSegment() {
-    translate(v=[0,198.0-sideThickness,boxHeight+bottomThickness])
-      cube(size=[sideSupportWidth, sideThickness, topThickness]);
+    translate(v=[0,200.0+1,boxHeight+bottomThickness])
+      cube(size=[sideSupportWidth, faceThickness, topThickness]);
   }
 
   module frontRailMountSegment() {
     // +2 is slack
     translate(v=[-railMountWidthDiff+5,0,0])
       // should technically use different totalHeight, as current totalHeight is for case holder
-      cube(size=[railWidth,sideThickness,totalHeight]);
+      cube(size=[railWidth,faceThickness,totalHeight]);
   }
 
   module backRailMountSegment() {
-    translate(v=[0,198.0-sideThickness,0])
+    translate(v=[0,200+1,0])
       // should technically use different totalHeight, as current totalHeight is for case holder
       frontRailMountSegment();
   }
@@ -82,19 +85,19 @@ module sideHolder() {
       }
 
       // screw holes
-      translate(v=[-railMountWidthDiff + 10,0,5])
+      translate(v=[-railMountWidthDiff + 11.5,0,5])
         rotate(a=[90,0,0])
-        cylinder(r=m3RadiusSlacked, h=10, center=true);
+        cylinder(r=m4RadiusSlacked, h=10, center=true);
 
-      translate(v=[-railMountWidthDiff + 10,0,25])
+      translate(v=[-railMountWidthDiff + 11.5,0,25])
         rotate(a=[90,0,0])
-        cylinder(r=m3RadiusSlacked, h=10, center=true);
+        cylinder(r=m4RadiusSlacked, h=10, center=true);
     }
     
   }
 
   module backFace() {
-    translate(v=[0,198.0-sideThickness,0])
+    translate(v=[0,200.0+faceThickness+1,0])
       frontFace();
       
   }
@@ -134,24 +137,24 @@ module sideHolder() {
   difference() {
     cube(size=[sideThickness, totalLength, totalHeight]);
 
-    translate(v=[-eps/2,5,5])
-      cube(size=[sideThickness+eps,totalLength-10+eps, totalHeight-10+eps]);
+    translate(v=[-eps/2,8,5])
+      cube(size=[sideThickness+eps,totalLength-17.5+eps, totalHeight-10+eps]);
   }
 
 
   // side support/hold for case
   difference() {
     translate(v=[sideSupportWidth-sideThickness,totalLength,0])
-    cube(size=[sideThickness, 198-totalLength, totalHeight]);
+    cube(size=[sideThickness, totalMountLength-totalLength, totalHeight]);
 
-    translate(v=[sideSupportWidth-sideThickness-eps/2,(198-totalLength)+15,5])
-      cube(size=[sideThickness+eps,(198-totalLength)-10+eps, totalHeight-10+eps]);
+    translate(v=[sideSupportWidth-sideThickness-eps/2,(200-totalLength)+20,5])
+      cube(size=[sideThickness+eps,(200-totalLength)-10+eps, totalHeight-10+eps]);
   }
 }
 
 
 module sideHolderAligned() {
-  translate(v=[19,0,0])
+  //translate(v=[19,0,0])
     sideHolder();
 }
 
@@ -163,6 +166,6 @@ module mSide() {
 
 sideHolderAligned();
 
-translate(v=[42 + boxWidth,0,0])
-*mSide();
+//translate(v=[42 + boxWidth,0,0])
+//mSide();
 
