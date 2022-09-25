@@ -1,3 +1,14 @@
+/*
+TODO this case has many many problems as it currently is. The following
+ should be addressed before it is printed again:
+  - not enough space for I/O connectors (the plastic handles have
+   to go though the IO holes right now and they usually don't fit)
+  - risers are made of plastic and really easily break
+  - side perforations for ventilation do not print nicely (probably a printer issue)
+  - not enough space for sd card
+  - no locking lid for case
+*/
+
 include <../common.scad>
 
 // All coordinates are in [x,y], or [x,y,z] format
@@ -78,9 +89,6 @@ module cutoutProfileAirflow_N() {
   cube(size=[inf50, 80, 15]);
 }
 
-
-
-
 difference() {
 
   union() {
@@ -100,11 +108,7 @@ difference() {
     cutoutProfileAirflow_N();
   }
 }
-
-
 //cutoutProfileAirflow_N();
-
-
 
 module mountPoints_N(cylHeight, cylRad1, cylRad2, cylFn, center) {
   for (i=[0:3]) {
@@ -122,8 +126,6 @@ module mountPoints_N(cylHeight, cylRad1, cylRad2, cylFn, center) {
     mountPoints_N(7, mountPointDiameter/2.5, mountPointDiameter/2.5, 32, false);
     mountPoints_N(5, mountPointDiameter, mountPointDiameter, 32, false);
   }
-
-  
 }
 
 module cutoutProfile_N() {
