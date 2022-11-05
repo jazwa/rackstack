@@ -1,11 +1,7 @@
 /*
 TODO this case has many many problems as it currently is. The following
  should be addressed before it is printed again:
-  - not enough space for I/O connectors (the plastic handles have
-   to go though the IO holes right now and they usually don't fit)
   - risers are made of plastic and really easily break
-  - side perforations for ventilation do not print nicely (probably a printer issue)
-  - not enough space for sd card
   - no locking lid for case
 */
 
@@ -18,14 +14,14 @@ pcbThickness = 1.42;
 
 
 // [+x, -x, +y, -y]
-pcbCaseSpace = [5, 2, 2, 2];
+pcbCaseSpace = [5, 2, 5, 2];
 
 pcbRise = 3;
 caseWallThickness = 2;
 caseBottomThickness = 2;
 
 
-mountPointDiameter = 2.69;
+mountPointDiameter = 5;
 mountPoints = [[3.65,23.30,0], [3.65,pcbDimensions[1]-3.65,0], [pcbDimensions[0]-3.65,23.30,0], [pcbDimensions[0]-3.65,pcbDimensions[1]-3.65,0]];
 
 module pcb() {
@@ -52,8 +48,11 @@ module pcbCaseBottom_() {
 module pcbCaseWithRisers_() {
   union() {
     translate(v=[0,0,-pcbRise]){
-      mountPoints_N(pcbRise, mountPointDiameter, mountPointDiameter, 32, false);
-      mountPoints_N(pcbRise+2, mountPointDiameter/2.5, mountPointDiameter/2.5, 32, false);
+
+      difference () {
+        mountPoints_N(pcbRise, mountPointDiameter/1.5, mountPointDiameter/2, 32, false);
+        mountPoints_N(pcbRise + 2, 1.95/2 - 0.05, 1.95/2 - 0.05, 32, false);
+      }
     }
     pcbCaseBottom_();
   }
@@ -73,15 +72,12 @@ module cutoutProfileAirflow_N() {
     }
   }
 
-  // back cutouts
-  for (i=[0:4]) {
-    translate(v=[i*10 + 7,pcbDimensions[1],4])
+  // back cutout
+  translate(v=[5,pcbDimensions[1]+5,-1])
     minkowski() {
-      
-        cube(size=[3,100,10], center=false);
-        rotate(a=[90,0,0])
+      cube(size=[50,90,15], center=false);
+      rotate(a=[90,0,0])
         cylinder(h=1,r=2);
-      }
   }
 
   // front cutout
@@ -94,13 +90,16 @@ difference() {
   union() {
   pcbCaseWithRisers_();
 
-  // lugs
-  translate(v=[pcbDimensions[0]+caseWallThickness+pcbCaseSpace[0],-caseWallThickness-pcbCaseSpace[3],-pcbRise-caseBottomThickness])
-    cube(size=[2,5,5]);
+    // lugs
+    // -4
+    translate(v=[pcbDimensions[0]+caseWallThickness+pcbCaseSpace[0],-caseWallThickness-pcbCaseSpace[3],-pcbRise-caseBottomThickness])
+      cube(size=[2,5,5]);
 
-  translate(v=[pcbDimensions[0]+caseWallThickness+pcbCaseSpace[0],pcbDimensions[1]+pcbCaseSpace[2]-5+caseWallThickness,-pcbRise-caseBottomThickness])
-    cube(size=[2,5,5]);
+    // 87.1
+    translate(v=[pcbDimensions[0]+caseWallThickness+pcbCaseSpace[0],pcbDimensions[1]+pcbCaseSpace[2]-5+caseWallThickness,-pcbRise-caseBottomThickness])
+      cube(size=[2,5,5]);
 
+    // -> 87.1 + 4 = 91.1
   }
 
   union() {
@@ -128,24 +127,22 @@ module mountPoints_N(cylHeight, cylRad1, cylRad2, cylFn, center) {
   }
 }
 
+// fucked up
 module cutoutProfile_N() {
-
-
   color([1,0,1])
     union() {
     // front I/O
     mirror(v=[0,1,0])
-      translate(v=[2, -eps*100, pcbThickness])
-      cube(size=[52.0 + 0.1, inf50,  16.0 + 0.1]);
+      translate(v=[1, -eps*100, pcbThickness-4])
+      cube(size=[58.0 + 0.1, inf50,  18.0 + 0.1]);
 
     // side I/O
-    
-    translate(v=[-48, (pcbDimensions[1]-54)-5, pcbThickness])
-    cube(size=[inf50, 54, 8]);
+    translate(v=[-48-3, (pcbDimensions[1]-54)-10, pcbThickness-4])
+    cube(size=[inf50, 64, 18]);
   }
 
 }
 
-//cutoutProfile_N();
+*cutoutProfile_N();
 //pcb();
 

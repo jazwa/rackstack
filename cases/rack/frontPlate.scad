@@ -62,7 +62,7 @@ difference() {
   union() {
     translate(v=[160,-3,-frontPlateThickness])
     cube(size=[5.2, 5.2, 3]);
-    translate(v=[160-88,-3,-frontPlateThickness])
+    translate(v=[160-91.1,-3,-frontPlateThickness])
     cube(size=[5.2, 5.2, 3]);
   }
 }
