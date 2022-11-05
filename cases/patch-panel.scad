@@ -111,8 +111,8 @@ module patchPanel_P() {
   
   frontPlate();
   for (i = [0:7]) {
-    translate(v=[(i*20+12.5)-2.5,0,-3.5])
-      cube(size=[20,6,28]);
+    translate(v=[(i*20+12.5)-2.5,0,-4.5])
+      cube(size=[20,6,29]);
   } 
 
 }
@@ -123,7 +123,7 @@ module patchPanel() {
     patchPanel_P();
 
     for (i = [0:7]) {
-      translate(v=[i*20 + 12.5,0,0])
+      translate(v=[i*18 + 12.5,0,-2])
       keystoneJack_N();
   } 
   }

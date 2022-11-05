@@ -81,11 +81,6 @@ module trayBody() {
             cube(size=[5,2,5]);
         translate(v=[trayOuterWidth-5,-2,0])
             cube(size=[5,2,5]);
-
-        translate(v=[0,-2,20])
-            cube(size=[5,2,5]);
-        translate(v=[trayOuterWidth-5,-2,20])
-            cube(size=[5,2,5]);
     }
 }
 
