@@ -134,11 +134,11 @@ module cutoutProfile_N() {
     // front I/O
     mirror(v=[0,1,0])
       translate(v=[1, -eps*100, pcbThickness-4])
-      cube(size=[58.0 + 0.1, inf50,  18.0 + 0.1]);
+      cube(size=[58.0 + 0.1, inf50,  19.0 + 0.1]);
 
     // side I/O
     translate(v=[-48-3, (pcbDimensions[1]-54)-10, pcbThickness-4])
-    cube(size=[inf50, 64, 18]);
+    cube(size=[inf50, 64, 19]);
   }
 
 }

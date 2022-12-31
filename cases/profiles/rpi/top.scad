@@ -4,7 +4,7 @@ difference() {
   union() {
     cube(size=[67,95.7,1]);
     translate(v=[2,2,1])
-    cube(size=[63,91.7,3]);
+    cube(size=[63.2,92,3]);
   }
 
   union() {

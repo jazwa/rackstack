@@ -298,7 +298,7 @@ module frontPlateAligned() {
       frontPlate();
 
     union() {
-      // lugs
+      // lugs TODO not recessed enough!!
       translate(v=[-0.05,-(1.5+boxFrontThickness),-0.05])
         cube(size=[4+0.1,2,4+0.1]);
 
