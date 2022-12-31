@@ -1,5 +1,5 @@
-include <../common.scad>
-include <./screws.scad>
+include <../../common.scad>
+include <../screws.scad>
 
 $fn=64;
 

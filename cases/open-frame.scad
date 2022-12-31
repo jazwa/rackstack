@@ -1,13 +1,7 @@
 $fn=64;
+include <./math.scad>
 
 eps=0.1;
-
-
-function mirror4XY(midpoint, offsetX, offsetY)  =
-  [[midpoint[0]+offsetX, midpoint[1]+offsetY, midpoint[2]],
-   [midpoint[0]-offsetX, midpoint[1]+offsetY, midpoint[2]],
-   [midpoint[0]-offsetX, midpoint[1]-offsetY, midpoint[2]],
-   [midpoint[0]+offsetX, midpoint[1]-offsetY, midpoint[2]]];
 
 module leg() {
     mainLength = 80;

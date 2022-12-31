@@ -92,9 +92,27 @@ module frontPlate() {
 
 difference() {
 difference() {
-    union() {
-        rotate(a=[-90,0,0])
-            frontPlate();
+
+    difference() {
+        union() {
+            rotate(a = [- 90, 0, 0])
+                frontPlate();
+        }
+
+        union() {
+            translate(v=[1,0,0])
+                rotate(a=[0,-15, 0])
+                    translate(v=[0,-50,0])
+                        cube(size=[100, 100, 30]);
+
+            translate(v=[180-1,0,0])
+                mirror(v=[1,0,0]) {
+                    rotate(a = [0, - 15, 0])
+                        translate(v = [0, - 50, 0])
+                            cube(size = [100, 100, 30]);
+                }
+        }
+
     }
     // lug holes
     union() {
@@ -105,7 +123,7 @@ difference() {
     }
 }
     for (i=[0:5]) {
-        translate(v=[5,i*4 - 0.5,-10])
-        cube(size=[170, 2, 20]);
+        translate(v=[5,i*4 - 0.75,-10])
+        cube(size=[170, 1.5, 20]);
     }
 }
