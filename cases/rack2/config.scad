@@ -23,10 +23,12 @@ screwDiff = 10;
 numRailScrews = 20;
 
 // Screw type used for rackmount units. See screws.scad.
-railMainScrewType = "m4";
+mainRailScrewType = "m4";
 
 // Screw type used to affix side rails.
-railSideMountScrewType = "m4";
+mainRailSideMountScrewType = "m4";
 
 // Screw type used for constructing the actual rack frame.
-rackScrewType = "m3";
+rackFrameScrewType = "m3";
+// Currently, only m3 screws are supported here (tolerance issues)
+assert(rackFrameScrewType == "m3");
