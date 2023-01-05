@@ -5,7 +5,8 @@ include <./mainRail.scad>
 include <./helper/sphericalFilet.scad>
 include <./helper/cylindricalFilet.scad>
 
-railSlotSpacing = 4;
+// TODO: How do I nicely explain this?
+railSlotSpacing = 2;
 sideSpacing = 12;
 
 barDepth = maxUnitDepth + 2*railSlotSpacing;
@@ -20,7 +21,7 @@ echo("Bar total width: ", barWidth);
 
 module connectingBar() {
 
-  module _positive() {
+  module positive() {
     minkowski() {
       difference() {
         sphericalFiletEdge(barWidth, barDepth, barHeight, barRoundness);
@@ -31,8 +32,7 @@ module connectingBar() {
     }
   }
 
-
-  module _stackConn() {
+  module stackConn_N() {
     translate(v=[0,0,0])
     cube(size = [10, 10, 5]);
 
@@ -40,43 +40,49 @@ module connectingBar() {
     cylinder(r=2, h=2);
   }
 
-  module _sideConnector() {
-    //translate(v=[1.5, railTotalDepth - 4, -m3HeatSetInsertSlotHeightSlacked])
+  // negatives on the y-z plane to be imprinted on the side of the main
+  module sideConnector_N() {
+
+    translate(v=[ - m3HeatSetInsertSlotHeightSlacked, 7, 7.5])
     rotate(a=[0,90,0])
     heatSetInsertSlot_N(rackFrameScrewType);
+
+    translate(v=[ - m3HeatSetInsertSlotHeightSlacked, 35, 7.5])
+    rotate(a=[0,90,0])
+    heatSetInsertSlot_N(rackFrameScrewType);
+
+    translate(v=[-1, 7 + 28/2, 7.5])
+    cube(size=[2,10,5], center=true);
   }
 
-  module _test() {
+  module railConnector_N() {
+
+  }
+
+  module test() {
     difference() {
-      _positive();
+      positive();
 
       union() {
         translate(v=[10,10,0])
-        _stackConn();
+        stackConn_N();
 
         translate(v=[barWidth - (railTotalWidth + railSlotSpacing), railSlotSpacing, barHeight - railFootThickness])
         railFeetSlot_N();
 
-        translate(v=[barWidth - m3HeatSetInsertSlotHeightSlacked + eps, 6, 7.5])
-        _sideConnector();
-
-        translate(v=[barWidth - m3HeatSetInsertSlotHeightSlacked + eps, 35, 7.5])
-        _sideConnector();
+        translate(v=[barWidth + eps, 0,0])
+        sideConnector_N();
       }
     }
 
   }
-  _test();
-
-  translate(v=[barWidth - m3HeatSetInsertSlotHeightSlacked + eps, 6, 7.5])
-  _sideConnector();
-
+  test();
 }
 
 connectingBar();
 
 
-intersection() {
+*intersection() {
   connectingBar();
 
   cube(size=[15,100,100]);
