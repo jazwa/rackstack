@@ -5,8 +5,6 @@ include <./mainRail.scad>
 include <./helper/sphericalFilet.scad>
 include <./helper/cylindricalFilet.scad>
 
-
-// TODO: How do I nicely explain this?
 railSlotSpacing = 4;
 sideSpacing = 12;
 
