@@ -8,32 +8,29 @@ railFootThickness = 3;
 
 railTotalHeight = screwDiff * (numRailScrews + 1) + 2 * railFootThickness;
 
+railFrontThickness = 6; // Make sure that the nuts for the chosen screw type can slot within the front face
+railSideMountThickness = 2.5;
+
 // Distance between the middle of a screw mount and the rail's vertical edges
 railScrewHoleToInnerEdge = 5;
-railScrewHoleToOuterEdge = 5;
+railScrewHoleToOuterEdge = 7;
 
 // Distance between the midpoint of the rail screw holes.
 rackMountScrewWidth = maxUnitWidth + 2 * railScrewHoleToInnerEdge;
 
-railFrontThickness = 6; // Make sure that the nuts for the chosen screw type can slot within the front face
-railSideMountThickness = 2.5;
-railOtherThickness = 2.5;
-
 // Extra spacing for screws.
-frontScrewSpacing = 8;
+frontScrewSpacing = 15;
 
-sideSupportExtraSpace = 2;
-sideSupportScrewHoleToFrontEdge = 5;
-sideSupportScrewHoleToBackEdge = 4.5;
-sideSupportDepth = sideSupportScrewHoleToBackEdge + sideSupportScrewHoleToFrontEdge;
+sideSupportScrewHoleToBackEdge = 4;
+sideSupportDepth = sideSupportScrewHoleToBackEdge + frontScrewSpacing;
 
 frontFaceWidth = railScrewHoleToInnerEdge + railScrewHoleToOuterEdge;
 
 railTotalWidth = frontFaceWidth;
-railTotalDepth = railFrontThickness+railOtherThickness+frontScrewSpacing+sideSupportDepth;
-
+railTotalDepth = railFrontThickness+sideSupportDepth;
 
 *mainRail();
+
 echo("Total Rail Height: ", railTotalHeight);
 
 module mainRail() {
@@ -41,19 +38,16 @@ module mainRail() {
   union() {
     _frontRailSegment();
 
-    translate(v = [0, railFrontThickness, 0])
-    _connectingLBracketRailSegment();
-
-    translate(v = [frontFaceWidth-sideSupportExtraSpace, railFrontThickness+railOtherThickness+frontScrewSpacing, 0])
+    translate(v = [railSideMountThickness, railFrontThickness, 0])
     rotate(a = [0, 0, 90])
     _sideSupportSegment();
 
+    translate(v = [0, railFrontThickness, 0]) {
 
-    translate(v = [0, railFrontThickness + railOtherThickness + frontScrewSpacing, 0]) {
-
+      translate(v=[railSideMountThickness,0,0])
       _railFeet();
 
-      translate(v = [0, 0, railTotalHeight - railFootThickness])
+      translate(v = [railSideMountThickness, 0, railTotalHeight - railFootThickness])
       _railFeet();
     }
   }
@@ -70,54 +64,40 @@ module mainRail() {
     }
   }
 
-  module _connectingLBracketRailSegment() {
-    difference() {
-      cube(size = [railOtherThickness, frontScrewSpacing + railOtherThickness, railTotalHeight]);
-
-      union() {
-        translate(v = [0, 4, railFootThickness + screwDiff / 2])
-        rotate(a = [0, 90, 0])
-        cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = 10, $fn = 32, center = true);
-
-        translate(v = [0, 4, railTotalHeight - (railFootThickness + screwDiff / 2)])
-        rotate(a = [0, 90, 0])
-        cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32, center = true);
-      }
-    }
-
-    translate(v = [0, frontScrewSpacing + railOtherThickness, 0])
-    rotate(a = [0, 0, 270])
-    cube(size = [railOtherThickness, frontFaceWidth - sideSupportExtraSpace, railTotalHeight]);
-  }
-
-
   module _sideSupportSegment() {
     difference() {
       cube(size = [sideSupportDepth, railSideMountThickness, railTotalHeight]);
 
-      for (i = [1:numRailScrews]) {
-        translate(v = [sideSupportScrewHoleToFrontEdge, railFrontThickness / 2, i * screwDiff + railFootThickness])
-        rotate(a = [90, 0, 0])
-        cylinder(r = screwRadiusSlacked(mainRailSideMountScrewType), h = inf10, $fn = 32);
+      union() {
+        for (i = [1:numRailScrews]) {
+          translate(v = [frontScrewSpacing, railFrontThickness/2, i*screwDiff+railFootThickness])
+          rotate(a = [90, 0, 0])
+          cylinder(r = screwRadiusSlacked(mainRailSideMountScrewType), h = inf10, $fn = 32);
+        }
+
+        translate(v = [4, 0, railFootThickness + 5])
+        rotate(a=[90,0,0])
+        cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32, center = true);
+
+        translate(v = [4, 0, railTotalHeight- (railFootThickness + 5)])
+        rotate(a=[90,0,0])
+        cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32, center = true);
       }
     }
-
   }
 
   module _railFeet() {
     difference() {
-      cube(size = [frontFaceWidth - sideSupportExtraSpace, sideSupportDepth, railFootThickness]);
+      cube(size = [frontFaceWidth - railSideMountThickness, sideSupportDepth, railFootThickness]);
 
-      hull() {
-        translate(v = [1.5, 5, 0])
-        cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32);
+      translate(v = [6, 4, 0])
+      cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32);
 
-        translate(v = [0, 5, 0])
-        cube(size = [eps, screwRadiusSlacked(rackFrameScrewType) * 2, 10], center = true);
-      }
+      translate(v = [6, 12, 0])
+      cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32);
+
     }
   }
-
 }
 
 module railFeetSlot_N() {
@@ -125,7 +105,10 @@ module railFeetSlot_N() {
   union() {
     cube(size = [railTotalWidth, railTotalDepth, railFootThickness]);
 
-    translate(v=[1.5, railTotalDepth - 4, -m3HeatSetInsertSlotHeightSlacked])
+    translate(v = [railSideMountThickness + 6, railFrontThickness + 4, -m3HeatSetInsertSlotHeightSlacked])
+    heatSetInsertSlot_N(rackFrameScrewType);
+
+    translate(v = [railSideMountThickness + 6, railFrontThickness + 12, -m3HeatSetInsertSlotHeightSlacked])
     heatSetInsertSlot_N(rackFrameScrewType);
   }
 }
