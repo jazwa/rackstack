@@ -5,8 +5,11 @@ include <./mainRail.scad>
 include <./helper/sphericalFilet.scad>
 include <./helper/cylindricalFilet.scad>
 
+// TODO remove support requirements
+// TODO add slack to top slots
+// TODO clean up
 // TODO: How do I nicely explain this?
-railSlotSpacing = 2;
+railSlotSpacing = 3;
 sideSpacing = 12;
 
 barDepth = maxUnitDepth + 2*railSlotSpacing;
@@ -39,56 +42,77 @@ module connectingBar() {
     cylinder(r=2, h=2);
   }
 
+  // TODO move this to custom file
   // negatives on the y-z plane to be imprinted on the side of the main
-  module sideConnector_N() {
+  module frontBarConnector_N() {
 
-    zOffset = 7.5;
-    y1 = 5;
+    y1 = 6;
     y2 = 27;
+    z = 6;
 
-    translate(v=[ - m3HeatSetInsertSlotHeightSlacked, y1, zOffset])
-    rotate(a=[0,90,0])
+    translate(v = [-m3HeatSetInsertSlotHeightSlacked, y1, z])
+    rotate(a = [0, 90, 0])
     heatSetInsertSlot_N(rackFrameScrewType);
 
-    translate(v=[ - m3HeatSetInsertSlotHeightSlacked, y2, zOffset])
-    rotate(a=[0,90,0])
+    translate(v = [-m3HeatSetInsertSlotHeightSlacked, y2, z])
+    rotate(a = [0, 90, 0])
     heatSetInsertSlot_N(rackFrameScrewType);
 
-    translate(v=[-1, y1 + (y2 - y1)/2, zOffset])
+    // TODO fix this up, no center=true
+    translate(v=[-1, y1 + (y2 - y1)/2, 0])
     cube(size=[2,10,5], center=true);
   }
 
-  module railConnector_N() {
+  // TODO move this in custom file, like for railFeetSlot_N
+  module sideWallConnector_N() {
 
+    lugW = 7;
+    lugD = 20;
+    lugH = 2;
+
+    insertDw = lugW/2;
+
+    insertDd = lugD - 4;
+
+    translate(v=[0,0, -lugH])
+    cube(size=[lugW, lugD, lugH]);
+
+    translate(v=[insertDw, insertDd, -(m3HeatSetInsertSlotHeightSlacked + lugH)])
+    heatSetInsertSlot_N(rackFrameScrewType);
   }
 
-  module test() {
+
+  module singleCorner_N() {
+    union() {
+      translate(v=[5,5,0])
+      stackConn_N();
+
+      translate(v=[barWidth - (railTotalWidth + railSlotSpacing), railSlotSpacing, barHeight - railFootThickness])
+      railFeetSlot_N();
+
+      translate(v=[barWidth + eps, 0,0])
+      frontBarConnector_N();
+
+
+      translate(v=[barWidth - (railTotalWidth + railSlotSpacing) - 9, railSlotSpacing, barHeight])
+      sideWallConnector_N();
+    }
+  }
+
+  module connectingBar() {
     difference() {
       positive();
 
-      union() {
-        translate(v=[5,5,0])
-        stackConn_N();
+      singleCorner_N();
 
-        translate(v=[barWidth - (railTotalWidth + railSlotSpacing), railSlotSpacing, barHeight - railFootThickness])
-        railFeetSlot_N();
-
-        translate(v=[barWidth + eps, 0,0])
-        sideConnector_N();
-
-        // TODO change this
-        translate(v=[barWidth - (railTotalWidth + railSlotSpacing) - 7, railSlotSpacing, barHeight-2])
-        cube(size=[5,13,2]);
+      translate(v=[0,barDepth,0])
+      mirror(v=[0,1,0]) {
+        singleCorner_N();
       }
     }
 
   }
-  test();
+  connectingBar();
 }
 
 connectingBar();
-*intersection() {
-  connectingBar();
-
-  cube(size=[21,100,100]);
-}

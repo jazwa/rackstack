@@ -5,7 +5,7 @@ include <../common.scad>
 
 /********************************************************************************/
 // M3 dimensions
-m3HoleRadiusSlack = 0.15;
+m3HoleRadiusSlack = 0.3;
 m3Diameter = 3.0;
 m3Radius = m3Diameter / 2.0;
 m3RadiusSlacked = m3Radius + m3HoleRadiusSlack;
@@ -14,7 +14,7 @@ m3HexNutWidthAcrossFlats = 5.41;
 m3HexNutWidthAcrossCorners = FtoG(m3HexNutWidthAcrossFlats);
 m3HexNutThickness = 2.18;
 
-m3HeatSetInsertSlotRadiusSlack = 0.0;
+m3HeatSetInsertSlotRadiusSlack = -0.1;
 m3HeatSetInsertSlotHeightSlack = 0.5;
 
 m3HeatSetInsertSlotRadius = 2.5;

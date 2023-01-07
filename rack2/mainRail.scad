@@ -90,12 +90,8 @@ module mainRail() {
     difference() {
       cube(size = [frontFaceWidth - railSideMountThickness, sideSupportDepth, railFootThickness]);
 
-      translate(v = [6, 4, 0])
+      translate(v = [5, 4, 0])
       cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32);
-
-      translate(v = [6, 12, 0])
-      cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32);
-
     }
   }
 }
@@ -105,10 +101,7 @@ module railFeetSlot_N() {
   union() {
     cube(size = [railTotalWidth, railTotalDepth, railFootThickness]);
 
-    translate(v = [railSideMountThickness + 6, railFrontThickness + 4, -m3HeatSetInsertSlotHeightSlacked])
-    heatSetInsertSlot_N(rackFrameScrewType);
-
-    translate(v = [railSideMountThickness + 6, railFrontThickness + 12, -m3HeatSetInsertSlotHeightSlacked])
+    translate(v = [railSideMountThickness + 5, railFrontThickness + 4, -m3HeatSetInsertSlotHeightSlacked])
     heatSetInsertSlot_N(rackFrameScrewType);
   }
 }
