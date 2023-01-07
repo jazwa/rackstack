@@ -29,8 +29,6 @@ frontFaceWidth = railScrewHoleToInnerEdge + railScrewHoleToOuterEdge;
 railTotalWidth = frontFaceWidth;
 railTotalDepth = railFrontThickness+sideSupportDepth;
 
-*mainRail();
-
 echo("Total Rail Height: ", railTotalHeight);
 
 module mainRail() {
@@ -67,21 +65,11 @@ module mainRail() {
   module _sideSupportSegment() {
     difference() {
       cube(size = [sideSupportDepth, railSideMountThickness, railTotalHeight]);
-
-      union() {
-        for (i = [1:numRailScrews]) {
-          translate(v = [frontScrewSpacing, railFrontThickness/2, i*screwDiff+railFootThickness])
-          rotate(a = [90, 0, 0])
-          cylinder(r = screwRadiusSlacked(mainRailSideMountScrewType), h = inf10, $fn = 32);
-        }
-
-        translate(v = [4, 0, railFootThickness + 5])
-        rotate(a=[90,0,0])
-        cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32, center = true);
-
-        translate(v = [4, 0, railTotalHeight- (railFootThickness + 5)])
-        rotate(a=[90,0,0])
-        cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32, center = true);
+      
+      for (i = [1:numRailScrews]) {
+        translate(v = [frontScrewSpacing, railFrontThickness/2, i*screwDiff+railFootThickness])
+        rotate(a = [90, 0, 0])
+        cylinder(r = screwRadiusSlacked(mainRailSideMountScrewType), h = inf10, $fn = 32);
       }
     }
   }
@@ -98,10 +86,12 @@ module mainRail() {
 
 module railFeetSlot_N() {
 
+  slotSlack = 0.2;
   union() {
-    cube(size = [railTotalWidth, railTotalDepth, railFootThickness]);
+    translate(v=[-slotSlack/2, -slotSlack/2,0])
+    cube(size = [railTotalWidth + slotSlack, railTotalDepth + slotSlack, railFootThickness]);
 
-    translate(v = [railSideMountThickness + 5, railFrontThickness + 4, -m3HeatSetInsertSlotHeightSlacked])
+    translate(v = [railSideMountThickness + 5, railFrontThickness + 4 , -m3HeatSetInsertSlotHeightSlacked])
     heatSetInsertSlot_N(rackFrameScrewType);
   }
 }

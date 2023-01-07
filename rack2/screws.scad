@@ -5,7 +5,7 @@ include <../common.scad>
 
 /********************************************************************************/
 // M3 dimensions
-m3HoleRadiusSlack = 0.3;
+m3HoleRadiusSlack = 0.4; // higher slack for not-so straight heat set inserts
 m3Diameter = 3.0;
 m3Radius = m3Diameter / 2.0;
 m3RadiusSlacked = m3Radius + m3HoleRadiusSlack;

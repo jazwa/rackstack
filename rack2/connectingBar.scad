@@ -1,12 +1,12 @@
 include <../math.scad>
 include <./config.scad>
 include <./screws.scad>
+include <./misc/magnet.scad>
+
 include <./mainRail.scad>
 include <./helper/sphericalFilet.scad>
 include <./helper/cylindricalFilet.scad>
 
-// TODO remove support requirements
-// TODO add slack to top slots
 // TODO clean up
 // TODO: How do I nicely explain this?
 railSlotSpacing = 3;
@@ -22,6 +22,7 @@ barRoundness = 5;
 echo("Bar total depth: ", barDepth);
 echo("Bar total width: ", barWidth);
 
+
 module connectingBar() {
 
   module positive() {
@@ -35,11 +36,25 @@ module connectingBar() {
   }
 
   module stackConn_N() {
-    translate(v=[0,0,0])
-    cube(size = [10, 10, 5]);
+    taperH = 2;
 
-    translate(v=[5,5,5])
-    cylinder(r=2, h=2);
+    translate(v=[0,0,0])
+    cube(size = [10, 10, taperH]);
+
+
+    hull() {
+      translate(v = [0, 0, taperH])
+      linear_extrude(height=eps)
+      square(size = [10, 10]);
+
+      translate(v=[5,5,5])
+      linear_extrude(height=eps)
+      circle(r=magnetRSlacked);
+    }
+
+    // -1 is for male support
+    translate(v=[5,5,5 - 1])
+    cylinder(r=magnetRSlacked, h=magnetHSlacked);
   }
 
   // TODO move this to custom file
@@ -60,7 +75,8 @@ module connectingBar() {
 
     // TODO fix this up, no center=true
     translate(v=[-1, y1 + (y2 - y1)/2, 0])
-    cube(size=[2,10,5], center=true);
+    rotate(a=[0,45,0])
+    cube(size=[3,10,6], center=true);
   }
 
   // TODO move this in custom file, like for railFeetSlot_N
@@ -114,5 +130,3 @@ module connectingBar() {
   }
   connectingBar();
 }
-
-connectingBar();
