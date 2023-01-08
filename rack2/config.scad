@@ -20,7 +20,7 @@ maxUnitDepth = 200;
 screwDiff = 10;
 
 // Number screw slots on the main rail. Affects build volume.
-numRailScrews = 3;
+numRailScrews = 20;
 
 // Screw type used for rackmount units. See screws.scad.
 mainRailScrewType = "m4";

@@ -31,6 +31,7 @@ railTotalDepth = railFrontThickness+sideSupportDepth;
 
 echo("Total Rail Height: ", railTotalHeight);
 
+// Also known as the z-bar :)
 module mainRail() {
 
   union() {
