@@ -23,7 +23,7 @@ echo("Bar total depth: ", barDepth);
 echo("Bar total width: ", barWidth);
 
 
-module connectingBar() {
+module sideBar() {
 
   module positive() {
       difference() {
@@ -115,7 +115,7 @@ module connectingBar() {
     }
   }
 
-  module connectingBar() {
+  module sideBar() {
     difference() {
       positive();
 
@@ -128,5 +128,5 @@ module connectingBar() {
     }
 
   }
-  connectingBar();
+  sideBar();
 }

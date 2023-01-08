@@ -1,8 +1,8 @@
 include <../math.scad>
 include <./config.scad>
 include <./mainRail.scad>
-include <./connectingBar.scad>
+include <./sideBar.scad>
 
 
 *mainRail();
-connectingBar();
+sideBar();
