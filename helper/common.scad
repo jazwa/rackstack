@@ -1,6 +1,5 @@
 
-/* Some initial configurations and commonly used variables
-   plus functions
+/* Some commonly used variables plus functions
 */
 
 $fn=64;
