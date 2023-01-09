@@ -1,11 +1,9 @@
 
-// config
 length = 100;
 resolution = 128;
 amplitude = 4.0;
 period = PI;
 shift = 0.0;
-// end config
 
 function radToDeg(r) = r * (180 / PI);
 function sinR(r) = sin(radToDeg(r));
