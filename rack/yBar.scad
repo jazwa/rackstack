@@ -1,4 +1,4 @@
-include <../math.scad>
+include <../helper/math.scad>
 include <../misc/magnet.scad>
 include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
