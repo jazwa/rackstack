@@ -1,4 +1,4 @@
-include <../math.scad>
+include <../helper/math.scad>
 include <./config.scad>
 include <./mainRail.scad>
 include <./yBar.scad>

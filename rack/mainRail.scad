@@ -1,6 +1,6 @@
 include <./config.scad>
 include <./screws.scad>
-include <../math.scad>
+include <../helper/math.scad>
 
 /* Small horizontal planes at the top and bottom of the main rails. Used so we can fasten the rail to the frame
    Note that this value is also used for a depression at the bottom/top of the frame for aligning the rail */
