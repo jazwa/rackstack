@@ -1,11 +1,15 @@
 include <../helper/math.scad>
-include <../misc/magnet.scad>
 include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
+include <../misc/magnet.scad>
 include <./config.scad>
 include <./screws.scad>
 include <./mainRail.scad>
+
+// Connectors
 include <./stackConnector.scad>
+include <./xyBarConnector.scad>
+include <./sideWallConnector.scad>
 
 // TODO clean up
 // TODO: How do I nicely explain this?
@@ -33,47 +37,6 @@ module yBar() {
       cylindricalFiletEdge(yBarWidth, yBarDepth-32*2, yBarHeight, yBarRoundness);
     }
   }
-
-  // TODO move this to custom file
-  // negatives on the y-z plane to be imprinted on the side of the main
-  module frontBarConnector_N() {
-
-    y1 = 6;
-    y2 = 27;
-    z = 6;
-
-    translate(v = [-m3HeatSetInsertSlotHeightSlacked, y1, z])
-    rotate(a = [0, 90, 0])
-    heatSetInsertSlot_N(rackFrameScrewType);
-
-    translate(v = [-m3HeatSetInsertSlotHeightSlacked, y2, z])
-    rotate(a = [0, 90, 0])
-    heatSetInsertSlot_N(rackFrameScrewType);
-
-    // TODO fix this up, no center=true
-    translate(v = [-1, y1+(y2-y1)/2, 0])
-    rotate(a = [0, 45, 0])
-    cube(size = [3, 10, 6], center = true);
-  }
-
-  // TODO move this in custom file, like for railFeetSlot_N
-  module sideWallConnector_N() {
-
-    lugW = 7;
-    lugD = 20;
-    lugH = 2;
-
-    insertDw = lugW/2;
-
-    insertDd = lugD-4;
-
-    translate(v = [0, 0, -lugH])
-    cube(size = [lugW, lugD, lugH]);
-
-    translate(v = [insertDw, insertDd, -(m3HeatSetInsertSlotHeightSlacked+lugH)])
-    heatSetInsertSlot_N(rackFrameScrewType);
-  }
-
 
   module singleCornerNoStackConnector_N() {
     union() {
