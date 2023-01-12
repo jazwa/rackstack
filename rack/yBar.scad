@@ -1,9 +1,10 @@
 include <../helper/math.scad>
 include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
+include <../helper/screws.scad>
 include <../misc/magnet.scad>
+
 include <./config.scad>
-include <./screws.scad>
 include <./mainRail.scad>
 
 // Connectors

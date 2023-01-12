@@ -1,6 +1,6 @@
 include <../helper/math.scad>
-include <../misc/magnet.scad>
 include <../helper/common.scad>
+include <../misc/magnet.scad>
 
 connectorTaperStartHeight = 2;
 connectorRectWidth = 10;

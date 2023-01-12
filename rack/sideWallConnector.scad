@@ -1,5 +1,5 @@
 include <./config.scad>
-include <./screws.scad>
+include <../helper/screws.scad>
 
 module sideWallConnector_N() {
 
