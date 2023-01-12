@@ -1,7 +1,7 @@
 include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
+include <../helper/screws.scad>
 include <./config.scad>
-include <./screws.scad>
 
 xBarDepth = 180;
 xBarWidth = 32;
