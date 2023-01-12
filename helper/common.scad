@@ -3,7 +3,7 @@
 */
 
 $fn=64;
-
+// TODO move these to math
 eps=0.0001;
 
 inf10 = 10;
