@@ -1,4 +1,4 @@
-
+// TODO remove/rename this file
 /* Example usage:
 for (i=mirror4XY(midpoint=[0,0,0], offsetX=90, offsetY=90)) {
     translate(v=i)
