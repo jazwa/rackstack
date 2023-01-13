@@ -4,8 +4,6 @@ include <../helper/screws.scad>
 include <./config.scad>
 include <./derivedConfig.scad>
 include <./xyBarConnector.scad>
-include <./xBarBasePlateConnector.scad>
-
 
 // Temporary
 include <./yBar.scad>
@@ -49,7 +47,7 @@ module xBar() {
     // TODO refactor - probably better off mirroring the side faces and hulling the shell
     difference() {
       union() {
-        intersection () {
+        intersection() {
           positive();
           halfspace(vpos = [1, 0, 1], p = [0.5, 0, 0]);
 
@@ -69,21 +67,10 @@ module xBar() {
         yBarConnectorFromX_N();
       }
     }
-
-
-    // TODO change me?
-    translate(v=[0,xBarWidth,0])
-    basePlateMount();
-
-    translate(v=[xBarDepth,xBarWidth,0])
-    mirror(v=[1,0,0])
-    basePlateMount();
   }
-
   xBar();
 }
-translate(v=[-30,0,0])
-*yBar();
+
 xBar();
 
 

@@ -11,6 +11,7 @@ include <./mainRail.scad>
 include <./stackConnector.scad>
 include <./xyBarConnector.scad>
 include <./sideWallConnector.scad>
+include <./yBarBasePlateConnector.scad>
 
 // TODO clean up
 // TODO: How do I nicely explain this?
@@ -24,6 +25,8 @@ yBarHeight = 15;
 yBarWallThickness = 3;
 yBarRoundness = baseRoundness;
 
+joinCornerDepth = 32;
+
 echo("Bar total depth: ", yBarDepth);
 echo("Bar total width: ", yBarWidth);
 
@@ -34,8 +37,8 @@ module yBar() {
     difference() {
       sphericalFiletEdge(yBarWidth, yBarDepth, yBarHeight, yBarRoundness);
 
-      translate(v = [yBarWallThickness, 32, yBarWallThickness])
-      cylindricalFiletEdge(yBarWidth, yBarDepth-32*2, yBarHeight, yBarRoundness);
+      translate(v = [yBarWallThickness, joinCornerDepth, yBarWallThickness])
+      cylindricalFiletEdge(yBarWidth, yBarDepth-2*joinCornerDepth, yBarHeight, yBarRoundness);
     }
   }
 
@@ -55,7 +58,7 @@ module yBar() {
     }
   }
 
-  module sideBar() {
+    module yBar() {
 
     module mirrorOtherCorner() {
       children(0);
@@ -67,12 +70,30 @@ module yBar() {
     }
 
     difference() {
-      positive();
 
-      mirrorOtherCorner()
-      singleCornerNoStackConnector_N();
+      union() {
+        positive();
+
+        mirrorOtherCorner()
+        translate(v=[yBarWidth-12, joinCornerDepth,0.01])
+        yBarBasePlateMount_P(mountX=12, mountZ=yBarHeight);
+      }
+      union() {
+        mirrorOtherCorner()
+        singleCornerNoStackConnector_N();
+
+        mirrorOtherCorner()
+        translate(v=[yBarWidth-12, joinCornerDepth, 0])
+        yBarBasePlateMount_N();
+      }
     }
   }
 
-  sideBar();
+  yBar();
 }
+
+translate(v=[yBarWidth-12, joinCornerDepth, m3CounterSunkHeadLength])
+*yBarBasePlateMount_N();
+yBar();
+
+//counterSunkHead_N("m3", 1, 1);
