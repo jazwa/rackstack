@@ -1,6 +1,7 @@
 include <./config.scad>
 include <../helper/screws.scad>
 include <../helper/math.scad>
+include <../helper/halfspace.scad>
 
 /* Small horizontal planes at the top and bottom of the main rails. Used so we can fasten the rail to the frame
    Note that this value is also used for a depression at the bottom/top of the frame for aligning the rail */
@@ -29,25 +30,43 @@ frontFaceWidth = railScrewHoleToInnerEdge + railScrewHoleToOuterEdge;
 railTotalWidth = frontFaceWidth;
 railTotalDepth = railFrontThickness+sideSupportDepth;
 
+*mainRail();
+
 echo("Total Rail Height: ", railTotalHeight);
 
 // Also known as the z-bar :)
 module mainRail() {
 
-  union() {
-    _frontRailSegment();
+  mainRail();
 
-    translate(v = [railSideMountThickness, railFrontThickness, 0])
-    rotate(a = [0, 0, 90])
-    _sideSupportSegment();
+  module mainRail() {
+    b = 0.75; // bevel value
+    intersection() {
+      mainRailSharp();
+      halfspace(vpos=[1,1,0], p=[b,b,0]);
+      halfspace(vpos=[1,0,1], p=[b,0,b]);
+      halfspace(vpos=[1,0,-1], p=[b,0,railTotalHeight-b]);
 
-    translate(v = [0, railFrontThickness, 0]) {
+    }
+  }
 
-      translate(v=[railSideMountThickness,0,0])
-      _railFeet();
 
-      translate(v = [railSideMountThickness, 0, railTotalHeight - railFootThickness])
-      _railFeet();
+  module mainRailSharp() {
+    union() {
+      _frontRailSegment();
+
+      translate(v = [railSideMountThickness, railFrontThickness, 0])
+      rotate(a = [0, 0, 90])
+      _sideSupportSegment();
+
+      translate(v = [0, railFrontThickness, 0]) {
+
+        translate(v = [railSideMountThickness, 0, 0])
+        _railFeet();
+
+        translate(v = [railSideMountThickness, 0, railTotalHeight-railFootThickness])
+        _railFeet();
+      }
     }
   }
 

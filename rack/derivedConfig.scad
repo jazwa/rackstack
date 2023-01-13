@@ -2,3 +2,5 @@
 // multiple components.
 
 // TODO
+include <./config.scad>
+

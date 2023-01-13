@@ -22,7 +22,7 @@ yBarWidth = railSlotSpacing + railTotalWidth + sideSpacing;
 yBarHeight = 15;
 
 yBarWallThickness = 3;
-yBarRoundness = 5;
+yBarRoundness = baseRoundness;
 
 echo("Bar total depth: ", yBarDepth);
 echo("Bar total width: ", yBarWidth);
@@ -48,7 +48,7 @@ module yBar() {
       railFeetSlot_N();
 
       translate(v = [yBarWidth+eps, 0, 0])
-      frontBarConnector_N();
+      xBarConnectorFromY_N();
 
       translate(v = [yBarWidth-(railTotalWidth+railSlotSpacing)-9, railSlotSpacing, yBarHeight])
       sideWallConnector_N();

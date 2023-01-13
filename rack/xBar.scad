@@ -2,13 +2,24 @@ include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
 include <../helper/screws.scad>
 include <./config.scad>
+include <./derivedConfig.scad>
+include <./xyBarConnector.scad>
+include <./xBarBasePlateConnector.scad>
 
-xBarDepth = 180;
+
+// Temporary
+include <./yBar.scad>
+include <./mainRail.scad>
+
+xBarDepth = maxUnitWidth - 2*(railSlotSpacing + railScrewHoleToInnerEdge);
+
 xBarWidth = 32;
 xBarHeight = 15;
 
-xBarWallThickness = 3;
-xBarRoundness = 5;
+xBarWallThickness = 2;
+xBarRoundness = baseRoundness;
+
+//echo(xBarDepth);
 
 module xBar() {
 
@@ -24,11 +35,55 @@ module xBar() {
   }
 
   module xBar() {
-    positive();
+
+    module mirrorOtherCorner() {
+      children(0);
+
+      // TODO rename xBarDepth to xBarLength/xBarWidth
+      translate(v = [xBarDepth, 0, 0])
+      mirror(v = [1, 0, 0]) {
+        children(0);
+      }
+    }
+
+    // TODO refactor - probably better off mirroring the side faces and hulling the shell
+    difference() {
+      union() {
+        intersection () {
+          positive();
+          halfspace(vpos = [1, 0, 1], p = [0.5, 0, 0]);
+
+          halfspace(vpos = [-1, 0, 1], p = [xBarDepth-0.5, 0, 0]);
+        }
+
+        yBarConnectorFromXLug();
+
+        mirrorOtherCorner()
+        yBarConnectorFromXLug();
+      }
+
+      union() {
+        yBarConnectorFromX_N();
+
+        mirrorOtherCorner()
+        yBarConnectorFromX_N();
+      }
+    }
+
+
+    // TODO change me?
+    translate(v=[0,xBarWidth,0])
+    basePlateMount();
+
+    translate(v=[xBarDepth,xBarWidth,0])
+    mirror(v=[1,0,0])
+    basePlateMount();
   }
 
   xBar();
 }
+translate(v=[-30,0,0])
+*yBar();
+xBar();
 
 
-//xBar();

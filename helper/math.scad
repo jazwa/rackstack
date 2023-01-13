@@ -13,8 +13,19 @@ function mirror4XY(midpoint, offsetX, offsetY)  =
 
 
 module align(a,b) {
+
+    echo("a", a);
+    echo("b", b);
     rot_axis = cross(a,b);
-    angle = acos(a*b/ (norm(a)*norm(b)));
+
+    if (rot_axis == 0) {
+        error("Can't align - provided vectors are parallel");
+    }
+
+    echo("rot_axis", rot_axis);
+
+    angle = acos(a*b/(norm(a)*norm(b)));
+    echo("angle", angle)
 
     rotate(v=rot_axis, a=angle)
         children(0);

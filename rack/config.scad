@@ -32,3 +32,6 @@ mainRailSideMountScrewType = "m4";
 rackFrameScrewType = "m3";
 // Currently, only m3 screws are supported here (tolerance issues)
 assert(rackFrameScrewType == "m3");
+
+// Fillet radius
+baseRoundness = 5;
