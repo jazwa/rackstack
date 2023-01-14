@@ -2,27 +2,38 @@ include <../helper/common.scad>
 include <../helper/screws.scad>
 include <./config.scad>
 
-module yBarBasePlateMount_P(mountX=12, mountY=12, mountZ=12) {
-  cube(size=[mountX, mountY, mountZ]);
+_mountX = 12;
+_mountY = 12;
+_mountZ = 12;
+
+// x and y faces of the yBarBasePlateMount_P block
+_innerXFaceToScrew = 6;
+_innerYFaceToScrew = 6;
+
+_baseConnRecession = 3;
+_baseConnY = 8;
+_baseConnOuterXFaceToScrew = 2;
+
+module yBarBasePlateMount_P() {
+  cube(size=[_mountX, _mountY, _mountZ]);
 }
 
-module yBarBasePlateMount_N(innerEdgeToScrew=6, baseConnectorRecession = 2) {
+module yBarBasePlateMount_N() {
 
-  translate(v=[innerEdgeToScrew,innerEdgeToScrew, m3HeatSetInsertSlotHeightSlacked + baseConnectorRecession])
+  heatSetX = _mountX - _innerXFaceToScrew;
+  heatSetY = _mountY - _innerYFaceToScrew;
+
+  translate(v=[heatSetX, heatSetY, m3HeatSetInsertSlotHeightSlacked + _baseConnRecession])
   mirror(v=[0,0,1])
-  heatSetInsertSlot_N(rackFrameScrewType, topExtension=inf10);
+    heatSetInsertSlot_N(rackFrameScrewType, topExtension=inf10);
 
-  translate(v=[2,2,0])
-  cube(size=[inf50,8,baseConnectorRecession]);
-
-  translate(v=[innerEdgeToScrew,innerEdgeToScrew, baseConnectorRecession+m3CounterSunkHeadLength])
-  mirror(v=[0,0,1])
-  *counterSunkHead_N(rackFrameScrewType, screwExtension=0, headExtension=eps);
+  translate(v=[_baseConnOuterXFaceToScrew, heatSetY - _baseConnY/2,0])
+  cube(size=[inf50, _baseConnY, _baseConnRecession]);
 }
 
-*difference() {
+difference() {
   yBarBasePlateMount_P();
-  yBarBasePlateMount_N(innerEdgeToScrew=6,wallThickness=3);
+  yBarBasePlateMount_N();
 }
 
-*yBarBasePlateMount_N(innerEdgeToScrew=6);
+//yBarBasePlateMount_N();
