@@ -34,14 +34,14 @@ echo("Bar total width: ", yBarWidth);
 
 module yBar() {
 
-  applyBaseConnector()
+  applyBasePlateConnector()
   applyStackConnector()
   applySideWallConnector()
   applyRailConnector()
   applyXBarConnector()
-  base();
+  yBarBase();
 
-  module base() {
+  module yBarBase() {
     difference() {
       sphericalFiletEdge(yBarWidth, yBarDepth, yBarHeight, yBarRoundness);
 
@@ -50,7 +50,7 @@ module yBar() {
     }
   }
 
-  module applyBaseConnector() {
+  module applyBasePlateConnector() {
     apply_pn() {
       mirrorOtherCorner() {
         translate(v = [yBarWidth-12, joinCornerDepth, 0.01]) // why do we need 0.01 here???
