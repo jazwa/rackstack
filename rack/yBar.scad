@@ -30,10 +30,18 @@ joinCornerDepth = 32;
 echo("Bar total depth: ", yBarDepth);
 echo("Bar total width: ", yBarWidth);
 
+*yBar();
 
 module yBar() {
 
-  module positive() {
+  applyBaseConnector()
+  applyStackConnector()
+  applySideWallConnector()
+  applyRailConnector()
+  applyXBarConnector()
+  base();
+
+  module base() {
     difference() {
       sphericalFiletEdge(yBarWidth, yBarDepth, yBarHeight, yBarRoundness);
 
@@ -42,58 +50,68 @@ module yBar() {
     }
   }
 
-  module singleCornerNoStackConnector_N() {
-    union() {
+  module applyBaseConnector() {
+    apply_pn() {
+      mirrorOtherCorner() {
+        translate(v = [yBarWidth-12, joinCornerDepth, 0.01]) // why do we need 0.01 here???
+        yBarBasePlateMount_P();
+      }
+
+      mirrorOtherCorner() {
+        translate(v = [yBarWidth-12, joinCornerDepth, 0])
+        yBarBasePlateMount_N();
+      }
+
+      children(0);
+    }
+  }
+
+  module applyStackConnector() {
+    apply_n() {
+      mirrorOtherCorner()
       translate(v = [5, 5, 0])
       stackConnectorSocket_N();
 
+      children(0);
+    }
+  }
+
+  module applySideWallConnector() {
+    apply_n() {
+      mirrorOtherCorner()
+      translate(v = [yBarWidth-(railTotalWidth+railSlotSpacing)-9, railSlotSpacing, yBarHeight])
+      sideWallConnector_N();
+
+      children(0);
+    }
+  }
+
+  module applyRailConnector() {
+    apply_n() {
+      mirrorOtherCorner()
       translate(v = [yBarWidth-(railTotalWidth+railSlotSpacing), railSlotSpacing, yBarHeight-railFootThickness])
       railFeetSlot_N();
 
+      children(0);
+    }
+  }
+
+  module applyXBarConnector() {
+    apply_n() {
+      mirrorOtherCorner()
       translate(v = [yBarWidth+eps, 0, 0])
       xBarConnectorFromY_N();
 
-      translate(v = [yBarWidth-(railTotalWidth+railSlotSpacing)-9, railSlotSpacing, yBarHeight])
-      sideWallConnector_N();
-    }
-  }
-
-    module yBar() {
-
-    module mirrorOtherCorner() {
       children(0);
-
-      translate(v = [0, yBarDepth, 0])
-      mirror(v = [0, 1, 0]) {
-        children(0);
-      }
-    }
-
-    difference() {
-
-      union() {
-        positive();
-
-        mirrorOtherCorner()
-        translate(v=[yBarWidth-12, joinCornerDepth,0.01])
-        yBarBasePlateMount_P(mountX=12, mountZ=yBarHeight);
-      }
-      union() {
-        mirrorOtherCorner()
-        singleCornerNoStackConnector_N();
-
-        mirrorOtherCorner()
-        translate(v=[yBarWidth-12, joinCornerDepth, 0])
-        yBarBasePlateMount_N();
-      }
     }
   }
 
-  yBar();
+  module mirrorOtherCorner() {
+    children(0);
+
+    translate(v = [0, yBarDepth, 0])
+    mirror(v = [0, 1, 0])
+    children(0);
+  }
+
 }
-
-translate(v=[yBarWidth-12, joinCornerDepth, m3CounterSunkHeadLength])
-*yBarBasePlateMount_N();
-yBar();
-
-//counterSunkHead_N("m3", 1, 1);

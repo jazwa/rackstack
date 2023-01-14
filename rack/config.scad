@@ -3,8 +3,8 @@
    This file contains parameters used for declaring/generating a customized rack frame.
 
    - All dimensions are in millimetres (mm) unless stated otherwise.
-   - A "_N" appended to a module is meant to denote that this module is a negative volume, and should only be used to
-     substract from other volumes.
+   - "_N" appended to a module is meant to denote that this module is a negative volume, and should only be used to
+     substract from other volumes. "_P" is meant to denote a positive value. Modules are positive by default.
 */
 
 // Maximum width for rackmount units. Change this according your max expected enclosure width.
@@ -33,5 +33,5 @@ rackFrameScrewType = "m3";
 // Currently, only m3 screws are supported here (tolerance issues)
 assert(rackFrameScrewType == "m3");
 
-// Fillet radius
+// Fillet radius for main rack profile
 baseRoundness = 5;

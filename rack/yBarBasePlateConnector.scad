@@ -1,21 +1,25 @@
 include <../helper/common.scad>
+include <../helper/halfspace.scad>
 include <../helper/screws.scad>
 include <./config.scad>
 
 _mountX = 12;
-_mountY = 12;
-_mountZ = 12;
+_mountY = 14;
+_mountZ = 13;
 
 // x and y faces of the yBarBasePlateMount_P block
 _innerXFaceToScrew = 6;
-_innerYFaceToScrew = 6;
+_innerYFaceToScrew = 8;
 
 _baseConnRecession = 3;
 _baseConnY = 8;
 _baseConnOuterXFaceToScrew = 2;
 
 module yBarBasePlateMount_P() {
-  cube(size=[_mountX, _mountY, _mountZ]);
+  intersection() {
+    cube(size = [_mountX, _mountY, _mountZ]);
+    halfspace(vpos=[0, -1, -1], p=[0, _mountY-1, _mountZ-1]);
+  }
 }
 
 module yBarBasePlateMount_N() {
@@ -27,11 +31,18 @@ module yBarBasePlateMount_N() {
   mirror(v=[0,0,1])
     heatSetInsertSlot_N(rackFrameScrewType, topExtension=inf10);
 
-  translate(v=[_baseConnOuterXFaceToScrew, heatSetY - _baseConnY/2,0])
-  cube(size=[inf50, _baseConnY, _baseConnRecession]);
+
+  hull() {
+
+    translate(v = [heatSetX, heatSetY, 0])
+    cylinder(r=_baseConnY/2, h=_baseConnRecession);
+
+    translate(v = [inf50, heatSetY-_baseConnY/2, 0])
+    cube(size = [eps, _baseConnY, _baseConnRecession]);
+  }
 }
 
-difference() {
+*difference() {
   yBarBasePlateMount_P();
   yBarBasePlateMount_N();
 }
