@@ -17,7 +17,7 @@ xBarHeight = 15;
 xBarWallThickness = 2;
 xBarRoundness = baseRoundness;
 
-//echo(xBarDepth);
+*xBar();
 
 module xBar() {
 
@@ -70,7 +70,5 @@ module xBar() {
   }
   xBar();
 }
-
-xBar();
 
 

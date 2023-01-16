@@ -5,7 +5,7 @@ include <./config.scad>
 
 _mountX = 12;
 _mountY = 14;
-_mountZ = 13;
+_mountZ = 10;
 
 // x and y faces of the yBarBasePlateMount_P block
 _innerXFaceToScrew = 6;
@@ -31,14 +31,26 @@ module yBarBasePlateMount_N() {
   mirror(v=[0,0,1])
     heatSetInsertSlot_N(rackFrameScrewType, topExtension=inf10);
 
-
   hull() {
-
     translate(v = [heatSetX, heatSetY, 0])
     cylinder(r=_baseConnY/2, h=_baseConnRecession);
 
     translate(v = [inf50, heatSetY-_baseConnY/2, 0])
     cube(size = [eps, _baseConnY, _baseConnRecession]);
+  }
+
+  hull() {
+    translate(v = [heatSetX, heatSetY, 0])
+    cylinder(r=_baseConnY/2+0.25, h=eps);
+
+    translate(v = [inf50, heatSetY-_baseConnY/2, 0])
+    cube(size = [eps, _baseConnY + 0.5, eps]);
+
+    translate(v = [heatSetX, heatSetY, 1])
+    cylinder(r=_baseConnY/2, h=eps);
+
+    translate(v = [inf50, heatSetY-_baseConnY/2, 1])
+    cube(size = [eps, _baseConnY, eps]);
   }
 }
 
@@ -46,5 +58,3 @@ module yBarBasePlateMount_N() {
   yBarBasePlateMount_P();
   yBarBasePlateMount_N();
 }
-
-//yBarBasePlateMount_N();
