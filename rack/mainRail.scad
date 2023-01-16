@@ -30,7 +30,7 @@ frontFaceWidth = railScrewHoleToInnerEdge + railScrewHoleToOuterEdge;
 railTotalWidth = frontFaceWidth;
 railTotalDepth = railFrontThickness+sideSupportDepth;
 
-*mainRail();
+mainRail();
 
 echo("Total Rail Height: ", railTotalHeight);
 

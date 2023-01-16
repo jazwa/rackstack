@@ -20,8 +20,8 @@ m3HexNutThickness = 2.18;
 m3HeatSetInsertSlotRadiusSlack = -0.1;
 m3HeatSetInsertSlotHeightSlack = 0.5;
 
-m3HeatSetInsertSlotRadius = 2.5;
-m3HeatSetInsertSlotHeight = 6;
+m3HeatSetInsertSlotRadius = 2.3;
+m3HeatSetInsertSlotHeight = 5.7;
 
 m3HeatSetInsertSlotRadiusSlacked = m3HeatSetInsertSlotRadius+m3HeatSetInsertSlotRadiusSlack;
 m3HeatSetInsertSlotHeightSlacked = m3HeatSetInsertSlotHeight+m3HeatSetInsertSlotHeightSlack;

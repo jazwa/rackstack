@@ -42,18 +42,22 @@ module yBar() {
   yBarBase();
 
   module yBarBase() {
-    difference() {
-      sphericalFiletEdge(yBarWidth, yBarDepth, yBarHeight, yBarRoundness);
+    intersection() {
+      difference() {
+        sphericalFiletEdge(yBarWidth, yBarDepth, yBarHeight, yBarRoundness);
 
-      translate(v = [yBarWallThickness, joinCornerDepth, yBarWallThickness])
-      cylindricalFiletEdge(yBarWidth, yBarDepth-2*joinCornerDepth, yBarHeight, yBarRoundness);
+        translate(v = [yBarWallThickness, joinCornerDepth, yBarWallThickness])
+        cylindricalFiletEdge(yBarWidth, yBarDepth-2*joinCornerDepth, yBarHeight, yBarRoundness);
+      }
+
+      halfspace(vpos=[-1, 0, 1], p=[yBarWidth-0.5, 0,0]);
     }
   }
 
   module applyBasePlateConnector() {
     apply_pn() {
       mirrorOtherCorner() {
-        translate(v = [yBarWidth-12, joinCornerDepth, 0.01]) // why do we need 0.01 here???
+        translate(v = [yBarWidth-12, joinCornerDepth, yBarWallThickness]) // why do we need 0.01 here???
         yBarBasePlateMount_P();
       }
 

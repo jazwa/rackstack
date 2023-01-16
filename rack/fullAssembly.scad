@@ -9,21 +9,21 @@ mainRail();
 
 translate(v=[12,2 + 200,18])
 mirror(v=[0,1,0])
-mainRail();
+*mainRail();
 
 translate(v=[12 + 216,2,18])
 mirror(v=[1,0,0])
-mainRail();
+*mainRail();
 
 translate(v=[12 + 216,2 + 200,18])
 rotate(a=[0,0,180])
-mainRail();
+*mainRail();
 
-xyPlane();
+*xyPlane();
 
 translate(v=[0,0,250])
 mirror(v=[0,0,1])
-xyPlane();
+*xyPlane();
 
 module xyPlane() {
   yBar();
@@ -39,3 +39,8 @@ module xyPlane() {
   mirror(v = [0, 1, 0])
   xBar();
 }
+
+yBar();
+
+translate(v = [30, 0, 0])
+xBar();
