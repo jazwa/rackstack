@@ -9,7 +9,7 @@ include <./xyBarConnector.scad>
 include <./yBar.scad>
 include <./mainRail.scad>
 
-xBarDepth = maxUnitWidth - 2*(railSlotSpacing + railScrewHoleToInnerEdge);
+xBarDepth = maxUnitWidth - 2*railSlotSpacing;
 
 xBarWidth = 32;
 xBarHeight = 15;

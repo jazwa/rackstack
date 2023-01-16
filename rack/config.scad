@@ -43,5 +43,3 @@ assert(rackFrameScrewType == "m3");
 
 // Fillet radius for main rack profile
 baseRoundness = getConfig("baseRoundness");
-
-echo("numRailScrews", numRailScrews);
