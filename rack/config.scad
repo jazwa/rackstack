@@ -8,13 +8,16 @@
 */
 include <./profiles.scad>
 
-profile = "default";
+profileName = "micro";
+profile = getProfile(profileName);
 
 echo("Profile:", profile);
 
+function getConfig(name) = getConfigValue(profile, name);
+
 // Maximum width for rackmount units. Change this according your max expected enclosure width.
 // Changing this will directly affect the required build volume.
-maxUnitWidth = getConfigValue(profile, "maxUnitWidth");
+maxUnitWidth = getConfig("maxUnitWidth");
 
 // Maximum (recommended) unit depth. There technically isn't a max unit depth because there's no physical bound on
 // how far a rack unit can extrude back. This parameter basically controls the distance between the front of the front

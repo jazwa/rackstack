@@ -39,6 +39,12 @@ function _getConfigValueRaw(profile, varName) = profile[search([varName], profil
 function _getProfileRaw(profileName) = _profileConfigs[search([profileName], _profileConfigs)[0]][1];
 
 function _getConfigValueOrThrowError(val) = val == undef? assert(false, "blah") 0: val;
+function _getConfigValueOrDefault(val, default) = val == undef? default: val;
 
-function getConfigValue(profile, varName) = _getConfigValueOrThrowError(_getConfigValueRaw(profile, varName));
+function getConfigValue(profile, varName) =
+  _getConfigValueOrDefault(
+    _getConfigValueRaw(profile, varName),
+    _getConfigValueOrThrowError(_getConfigValueRaw(getProfile("default"), varName))
+  );
+
 function getProfile(profileName) = _getConfigValueOrThrowError(_getProfileRaw(profileName));
