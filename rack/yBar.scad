@@ -13,15 +13,16 @@ include <./xyBarConnector.scad>
 include <./sideWallConnector.scad>
 include <./yBarBasePlateConnector.scad>
 
-// TODO clean up
-// TODO: How do I nicely explain this?
-railSlotSpacing = 3;
-sideSpacing = 12;
+railSlotToInnerYEdge = 2;
+railSlotToXZ = 3;
+railSlotToSideWallSlot = 0;
+sideWallSlotToOuterYEdge = 3;
+sideWallSlotToXZ = 3;
 
-yBarDepth = maxUnitDepth + 2*railSlotSpacing;
-yBarWidth = railSlotSpacing + railTotalWidth + sideSpacing;
+yBarDepth = maxUnitDepth + 2*railSlotToInnerYEdge;
+yBarWidth = railSlotToInnerYEdge + railTotalWidth+ railSlotToSideWallSlot
+  + sideWallSlotToOuterYEdge + sideWallConnectorSlotWidth;
 yBarHeight = 15;
-
 yBarWallThickness = 3;
 yBarRoundness = baseRoundness;
 
@@ -29,8 +30,9 @@ joinCornerDepth = 32;
 
 echo("Bar total depth: ", yBarDepth);
 echo("Bar total width: ", yBarWidth);
+echo("Bar total height: ", yBarHeight);
 
-*yBar();
+yBar();
 
 module yBar() {
 
@@ -57,12 +59,12 @@ module yBar() {
   module applyBasePlateConnector() {
     apply_pn() {
       mirrorOtherCorner() {
-        translate(v = [yBarWidth-12, joinCornerDepth, yBarWallThickness]) // why do we need 0.01 here???
+        translate(v = [yBarWidth-yBarBasePlateConnectorWidth, joinCornerDepth, yBarWallThickness])
         yBarBasePlateMount_P();
       }
 
       mirrorOtherCorner() {
-        translate(v = [yBarWidth-12, joinCornerDepth, 0])
+        translate(v = [yBarWidth-yBarBasePlateConnectorWidth, joinCornerDepth, 0])
         yBarBasePlateMount_N();
       }
 
@@ -83,7 +85,7 @@ module yBar() {
   module applySideWallConnector() {
     apply_n() {
       mirrorOtherCorner()
-      translate(v = [yBarWidth-(railTotalWidth+railSlotSpacing)-9, railSlotSpacing, yBarHeight])
+      translate(v = [yBarWidth-(railTotalWidth+railSlotToInnerYEdge+railSlotToSideWallSlot+sideWallConnectorSlotWidth), sideWallSlotToXZ, yBarHeight])
       sideWallConnector_N();
 
       children(0);
@@ -93,7 +95,7 @@ module yBar() {
   module applyRailConnector() {
     apply_n() {
       mirrorOtherCorner()
-      translate(v = [yBarWidth-(railTotalWidth+railSlotSpacing), railSlotSpacing, yBarHeight-railFootThickness])
+      translate(v = [yBarWidth-(railTotalWidth+railSlotToInnerYEdge), railSlotToXZ, yBarHeight-railFootThickness])
       railFeetSlot_N();
 
       children(0);
