@@ -7,6 +7,9 @@ _mountX = 12;
 _mountY = 14;
 _mountZ = 10;
 
+// Needed for yBar to align this connector to its inner Y edge
+yBarBasePlateConnectorWidth = _mountX;
+
 // x and y faces of the yBarBasePlateMount_P block
 _innerXFaceToScrew = 6;
 _innerYFaceToScrew = 8;

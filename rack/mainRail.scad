@@ -14,7 +14,7 @@ railSideMountThickness = 2.5;
 
 // Distance between the middle of a screw mount and the rail's vertical edges
 railScrewHoleToInnerEdge = 5;
-railScrewHoleToOuterEdge = 7;
+railScrewHoleToOuterEdge = 9;
 
 // Distance between the midpoint of the rail screw holes.
 rackMountScrewWidth = maxUnitWidth + 2 * railScrewHoleToInnerEdge;
@@ -30,7 +30,7 @@ frontFaceWidth = railScrewHoleToInnerEdge + railScrewHoleToOuterEdge;
 railTotalWidth = frontFaceWidth;
 railTotalDepth = railFrontThickness+sideSupportDepth;
 
-mainRail();
+*mainRail();
 
 echo("Total Rail Height: ", railTotalHeight);
 

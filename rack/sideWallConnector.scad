@@ -1,6 +1,7 @@
 include <./config.scad>
 include <../helper/screws.scad>
 
+sideWallConnectorSlotWidth = 7;
 module sideWallConnector_N() {
 
     lugW = 7;
