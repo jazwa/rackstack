@@ -32,7 +32,7 @@ echo("Bar total depth: ", yBarDepth);
 echo("Bar total width: ", yBarWidth);
 echo("Bar total height: ", yBarHeight);
 
-yBar();
+*yBar();
 
 module yBar() {
 
