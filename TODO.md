@@ -4,6 +4,9 @@
 
 - Finish refactoring files to use the application style, like in `yBar.scad` 
 - Implement better build script using python
+- Finish side wall stuff
+- Finish baseplate
+- Start working on actual cases
 
 ### Ideas
 
@@ -36,5 +39,5 @@ dx(yBarInnerYZ, mainRailSlot, sideConnectorSlot, includeFirst=true, includeLast=
 // which would eval to:
 // x(yBarInnerYZ) + dx(yBarInnerYZ, mainRailSlot, sideConnectorSlot) + x(sideConnectorSlot);
 ```
-
+Hmm after looking into it a bit it seems that OpenScad's non-reassign rule is going to get in the way 
 
