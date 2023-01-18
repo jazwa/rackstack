@@ -9,7 +9,8 @@ include <./xyBarConnector.scad>
 include <./yBar.scad>
 include <./mainRail.scad>
 
-xBarDepth = maxUnitWidth - 2*railSlotSpacing;
+// It's actually the railSlotToInnerYEdge of the yBar, it'll be nice to be able to refer to it like yBar.railSlotToInnerYEdge
+xBarDepth = maxUnitWidth - 2*railSlotToInnerYEdge;
 
 xBarWidth = 32;
 xBarHeight = 15;
