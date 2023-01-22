@@ -15,7 +15,7 @@ include <./yBarBasePlateConnector.scad>
 
 railSlotToInnerYEdge = 2;
 railSlotToXZ = 3;
-railSlotToSideWallSlot = 0;
+railSlotToSideWallSlot = 2;
 sideWallSlotToOuterYEdge = 3;
 sideWallSlotToXZ = 3;
 
