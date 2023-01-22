@@ -64,14 +64,16 @@ function screwRadiusSlacked(screwType) =
 module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
 
   if (screwType == "m3") {
-    cylinder(r1=m3RadiusSlacked, r2=m3CounterSunkHeadRadius, h=m3CounterSunkHeadLength);
+    translate(v=[0,0,-m3CounterSunkHeadLength])
+    union() {
+      cylinder(r1 = m3RadiusSlacked, r2 = m3CounterSunkHeadRadius, h = m3CounterSunkHeadLength);
 
-    translate(v=[0,0,-screwExtension])
-    cylinder(r=m3RadiusSlacked, h=screwExtension);
+      translate(v = [0, 0, -screwExtension])
+      cylinder(r = m3RadiusSlacked, h = screwExtension);
 
-    translate(v=[0,0,m3CounterSunkHeadLength])
-    cylinder(r=m3CounterSunkHeadRadius, h=headExtension);
-
+      translate(v = [0, 0, m3CounterSunkHeadLength])
+      cylinder(r = m3CounterSunkHeadRadius, h = headExtension);
+    }
   } else {
     error("Unsupported screw type");
   }
