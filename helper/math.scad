@@ -13,9 +13,8 @@ function mirror4XY(midpoint, offsetX, offsetY)  =
 
 
 module align(a,b) {
-
-    echo("a", a);
-    echo("b", b);
+    //echo("a", a);
+    //echo("b", b);
     rot_axis = cross(a,b);
 
     if (rot_axis == [0,0,0]) {
@@ -25,7 +24,7 @@ module align(a,b) {
     //echo("rot_axis", rot_axis);
 
     angle = acos(a*b/(norm(a)*norm(b)));
-    echo("angle", angle)
+    //echo("angle", angle)
 
     rotate(v=rot_axis, a=angle)
         children(0);

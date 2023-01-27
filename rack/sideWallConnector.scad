@@ -1,14 +1,22 @@
 include <./config.scad>
 include <../helper/screws.scad>
+include <../helper/halfspace.scad>
+include <../misc/magnet.scad>
 
 sideWallConnectorSlotWidth = 7;
 
 sideWallConnW = 7;
 sideWallConnD = 20;
-sideWallConnLugDepression = 2;
+sideWallConnH = 2;
+sideWallConnLugDepression = sideWallConnH;
 
 yBarScrewHoleToOuterYEdge = 3.5;
 yBarScrewHoleToFrontXEdge = 16;
+
+magnetFaceToSideWallConnOuterYEdge = 2;
+magnetCenterToSideWallConnOuterXYFace = magnetRSlacked + 1;
+
+magnetMountExtraRadius = magnetRSlacked + 1;
 
 module sideWallConnector_N() {
     translate(v = [0, 0, -sideWallConnLugDepression])
@@ -19,27 +27,54 @@ module sideWallConnector_N() {
 }
 
 module sideWallConnectorMagnet() {
-    difference() {
-        cube(size = [sideWallConnW, sideWallConnD, sideWallConnLugDepression]);
 
-        translate(v = [yBarScrewHoleToOuterYEdge, yBarScrewHoleToFrontXEdge, sideWallConnLugDepression])
-        counterSunkHead_N(rackFrameScrewType, headExtension=eps,screwExtension=inf10);
-    }
+    applyYBarScrewMount()
+    applyMagnetMount()
+    base();
 
-    translate(v = [0, 5, 6])
-    rotate(a = [0, 90, 0])
-    difference() {
+    module base() {
+        intersection() {
+            cube(size = [sideWallConnW, sideWallConnD, sideWallConnLugDepression]);
 
-        hull() {
-            cylinder(r = magnetRSlacked + 1, h = magnetHSlacked+1);
-            translate(v=[5,0,(magnetHSlacked+1)/2])
-            cube(size=[eps, 2*(magnetRSlacked+1),magnetHSlacked+1], center=true);
+            // TODO: pattern for this? beef up mirror4XY?
+            cVal = 0.5;
+            halfspace(p=[0,cVal,0], vpos=[0,1,1]);
+            halfspace(p=[cVal,0,0], vpos=[1,0,1]);
+            halfspace(p=[sideWallConnW-cVal,0,0], vpos=[-1,0,1]);
+            halfspace(p=[0,sideWallConnD-cVal,0], vpos=[0,-1,1]);
         }
-        translate(v=[0,0,1])
-        cylinder(r = magnetRSlacked, h = magnetHSlacked);
     }
 
-    //cylinder(r = magnetRSlacked, h = magnetHSlacked);
+    module applyYBarScrewMount() {
+        apply_n() {
+            translate(v = [yBarScrewHoleToOuterYEdge, yBarScrewHoleToFrontXEdge, sideWallConnLugDepression])
+            counterSunkHead_N(rackFrameScrewType, headExtension = eps, screwExtension = inf10);
+
+            children(0);
+        }
+    }
+
+    // TODO: clean up
+    module applyMagnetMount() {
+        apply_p() {
+            difference() {
+                hull() {
+                    translate(v = [0, 4, magnetMountExtraRadius+sideWallConnH])
+                    rotate(a = [0, 90, 0])
+                    cylinder(r = magnetMountExtraRadius, h = sideWallConnW-magnetFaceToSideWallConnOuterYEdge);
+
+                    translate(v = [0, 0, sideWallConnH])
+                    cube(size = [sideWallConnW-magnetFaceToSideWallConnOuterYEdge, 2*magnetMountExtraRadius, eps]);
+                }
+
+                translate(v = [sideWallConnW-(magnetFaceToSideWallConnOuterYEdge+magnetHSlacked), 4, 6])
+                rotate(a = [0, 90, 0])
+                cylinder(r = magnetRSlacked, h = magnetHSlacked);
+            }
+
+            children(0);
+        }
+    }
 }
 
 module sideWallConnectorHinge() {
