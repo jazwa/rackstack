@@ -16,7 +16,6 @@ include <./yBarBasePlateConnector.scad>
 railSlotToInnerYEdge = 2;
 railSlotToXZ = 3;
 railSlotToSideWallSlot = 2;
-sideWallSlotToOuterYEdge = 3;
 sideWallSlotToXZ = 3;
 
 yBarDepth = maxUnitDepth + 2*railSlotToInnerYEdge;
