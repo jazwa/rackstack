@@ -11,9 +11,17 @@ sideWallZ = 110;
 sideWallY = 110;
 sideWallX = 12;
 
+sideWallZGapClearance = 0.2;
+
+
+// make these global
+hingePoleToInnerSideWallX = (hingePoleToConnectorOuterYZFace + sideWallSlotToOuterYEdge) - sideWallThickness;
+hingePoleToInnerSideWallY = (hingePoleToConnectorOuterXZFace + sideWallSlotToOuterXEdge) - sideWallThickness;
+
 
 module sideWall() {
 
+  applyHingeConnector()
   applyMagnetConnector()
   sideWallBase();
 
@@ -45,6 +53,34 @@ module sideWall() {
 
   module applyHingeConnector() {
 
+    hingeHolePositiveRad = hingeHoleR+1;
+
+    module hingeProjectConstructionPlane() {
+      translate(v=[sideWallX-(sideWallThickness+hingePoleToInnerSideWallX) - hingeHolePositiveRad,sideWallY,0])
+      cube(size=[2*hingeHolePositiveRad, eps, sideWallZ]);
+    }
+
+    apply_pn() {
+
+      hull() {
+        translate(v = [sideWallX-(sideWallThickness+hingePoleToInnerSideWallX), sideWallY-(sideWallThickness+
+          hingePoleToInnerSideWallY), 0])
+        cylinder(r = hingeHoleR+1, h = sideWallZ);
+
+        hingeProjectConstructionPlane();
+      }
+
+      union() {
+        translate(v = [sideWallX-(sideWallThickness+hingePoleToInnerSideWallX), sideWallY-(sideWallThickness+
+          hingePoleToInnerSideWallY), 0])
+        cylinder(r = hingeHoleR, h = sideWallZ);
+
+        // TODO annoying constant
+        halfspace(p=[sideWallX-3.3, sideWallY, 0], vpos=[1,1,0]);
+      }
+
+      children(0);
+    }
   }
 
   module applyMagnetConnector() {
@@ -64,3 +100,4 @@ module sideWall() {
 }
 
 sideWall();
+
