@@ -19,11 +19,17 @@ magnetMountExtraRadius = magnetRSlacked + 1;
 
 innerSideWallToYBarMagnetConn = magnetFaceToSideWallConnOuterYEdge + sideWallSlotToOuterYEdge - sideWallThickness;
 
-hingePoleR = 2.5;
-hingePoleH = 3;
-hingeHoleR = hingePoleR + 0.5;
+hingePoleR = 2;
+hingePoleH = 5;
+hingeHoleR = hingePoleR + 0.2;
 
 hingePoleToConnectorOuterYZFace = hingePoleR/2;
+hingePoleToConnectorOuterXZFace = hingePoleR/2;
+
+*sideWallConnector_N();
+*sideWallConnectorMagnet();
+*sideWallConnectorMagnetSide();
+*sideWallConnectorHinge();
 
 module sideWallConnector_N() {
     translate(v = [0, 0, -sideWallConnLugDepression])
@@ -134,9 +140,3 @@ module sideWallConnectorMagnetSide() {
         cylinder(r = magnetRSlacked, h = magnetHSlacked);
     }
 }
-*sideWallConnector_N();
-*sideWallConnectorMagnet();
-*sideWallConnectorMagnetSide();
-sideWallConnectorHinge();
-
-//counterSunkHead_N(rackFrameScrewType,screwExtension=10);
