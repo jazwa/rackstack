@@ -3,7 +3,6 @@ include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
 include <../helper/screws.scad>
 include <../misc/magnet.scad>
-
 include <./config.scad>
 include <./mainRail.scad>
 
@@ -13,19 +12,8 @@ include <./xyBarConnector.scad>
 include <./sideWallConnector.scad>
 include <./yBarBasePlateConnector.scad>
 
-railSlotToInnerYEdge = 2;
-railSlotToXZ = 3;
-railSlotToSideWallSlot = 2;
-sideWallSlotToXZ = 3;
+include <./sharedVariables.scad>
 
-yBarDepth = maxUnitDepth + 2*railSlotToInnerYEdge;
-yBarWidth = railSlotToInnerYEdge + railTotalWidth+ railSlotToSideWallSlot
-  + sideWallSlotToOuterYEdge + sideWallConnectorSlotWidth;
-yBarHeight = 15;
-yBarWallThickness = 3;
-yBarRoundness = baseRoundness;
-
-joinCornerDepth = 32;
 
 echo("Bar total depth: ", yBarDepth);
 echo("Bar total width: ", yBarWidth);

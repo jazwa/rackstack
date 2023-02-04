@@ -4,7 +4,6 @@ include <../helper/halfspace.scad>
 include <../misc/magnet.scad>
 include <./sharedVariables.scad>
 
-sideWallConnectorSlotWidth = 7;
 
 sideWallConnW = 7;
 sideWallConnD = 20;
@@ -15,9 +14,12 @@ yBarScrewHoleToOuterYEdge = 3.5;
 yBarScrewHoleToFrontXEdge = 16;
 
 magnetFaceToSideWallConnOuterYEdge = 2;
-magnetMountExtraRadius = magnetRSlacked + 1;
+magnetMountShellRadius = magnetRSlacked + 1;
 
 innerSideWallToYBarMagnetConn = magnetFaceToSideWallConnOuterYEdge + sideWallSlotToOuterYEdge - sideWallThickness;
+
+magnetMountToYBarTop = magnetMountShellRadius;
+magnetMountToYBarFront = magnetMountShellRadius + sideWallSlotToXZ;
 
 hingePoleR = 2;
 hingePoleH = 5;
@@ -67,27 +69,40 @@ module sideWallConnectorMagnet() {
         }
     }
 
-    // TODO: clean up
+
     module applyMagnetMount() {
-        apply_p() {
-            difference() {
-                hull() {
-                    translate(v = [0, 4, magnetMountExtraRadius+sideWallConnH])
-                    rotate(a = [0, 90, 0])
-                    cylinder(r = magnetMountExtraRadius, h = sideWallConnW-magnetFaceToSideWallConnOuterYEdge);
 
-                    translate(v = [0, 0, sideWallConnH])
-                    cube(size = [sideWallConnW-magnetFaceToSideWallConnOuterYEdge, 2*magnetMountExtraRadius, eps]);
-                }
+        magnetMountDx = magnetMountShellRadius;
+        magnetMountDy = magnetMountShellRadius + 2;
+        magnetMountDz = magnetMountShellRadius + sideWallConnLugDepression  +1;
 
-                translate(v = [sideWallConnW-(magnetFaceToSideWallConnOuterYEdge+magnetHSlacked), 4, 6])
-                rotate(a = [0, 90, 0])
-                cylinder(r = magnetRSlacked, h = magnetHSlacked);
-            }
-
+        apply_pn() {
+            magnetMountShell();
+            magnetMountHole();
             children(0);
         }
+
+        module magnetMountShell() {
+            hull() {
+                translate(v = [0, magnetMountDy, magnetMountDz])
+                rotate(a = [0, 90, 0])
+                cylinder(r = magnetMountShellRadius, h = sideWallConnW-magnetFaceToSideWallConnOuterYEdge);
+
+                translate(v = [0, 2, sideWallConnH])
+                cube(size = [sideWallConnW-magnetFaceToSideWallConnOuterYEdge, 2*magnetMountShellRadius, eps]);
+            }
+        }
+
+        module magnetMountHole() {
+            translate(v = [sideWallConnW-(magnetFaceToSideWallConnOuterYEdge+magnetHSlacked),
+                           magnetMountDy,
+                           magnetMountDz])
+            rotate(a = [0, 90, 0])
+            cylinder(r = magnetRSlacked, h = magnetHSlacked);
+        }
     }
+
+
 }
 
 module sideWallConnectorHinge() {
@@ -134,7 +149,7 @@ module sideWallConnectorHinge() {
 module sideWallConnectorMagnetSide() {
     // oriented so that the xy face is the side wall's inner face
     difference() {
-        cylinder(r1=magnetMountExtraRadius+2 ,r2 = magnetMountExtraRadius, h = innerSideWallToYBarMagnetConn);
+        cylinder(r1=magnetMountShellRadius + 0.5,r2 = magnetMountShellRadius, h = innerSideWallToYBarMagnetConn);
 
         translate(v=[0, 0, innerSideWallToYBarMagnetConn-magnetHSlacked])
         cylinder(r = magnetRSlacked, h = magnetHSlacked);
