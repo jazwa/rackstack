@@ -9,7 +9,8 @@
 - Start working on actual cases
 
 ### Ideas
-
+- Clean up `sharedVariables.scad`!!!
+- Start using matrices for transformations. Enforce strict local/global hierarchy of matrix transformations.
 - Instead of using names like 'mainRailSlotToInnerYZFace', experiment with a central distance/dimension directory. Like:
 ```openscad
 // Define identifiers:
