@@ -3,10 +3,11 @@ include <../helper/halfspace.scad>
 include <../misc/magnet.scad>
 include <./config.scad>
 include <./mainRail.scad>
-
+include <./side/sideWallMagnetMount.scad>
 include <./sharedVariables.scad>
 
-include <./sideWallConnector.scad>
+include <./side/magnetModule.scad>
+include <./side/hingeModule.scad>
 
 
 sideWallZGapClearance = 0.2;
@@ -97,19 +98,19 @@ module sideWall() {
     apply_p() {
       union() {
         translate(v = [sideWallThickness, magnetMountToYBarFront, magnetMountToYBarTop])
-        sideMagnetMount();
+        sideWallMagnetMountRotated();
 
         translate(v = [sideWallThickness, magnetMountToYBarFront, sideWallZ - magnetMountToYBarTop])
-        sideMagnetMount();
+        sideWallMagnetMountRotated();
       }
 
       children(0);
     }
 
 
-    module sideMagnetMount() {
+    module sideWallMagnetMountRotated() {
       rotate(a=[0,90,0])
-      sideWallConnectorMagnetSide();
+      sideWallMagnetMount();
     }
   }
 
@@ -127,8 +128,8 @@ sideWall();
 
 translate(v=[10,sideWallSlotToXZ,-2])
 mirror(v=[1,0,0])
-sideWallConnectorMagnet();
+magnetModule();
 
 translate(v=[3,100,0])
 mirror(v=[0,1,0])
-sideWallConnectorHinge();
+hingeModule();

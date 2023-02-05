@@ -9,9 +9,8 @@ include <./mainRail.scad>
 // Connectors
 include <./stackConnector.scad>
 include <./xyBarConnector.scad>
-include <./sideWallConnector.scad>
 include <./yBarBasePlateConnector.scad>
-
+include <./side/yBarSideWallConnector.scad>
 include <./sharedVariables.scad>
 
 
@@ -73,7 +72,7 @@ module yBar() {
     apply_n() {
       mirrorOtherCorner()
       translate(v = [yBarWidth-(railTotalWidth+railSlotToInnerYEdge+railSlotToSideWallSlot+sideWallConnectorSlotWidth), sideWallSlotToXZ, yBarHeight])
-      sideWallConnector_N();
+      yBarSideWallConnector_N();
 
       children(0);
     }
