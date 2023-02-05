@@ -96,10 +96,10 @@ module sideWall() {
   module applyMagnetConnector() {
     apply_p() {
       union() {
-        translate(v = [sideWallThickness, magnetMountToYBarFront + 2, magnetMountToYBarTop+1])
+        translate(v = [sideWallThickness, magnetMountToYBarFront, magnetMountToYBarTop])
         sideMagnetMount();
 
-        translate(v = [sideWallThickness, magnetMountToYBarFront + 2, sideWallZ - (magnetMountToYBarTop + 1)])
+        translate(v = [sideWallThickness, magnetMountToYBarFront, sideWallZ - magnetMountToYBarTop])
         sideMagnetMount();
       }
 
