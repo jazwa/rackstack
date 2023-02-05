@@ -1,25 +1,14 @@
-include <../helper/math.scad>
-include <../helper/halfspace.scad>
-include <../misc/magnet.scad>
-include <./config.scad>
-include <./mainRail.scad>
-include <./side/sideWallMagnetMount.scad>
-include <./sharedVariables.scad>
+include <../../helper/math.scad>
+include <../../helper/halfspace.scad>
+include <../../misc/magnet.scad>
+include <../config.scad>
 
-include <./side/magnetModule.scad>
-include <./side/hingeModule.scad>
+include <./sideWallMagnetMount.scad>
+include <./sideWallVariables.scad>
+include <../sharedVariables.scad>
 
-
-sideWallZGapClearance = 0.2;
-sideWallZ = railTotalHeight - 2*(railFootThickness + sideWallZGapClearance);
-
-sideWallY = yBarDepth;
-
-sideWallXGapClearance = 0.2;
-sideWallX = (yBarWidth-(railTotalWidth+railSlotToInnerYEdge)) - sideWallXGapClearance;
-
-hingePoleDx = hingePoleToConnectorOuterYZFace + sideWallSlotToOuterYEdge;
-hingePoleDy = hingePoleToConnectorOuterXZFace + sideWallSlotToOuterXEdge;
+include <./magnetModule.scad>
+include <./hingeModule.scad>
 
 echo("Side Wall Height", sideWallZ);
 echo("Side Wall Depth", sideWallY);
@@ -29,7 +18,7 @@ module sideWall() {
   applyHingeConnector()
   applyMagnetConnector()
   applyEpicVentilation()
-  applyHingeHandle()
+  applyHandle()
   sideWallBase();
 
   module sideWallBase() {
@@ -118,7 +107,7 @@ module sideWall() {
     children(0);
   }
 
-  module applyHingeHandle() {
+  module applyHandle() {
     children(0);
   }
 }
@@ -128,8 +117,8 @@ sideWall();
 
 translate(v=[10,sideWallSlotToXZ,-2])
 mirror(v=[1,0,0])
-magnetModule();
+*magnetModule();
 
 translate(v=[3,100,0])
 mirror(v=[0,1,0])
-hingeModule();
+*hingeModule();
