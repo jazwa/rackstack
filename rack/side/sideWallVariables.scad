@@ -1,6 +1,7 @@
 
 include <../config.scad>
 include <../sharedVariables.scad>
+include <../../misc/magnet.scad>
 
 sideWallConnW = 7;
 sideWallConnD = 20;

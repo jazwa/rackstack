@@ -1,13 +1,10 @@
-include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
 include <../helper/screws.scad>
 include <./config.scad>
-include <./derivedConfig.scad>
 include <./xyBarConnector.scad>
 
 // Temporary
 include <./yBar.scad>
-include <./mainRail.scad>
 
 // It's actually the railSlotToInnerYEdge of the yBar, it'll be nice to be able to refer to it like yBar.railSlotToInnerYEdge
 xBarDepth = maxUnitWidth - 2*railSlotToInnerYEdge;
@@ -22,54 +19,47 @@ xBarRoundness = baseRoundness;
 
 module xBar() {
 
-  module positive() {
-    mirror(v=[0,1,0])
-    rotate(a=[0,0,-90])
-    difference() {
-      cylindricalFiletEdge(xBarWidth, xBarDepth, xBarHeight, xBarRoundness);
+  applyYBarConnector()
+  xBarBase();
 
-      translate(v = [xBarWallThickness, xBarWallThickness, xBarWallThickness])
-      cylindricalFiletEdge(xBarWidth, xBarDepth - 2*xBarWallThickness, xBarHeight, xBarRoundness);
+  module xBarBase() {
+    intersection() {
+      mirror(v = [0, 1, 0])
+      rotate(a = [0, 0, -90])
+      difference() {
+        cylindricalFiletEdge(xBarWidth, xBarDepth, xBarHeight, xBarRoundness);
+
+        translate(v = [xBarWallThickness, xBarWallThickness, xBarWallThickness])
+        cylindricalFiletEdge(xBarWidth, xBarDepth-2*xBarWallThickness, xBarHeight, xBarRoundness);
+      }
+
+      // Shave off bottom corners to reduce elephant's foot at where xBar and YBar join
+      halfspace(vpos = [1, 0, 1], p = [0.6, 0, 0]);
+      halfspace(vpos = [-1, 0, 1], p = [xBarDepth-0.6, 0, 0]);
     }
   }
 
-  module xBar() {
+  module mirrorOtherCorner() {
+    children(0);
 
-    module mirrorOtherCorner() {
+    // TODO rename xBarDepth to xBarLength/xBarWidth
+    translate(v = [xBarDepth, 0, 0])
+    mirror(v = [1, 0, 0]) {
       children(0);
-
-      // TODO rename xBarDepth to xBarLength/xBarWidth
-      translate(v = [xBarDepth, 0, 0])
-      mirror(v = [1, 0, 0]) {
-        children(0);
-      }
-    }
-
-    // TODO refactor - probably better off mirroring the side faces and hulling the shell
-    difference() {
-      union() {
-        intersection() {
-          positive();
-          halfspace(vpos = [1, 0, 1], p = [0.5, 0, 0]);
-
-          halfspace(vpos = [-1, 0, 1], p = [xBarDepth-0.5, 0, 0]);
-        }
-
-        yBarConnectorFromXLug();
-
-        mirrorOtherCorner()
-        yBarConnectorFromXLug();
-      }
-
-      union() {
-        yBarConnectorFromX_N();
-
-        mirrorOtherCorner()
-        yBarConnectorFromX_N();
-      }
     }
   }
-  xBar();
+
+  module applyYBarConnector() {
+    apply_pn() {
+
+      mirrorOtherCorner()
+      yBarConnectorFromXLug();
+
+      mirrorOtherCorner()
+      yBarConnectorFromX_N();
+
+      children(0);
+    }
+  }
+
 }
-
-

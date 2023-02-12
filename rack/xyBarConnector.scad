@@ -48,9 +48,7 @@ module yBarConnectorFromXLug() {
         scale(v=[0.90,0.95,0.90])
         cube(size = [3, 10, 6], center = true);
 
-        mirror(v=[0,0,1])
         halfspace(vpos=[0,0,1], p=[0,0,0]);
-
         halfspace(vpos=[1,0,0], p=[-2,0,0]);
     }
 }
