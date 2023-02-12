@@ -4,6 +4,7 @@ include <./sideWallVariables.scad>
 include <../sharedVariables.scad>
 include <../../helper/halfspace.scad>
 include <../../misc/magnet.scad>
+include <../../helper/screws.scad>
 
 module magnetModule() {
 

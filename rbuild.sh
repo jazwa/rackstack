@@ -1,7 +1,7 @@
 #!/bin/bash
 
 STL_TARGET_DIR=stl
-RACK_DIR=rack
+RACK_DIR=rack/print
 RACK_TARGET_DIR="$STL_TARGET_DIR"/"$RACK_DIR"
 
 echo "Starting build"
@@ -17,9 +17,10 @@ rbuild() {
     build_scad "$item"
   elif [[ "$command" == "clean" ]]; then
     clean_scad "$item"
+  else
+    echo "Command not supported 😔";
   fi
 
-  echo "That all folks"
 }
 
 build_scad() {
@@ -50,7 +51,14 @@ build_scad_file() {
 }
 
 build_scad_dir() {
- echo "build_scad_dir TODO"
+
+  for ITEM in "$RACK_DIR"/*.scad; do
+
+    local base_item="$(basename "${ITEM}")";
+
+    build_scad_file "${base_item%.*}";
+  done
+
 }
 
 clean_scad_file() {
