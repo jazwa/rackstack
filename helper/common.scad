@@ -4,7 +4,7 @@
 
 $fn=64;
 // TODO move these to math
-eps=0.0001;
+eps=0.00000001;
 
 inf10 = 10;
 inf50 = 50;

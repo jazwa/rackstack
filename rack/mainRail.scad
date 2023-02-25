@@ -6,44 +6,35 @@ include <./sharedVariables.scad>
 
 *mainRail();
 
-echo("Total Rail Height: ", railTotalHeight);
-
 // Also known as the z-bar :)
 module mainRail() {
 
-  mainRail();
-
-  module mainRail() {
     b = 0.75; // bevel value
     intersection() {
       mainRailSharp();
       halfspace(vpos=[1,1,0], p=[b,b,0]);
       halfspace(vpos=[1,0,1], p=[b,0,b]);
       halfspace(vpos=[1,0,-1], p=[b,0,railTotalHeight-b]);
-
     }
-  }
 
   module mainRailSharp() {
     union() {
-      _frontRailSegment();
+      frontRailSegment();
 
       translate(v = [railSideMountThickness, railFrontThickness, 0])
       rotate(a = [0, 0, 90])
-      _sideSupportSegment();
+      sideSupportSegment();
 
       translate(v = [0, railFrontThickness, 0]) {
-
         translate(v = [railSideMountThickness, 0, 0])
-        _railFeet();
-
+        railFeet();
         translate(v = [railSideMountThickness, 0, railTotalHeight-railFootThickness])
-        _railFeet();
+        railFeet();
       }
     }
   }
 
-  module _frontRailSegment() {
+  module frontRailSegment() {
     difference() {
       cube(size = [frontFaceWidth, railFrontThickness, railTotalHeight]);
 
@@ -55,7 +46,7 @@ module mainRail() {
     }
   }
 
-  module _sideSupportSegment() {
+  module sideSupportSegment() {
     difference() {
       cube(size = [sideSupportDepth, railSideMountThickness, railTotalHeight]);
       
@@ -67,7 +58,7 @@ module mainRail() {
     }
   }
 
-  module _railFeet() {
+  module railFeet() {
     difference() {
       cube(size = [frontFaceWidth - railSideMountThickness, sideSupportDepth, railFootThickness]);
 
