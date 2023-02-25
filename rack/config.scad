@@ -15,7 +15,7 @@ echo("Profile:", profile);
 
 function getConfig(name) = getConfigValue(profile, name);
 
-// Maximum width for rackmount units. Change this according your max expected enclosure width.
+// Maximum width for rack-mount units. Change this according your max expected enclosure width.
 // Changing this will directly affect the required build volume.
 maxUnitWidth = getConfig("maxUnitWidth");
 

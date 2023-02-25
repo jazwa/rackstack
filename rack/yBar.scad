@@ -13,11 +13,6 @@ include <./yBarBasePlateConnector.scad>
 include <./side/yBarSideWallConnector.scad>
 include <./sharedVariables.scad>
 
-
-echo("Bar total depth: ", yBarDepth);
-echo("Bar total width: ", yBarWidth);
-echo("Bar total height: ", yBarHeight);
-
 *yBar();
 
 module yBar() {
@@ -71,7 +66,11 @@ module yBar() {
   module applySideWallConnector() {
     apply_n() {
       mirrorOtherCorner()
-      translate(v = [yBarWidth-(railTotalWidth+railSlotToInnerYEdge+railSlotToSideWallSlot+sideWallConnectorSlotWidth), sideWallSlotToXZ, yBarHeight])
+      translate(v = [
+          yBarWidth-(railTotalWidth+railSlotToInnerYEdge+railSlotToSideWallSlot+sideWallConnectorSlotWidth),
+          sideWallSlotToXZ,
+          yBarHeight
+        ])
       yBarSideWallConnector_N();
 
       children(0);
