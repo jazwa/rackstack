@@ -4,6 +4,8 @@ include <../sharedVariables.scad>
 include <../../helper/halfspace.scad>
 include <../../helper/screws.scad>
 
+translate(v=[10,20,-2 - sideWallZHingeTotalClearance])
+*hingeModule();
 
 module hingeModule() {
 
@@ -13,7 +15,14 @@ module hingeModule() {
 
   module base() {
     intersection() {
-      cube(size = [sideWallConnW, sideWallConnD, sideWallConnLugDepression]);
+
+      union() {
+        cube(size = [sideWallConnW, sideWallConnD, sideWallConnLugDepression]);
+
+        // Riser to enforce side wall hinge clearance
+        translate(v = [0, 0, sideWallConnLugDepression])
+        cube(size = [sideWallConnW, sideWallConnD - 12, sideWallZGapClearance]);
+      }
 
       // TODO: pattern for this? beef up mirror4XY?
       cVal = 0.5;

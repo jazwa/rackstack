@@ -37,7 +37,7 @@ module sideWallBase() {
         roundThingHelper(sideWallX,sideWallY,sideWallZ, baseRoundness);
 
         translate(v=[sideWallThickness, sideWallThickness,0])
-        roundThingHelper(sideWallX,sideWallY - 2*sideWallThickness,sideWallZ, baseRoundness);
+        roundThingHelper(sideWallX,sideWallY - 2*sideWallThickness, sideWallZ, baseRoundness);
       }
 
       halfspace(vpos=[-1,0,0], p=[sideWallX,0,0]);
@@ -87,10 +87,10 @@ module sideWallBase() {
   module applyMagnetConnector() {
     apply_p() {
       union() {
-        translate(v = [sideWallThickness, magnetMountToYBarFront, magnetMountToYBarTop])
+        translate(v = [sideWallThickness, magnetMountToYBarFront, magnetMountToYBarTop - sideWallZHingeTotalClearance])
         sideWallMagnetMountRotated();
 
-        translate(v = [sideWallThickness, magnetMountToYBarFront, sideWallZ - magnetMountToYBarTop])
+        translate(v = [sideWallThickness, magnetMountToYBarFront, sideWallZ - (magnetMountToYBarTop- sideWallZHingeTotalClearance)])
         sideWallMagnetMountRotated();
       }
 

@@ -6,6 +6,9 @@ include <../../helper/halfspace.scad>
 include <../../misc/magnet.scad>
 include <../../helper/screws.scad>
 
+translate(v=[10,-5,-(2+sideWallZHingeTotalClearance)])
+*magnetModule();
+
 module magnetModule() {
 
   applyYBarScrewMount()
@@ -65,6 +68,5 @@ module magnetModule() {
       cylinder(r = magnetRSlacked, h = magnetHSlacked);
     }
   }
-
 
 }
