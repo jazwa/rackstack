@@ -13,6 +13,9 @@ include <./hingeModule.scad>
 echo("Side Wall Height", sideWallZ);
 echo("Side Wall Depth", sideWallY);
 
+translate(v = [hingePoleDx ,hingePoleDy, 10])
+rotate(a=[0,0,-120])
+translate(v = [-hingePoleDx ,-hingePoleDy, 0])
 *sideWallBase();
 
 module sideWallBase() {
@@ -24,7 +27,7 @@ module sideWallBase() {
 
   module sideWallBase() {
 
-    module roundThingHelper(x,y,z,r) {
+    module sideWallShellHelper(x,y,z,r) {
       translate(v=[r, r, 0])
       minkowski() {
         cube(size = [x-r, y - 2*r, z]);
@@ -34,10 +37,10 @@ module sideWallBase() {
 
     intersection() {
       difference() {
-        roundThingHelper(sideWallX,sideWallY,sideWallZ, baseRoundness);
+        sideWallShellHelper(sideWallX,sideWallY,sideWallZ, baseRoundness);
 
         translate(v=[sideWallThickness, sideWallThickness,0])
-        roundThingHelper(sideWallX,sideWallY - 2*sideWallThickness, sideWallZ, baseRoundness);
+        sideWallShellHelper(sideWallX,sideWallY - 2*sideWallThickness, sideWallZ, baseRoundness - sideWallThickness);
       }
 
       halfspace(vpos=[-1,0,0], p=[sideWallX,0,0]);
@@ -53,32 +56,34 @@ module sideWallBase() {
     apply_pn() {
       hull() {
         hingeShell();
-        hingeBacksideProjectionPlane();
+        hingeSideProjectionPlane();
       }
 
       union() {
         hingeHole();
+
         // Trim parts of the wall for rotational clearance
-        halfspace(p=[sideWallX-5, sideWallY, 0], vpos=[1,1.5,0]);
+        halfspace(p=[0, sideWallY-2.5, 0], vpos=[-0.5,1,0]); // flat area to limit rotation against the main rail
+        halfspace(p=[sideWallX-10, sideWallY, 0], vpos=[1,2.5,0]);
       }
 
       children(0);
     }
 
     module hingeShell() {
-      translate(v = [sideWallX-hingePoleDx, sideWallY-(sideWallThickness+hingePoleDy), 0])
+      translate(v = [hingePoleDx, hingePoleDy, 0])
       cylinder(r = hingeHoleShellR, h = sideWallZ);
     }
 
     // XZ plane in line with the back of the case. Project the hinge pole shell onto this to fill any weird
     // geometries from the curves of the side wall
-    module hingeBacksideProjectionPlane() {
-      translate(v=[sideWallX-hingePoleDx - hingeHoleShellR,sideWallY,0])
-      cube(size=[2*hingeHoleShellR, eps, sideWallZ]);
+    module hingeSideProjectionPlane() {
+      translate(v=[sideWallThickness, hingePoleDy - hingeHoleShellR, 0])
+      cube(size=[eps, 2*hingeHoleShellR, sideWallZ]);
     }
 
     module hingeHole() {
-      translate(v = [sideWallX-hingePoleDx, sideWallY-(sideWallThickness+hingePoleDy), 0])
+      translate(v = [hingePoleDx , hingePoleDy, 0])
       cylinder(r = hingeHoleR, h = sideWallZ);
     }
   }
