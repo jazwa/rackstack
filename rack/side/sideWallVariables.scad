@@ -20,9 +20,6 @@ hingePoleR = 2;
 hingePoleH = 5;
 hingeHoleR = hingePoleR + 0.2;
 
-hingePoleToConnectorOuterYZFace = hingePoleR/2;
-hingePoleToConnectorOuterXZFace = hingePoleR/2;
-
 
 sideWallZHingeSlack = 0.3;
 sideWallZGapClearance = 1.0;
@@ -36,5 +33,5 @@ magnetMountToYBarFront = magnetMountShellRadius + sideWallSlotToXZ + 2;
 sideWallXGapClearance = 0.2;
 sideWallX = (yBarWidth-(railTotalWidth+railSlotToInnerYEdge)) - sideWallXGapClearance;
 
-hingePoleDx = hingePoleToConnectorOuterYZFace + sideWallSlotToOuterYEdge;
-hingePoleDy = hingePoleToConnectorOuterXZFace + sideWallSlotToOuterXEdge;
+hingePoleDx = sideWallSlotToOuterYEdge + sideWallConnW/2.0;
+hingePoleDy = sideWallY - (sideWallSlotToOuterXEdge + hingeHoleR);

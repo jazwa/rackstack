@@ -13,29 +13,34 @@ module hingeModule() {
   applyYBarScrewMount()
   base();
 
+  connSlack = 0.1;
+  connW = sideWallConnW - connSlack;
+  connD = sideWallConnD - connSlack;
+
   module base() {
+    translate(v=[connSlack, connSlack,0])
     intersection() {
 
       union() {
-        cube(size = [sideWallConnW, sideWallConnD, sideWallConnLugDepression]);
+        cube(size = [connW, connD, sideWallConnLugDepression]);
 
         // Riser to enforce side wall hinge clearance
         translate(v = [0, 0, sideWallConnLugDepression])
-        cube(size = [sideWallConnW, sideWallConnD - 12, sideWallZGapClearance]);
+        cube(size = [connW, connD - 12, sideWallZGapClearance]);
       }
 
       // TODO: pattern for this? beef up mirror4XY?
       cVal = 0.5;
       halfspace(p=[0,cVal,0], vpos=[0,1,1]);
       halfspace(p=[cVal,0,0], vpos=[1,0,1]);
-      halfspace(p=[sideWallConnW-cVal,0,0], vpos=[-1,0,1]);
-      halfspace(p=[0,sideWallConnD-cVal,0], vpos=[0,-1,1]);
+      halfspace(p=[connW-cVal,0,0], vpos=[-1,0,1]);
+      halfspace(p=[0,connD-cVal,0], vpos=[0,-1,1]);
     }
   }
 
   module applyHingePole() {
     apply_p() {
-      translate(v = [sideWallConnW-hingePoleR, hingePoleR, sideWallConnH])
+      translate(v = [sideWallConnW/2.0, hingePoleR, sideWallConnH])
       cylinder(r = hingePoleR, h = hingePoleH);
 
       children(0);
