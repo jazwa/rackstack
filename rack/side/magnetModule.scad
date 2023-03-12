@@ -15,7 +15,7 @@ module magnetModule() {
   applyMagnetMount()
   base();
 
-  connSlack = 0.1;
+  connSlack = 0.05;
   connW = sideWallConnW - connSlack;
   connD = sideWallConnD - connSlack;
 

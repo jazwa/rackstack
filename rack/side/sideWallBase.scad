@@ -109,6 +109,22 @@ module sideWallBase() {
   }
 
   module applyHandle() {
-    children(0);
+
+    handleWidth = 8;
+    handleLength = 60;
+    handleRoundness = 7;
+    widthOffset = 3;
+
+    apply_n() {
+
+      minkowski() {
+        sphere(r=handleRoundness);
+
+        translate(v = [sideWallX -(handleWidth-handleRoundness) + widthOffset, 0, (sideWallZ-handleLength)/2])
+        cube(size = [handleWidth-handleRoundness, sideWallThickness, handleLength-handleRoundness]);
+      }
+
+      children(0);
+    }
   }
 }

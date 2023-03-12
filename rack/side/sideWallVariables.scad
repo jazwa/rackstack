@@ -22,8 +22,8 @@ hingeHoleR = hingePoleR + 0.2;
 
 
 sideWallZHingeSlack = 0.3;
-sideWallZGapClearance = 1.0;
-sideWallZHingeTotalClearance = sideWallZHingeSlack + sideWallZGapClearance;
+sideWallZGapClearance = 0.5;
+sideWallZHingeTotalClearance = sideWallZHingeSlack + sideWallZGapClearance; // only for one edge
 sideWallZ = (railTotalHeight - 2*railFootThickness) - 2*sideWallZHingeTotalClearance;
 sideWallY = yBarDepth;
 
