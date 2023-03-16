@@ -7,9 +7,8 @@ include <./xyBarConnector.scad>
 include <./yBar.scad>
 
 // It's actually the railSlotToInnerYEdge of the yBar, it'll be nice to be able to refer to it like yBar.railSlotToInnerYEdge
-xBarDepth = maxUnitWidth - 2*railSlotToInnerYEdge;
-
-xBarWidth = 32;
+xBarX = maxUnitWidth - 2*railSlotToInnerYEdge;
+xBarY = 32;
 xBarHeight = 15;
 
 xBarWallThickness = 2;
@@ -24,27 +23,25 @@ module xBar() {
 
   module xBarBase() {
     intersection() {
-      mirror(v = [0, 1, 0])
-      rotate(a = [0, 0, -90])
+
       difference() {
-        cylindricalFiletEdge(xBarWidth, xBarDepth, xBarHeight, xBarRoundness);
+        cylindricalFiletEdge(xBarY, xBarX, xBarHeight, xBarRoundness);
 
         translate(v = [xBarWallThickness, xBarWallThickness, xBarWallThickness])
-        cylindricalFiletEdge(xBarWidth, xBarDepth-2*xBarWallThickness, xBarHeight, xBarRoundness);
+        cylindricalFiletEdge(xBarY, xBarX-2*xBarWallThickness, xBarHeight, xBarRoundness);
       }
 
       // Shave off bottom corners to reduce elephant's foot at where xBar and YBar join
-      halfspace(vpos = [1, 0, 1], p = [0.6, 0, 0]);
-      halfspace(vpos = [-1, 0, 1], p = [xBarDepth-0.6, 0, 0]);
+      halfspace(vpos = [0, 1, 1], p = [0, 0.6, 0]);
+      halfspace(vpos = [0, -1, 1], p = [0, xBarX-0.6, 0]);
     }
   }
 
   module mirrorOtherCorner() {
     children(0);
 
-    // TODO rename xBarDepth to xBarLength/xBarWidth
-    translate(v = [xBarDepth, 0, 0])
-    mirror(v = [1, 0, 0]) {
+    translate(v = [0, xBarX, 0])
+    mirror(v = [0, 1, 0]) {
       children(0);
     }
   }
@@ -53,9 +50,11 @@ module xBar() {
     apply_pn() {
 
       mirrorOtherCorner()
+      rotate(a=[0,0,-90])
       yBarConnectorFromXLug();
 
       mirrorOtherCorner()
+      rotate(a=[0,0,-90])
       yBarConnectorFromX_N();
 
       children(0);

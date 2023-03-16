@@ -11,7 +11,7 @@ include <./profiles.scad>
 profileName = "micro";
 profile = getProfile(profileName);
 
-echo("Profile:", profile);
+// echo("Profile:", profile);
 
 function getConfig(name) = getConfigValue(profile, name);
 
