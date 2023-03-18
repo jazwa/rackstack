@@ -8,6 +8,8 @@ connectorTotalHeight = 10;
 connectorSocketMagnetExtrudeHeight = 1;
 connectorTaperStartHeight = 3;
 
+connectorTopR = 3;
+
 connectorRectPlugSlack = -0.1;
 connectorRectSocketSlack = 0.1;
 
@@ -17,6 +19,7 @@ module stackConnectorBase(rectSlack) {
 
   wSlacked = connectorRectWidth + rectSlack;
   dSlacked = connectorRectDepth + rectSlack;
+  topRSlacked = connectorTopR + rectSlack/2;
 
   module connRect() {
     linear_extrude(height=eps)
@@ -25,7 +28,7 @@ module stackConnectorBase(rectSlack) {
 
   module connTop() {
     linear_extrude(height=eps)
-    circle(r=3);
+    circle(r=topRSlacked);
   }
 
   hull() {
