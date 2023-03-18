@@ -13,7 +13,7 @@ include <./yBarBasePlateConnector.scad>
 include <./side/yBarSideWallConnector.scad>
 include <./sharedVariables.scad>
 
-yBar();
+*yBar();
 
 translate(v=[20,0,0])
 *stackConnectorPlug();
