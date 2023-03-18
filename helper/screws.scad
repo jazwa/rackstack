@@ -15,7 +15,7 @@ m3CounterSunkHeadLength = 1.7;
 
 m3HexNutWidthAcrossFlats = 5.41;
 m3HexNutWidthAcrossCorners = FtoG(m3HexNutWidthAcrossFlats);
-m3HexNutThickness = 2.18;
+m3HexNutThickness = 2.2;
 
 m3HeatSetInsertSlotRadiusSlack = -0.1;
 m3HeatSetInsertSlotHeightSlack = 0.5;
@@ -80,17 +80,17 @@ module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
 }
 
 
-module hexNutPocket_N(screwType) {
+module hexNutPocket_N(screwType, openSide=true) {
   if (screwType == "m3") {
-    hexNutPocketHelper_N(m3RadiusSlacked, m3HexNutWidthAcrossCorners / 2 + 0.1, m3HexNutThickness + 0.2);
+    hexNutPocketHelper_N(m3RadiusSlacked, m3HexNutWidthAcrossCorners / 2 + 0.1, m3HexNutThickness + 0.2, openSide=openSide);
   } else if (screwType == "m4") {
-    hexNutPocketHelper_N(m4RadiusSlacked, m4HexNutWidthAcrossCorners / 2 + 0.1, m4HexNutThickness + 0.2);
+    hexNutPocketHelper_N(m4RadiusSlacked, m4HexNutWidthAcrossCorners / 2 + 0.1, m4HexNutThickness + 0.2, openSide=openSide);
   } else {
     error("Unsupported screw type");
   }
 }
 
-module hexNutPocketHelper_N(innerRadius, widthAcrossCorners, thickness) {
+module hexNutPocketHelper_N(innerRadius, widthAcrossCorners, thickness, openSide=true) {
   union() {
     hull() {
       // hexagonal cylinder representing where the nut should fit
@@ -105,10 +105,12 @@ module hexNutPocketHelper_N(innerRadius, widthAcrossCorners, thickness) {
     translate(v = [0, 0, - 10])
     cylinder(r = innerRadius, h = inf50, $fn = 32);
 
-    hull() {
-      translate(v = [inf50, 0, 0])
-      cylinder(r = innerRadius, h = inf50, $fn = 32);
-      cylinder(r = innerRadius, h = inf50, $fn = 32);
+    if (openSide) {
+      hull() {
+        translate(v = [inf50, 0, 0])
+        cylinder(r = innerRadius, h = inf50, $fn = 32);
+        cylinder(r = innerRadius, h = inf50, $fn = 32);
+      }
     }
   }
 }
