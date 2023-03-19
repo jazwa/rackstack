@@ -7,6 +7,8 @@ module xBarConnectorFromY_N() {
     y2 = 27;
     z = 6;
 
+    slack = 0.4;
+
     translate(v = [-m3HeatSetInsertSlotHeightSlacked, y1, z])
     rotate(a = [0, 90, 0])
     heatSetInsertSlot_N(rackFrameScrewType);
@@ -15,10 +17,11 @@ module xBarConnectorFromY_N() {
     rotate(a = [0, 90, 0])
     heatSetInsertSlot_N(rackFrameScrewType);
 
-    // TODO fix this up, no center=true
+    // TODO fix this up
+    // TODO need to add slack values
     translate(v = [-1, y1+(y2-y1)/2, 0])
     rotate(a = [0, 45, 0])
-    cube(size = [3, 10, 6], center = true);
+    cube(size = [3+slack, 10+slack, 6+slack], center = true);
 }
 
 
@@ -26,6 +29,8 @@ module yBarConnectorFromX_N() {
     y1 = 6;
     y2 = 27;
     z = 6;
+    slack = 0.2;
+
     translate(v = [-inf50/2, y1, z])
     rotate(a = [0, 90, 0])
     cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf50, $fn = 32);
@@ -41,12 +46,14 @@ module yBarConnectorFromXLug() {
     y2 = 27;
     z = 6;
 
+    slack = 0.2;
+
     intersection() {
         // TODO fix this up, no center=true
         translate(v = [-1, y1+(y2-y1)/2, 0])
         rotate(a = [0, 45, 0])
         scale(v=[0.90,0.95,0.90])
-        cube(size = [3, 10, 6], center = true);
+        cube(size = [3-slack, 10-slack, 6-slack], center = true);
 
         halfspace(vpos=[0,0,1], p=[0,0,0]);
         halfspace(vpos=[1,0,0], p=[-2,0,0]);

@@ -1,6 +1,9 @@
 include <../helper/math.scad>
 include <../helper/common.scad>
 include <../misc/magnet.scad>
+include <../helper/screws.scad>
+
+include <./config.scad>
 
 connectorRectWidth = 10;
 connectorRectDepth = 10;
@@ -14,6 +17,8 @@ connectorRectPlugSlack = -0.1;
 connectorRectSocketSlack = 0.1;
 
 connectorBottomToScrew = 6;
+
+*stackConnectorPlug();
 
 module stackConnectorBase(rectSlack) {
 
