@@ -20,7 +20,7 @@ connectorBottomToScrew = 6;
 
 *stackConnectorPlug();
 
-module stackConnectorBase(rectSlack) {
+module stackConnectorBase(rectSlack, topSlack=0.0) {
 
   wSlacked = connectorRectWidth + rectSlack;
   dSlacked = connectorRectDepth + rectSlack;
@@ -47,7 +47,7 @@ module stackConnectorBase(rectSlack) {
     translate(v = [0, 0, connectorTaperStartHeight])
     connRect();
 
-    translate(v=[wSlacked/2, dSlacked/2, connectorTotalHeight])
+    translate(v=[wSlacked/2, dSlacked/2, connectorTotalHeight+topSlack])
     connTop();
   }
 }
@@ -65,8 +65,9 @@ module stackConnectorSocket_N() {
 
   screwExtension = 4;
 
+
   union() {
-    stackConnectorBase(connectorRectSocketSlack);
+    stackConnectorBase(connectorRectSocketSlack, topSlack=0.4);
 
     translate(v = [-screwExtension, connectorRectDepth/2, connectorBottomToScrew])
     rotate(a = [0, -90, 0])

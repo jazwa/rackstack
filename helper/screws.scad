@@ -82,7 +82,7 @@ module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
 
 module hexNutPocket_N(screwType, openSide=true) {
   if (screwType == "m3") {
-    hexNutPocketHelper_N(m3RadiusSlacked, m3HexNutWidthAcrossCorners / 2 + 0.1, m3HexNutThickness + 0.2, openSide=openSide);
+    hexNutPocketHelper_N(m3RadiusSlacked, m3HexNutWidthAcrossCorners / 2 + 0.3, m3HexNutThickness + 0.3, openSide=openSide);
   } else if (screwType == "m4") {
     hexNutPocketHelper_N(m4RadiusSlacked, m4HexNutWidthAcrossCorners / 2 + 0.1, m4HexNutThickness + 0.2, openSide=openSide);
   } else {
