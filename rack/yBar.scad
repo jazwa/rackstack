@@ -38,7 +38,7 @@ module yBar() {
         cylindricalFiletEdge(yBarWidth, yBarDepth-2*joinCornerDepth, yBarHeight, yBarRoundness);
       }
 
-      halfspace(vpos=[-1, 0, 1], p=[yBarWidth-0.5, 0,0]);
+      halfspace(vpos=[-1, 0, 1], p=[yBarWidth-1, 0,0]);
     }
   }
 
