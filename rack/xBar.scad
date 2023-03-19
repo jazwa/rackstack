@@ -32,8 +32,8 @@ module xBar() {
       }
 
       // Shave off bottom corners to reduce elephant's foot at where xBar and YBar join
-      halfspace(vpos = [0, 1, 1], p = [0, 0.6, 0]);
-      halfspace(vpos = [0, -1, 1], p = [0, xBarX-0.6, 0]);
+      halfspace(vpos = [0, 1, 1], p = [0, 0.75, 0]);
+      halfspace(vpos = [0, -1, 1], p = [0, xBarX-0.75, 0]);
     }
   }
 
