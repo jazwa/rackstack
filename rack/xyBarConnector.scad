@@ -1,61 +1,43 @@
 include <../helper/screws.scad>
+include <../helper/dovetail.scad>
 include <../helper/halfspace.scad>
 include <./config.scad>
 
+//xBarConnectorFromY_N();
+
 module xBarConnectorFromY_N() {
-    y1 = 6;
-    y2 = 27;
+    y = 27;
     z = 6;
-
-    slack = 0.4;
-
-    translate(v = [-m3HeatSetInsertSlotHeightSlacked, y1, z])
+    translate(v = [-m3HeatSetInsertSlotHeightSlacked, y, z])
     rotate(a = [0, 90, 0])
     heatSetInsertSlot_N(rackFrameScrewType);
 
-    translate(v = [-m3HeatSetInsertSlotHeightSlacked, y2, z])
-    rotate(a = [0, 90, 0])
-    heatSetInsertSlot_N(rackFrameScrewType);
+}
 
-    // TODO fix this up
-    // TODO need to add slack values
-    translate(v = [-1, y1+(y2-y1)/2, 0])
-    rotate(a = [0, 45, 0])
-    cube(size = [3+slack, 10+slack, 6+slack], center = true);
+module xBarConnectorFromY_P() {
+    rotate(a=[0,0,-90])
+    dovetail(topWidth = 15, bottomWidth = 12, height = 2, length = yBarHeight, headExtension = 1, baseExtension = 2, frontFaceLength = 0.5,
+    frontFaceScale = 0.90,
+    backFaceLength = 5,
+    backFaceScale = 1.2);
 }
 
 
 module yBarConnectorFromX_N() {
-    y1 = 6;
-    y2 = 27;
+    y = 27;
     z = 6;
-    slack = 0.2;
+    slack = 0.3;
 
-    translate(v = [-inf50/2, y1, z])
+
+    translate(v=[-0.5,14,0])
+    mirror(v=[1,0,0])
+    rotate(a=[0,0,-90])
+    dovetail(topWidth = 15+slack, bottomWidth = 12+slack, height = 2+slack, length = yBarHeight, headExtension = 1, baseExtension = 2, frontFaceLength = 0.5,
+    frontFaceScale = 1.1,
+    backFaceLength = 5,
+    backFaceScale = 1.2);
+
+    translate(v = [-inf50/2, y, z])
     rotate(a = [0, 90, 0])
     cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf50, $fn = 32);
-
-    translate(v = [-inf50/2, y2, z])
-    rotate(a = [0, 90, 0])
-    cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf50, $fn = 32);
-}
-
-// TODO: figure out nice abstraction to apply both positive and negative mods
-module yBarConnectorFromXLug() {
-    y1 = 6;
-    y2 = 27;
-    z = 6;
-
-    slack = 0.2;
-
-    intersection() {
-        // TODO fix this up, no center=true
-        translate(v = [-1, y1+(y2-y1)/2, 0])
-        rotate(a = [0, 45, 0])
-        scale(v=[0.90,0.95,0.90])
-        cube(size = [3-slack, 10-slack, 6-slack], center = true);
-
-        halfspace(vpos=[0,0,1], p=[0,0,0]);
-        halfspace(vpos=[1,0,0], p=[-2,0,0]);
-    }
 }

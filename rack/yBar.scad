@@ -15,11 +15,6 @@ include <./sharedVariables.scad>
 
 *yBar();
 
-translate(v=[20,0,0])
-*stackConnectorPlug();
-
-*stackConnectorSocket_N();
-
 module yBar() {
 
   applyBasePlateConnector()
@@ -93,7 +88,12 @@ module yBar() {
   }
 
   module applyXBarConnector() {
-    apply_n() {
+    apply_pn() {
+
+      mirrorOtherCorner()
+      translate(v=[yBarWidth + 0.5,14,0])
+      xBarConnectorFromY_P();
+
       mirrorOtherCorner()
       translate(v = [yBarWidth+eps, 0, 0])
       xBarConnectorFromY_N();

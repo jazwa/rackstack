@@ -12,6 +12,7 @@ xBarY = 32;
 xBarHeight = 15;
 
 xBarWallThickness = 2;
+xBarSideThickness = 6;
 xBarRoundness = baseRoundness;
 
 *xBar();
@@ -27,8 +28,8 @@ module xBar() {
       difference() {
         cylindricalFiletEdge(xBarY, xBarX, xBarHeight, xBarRoundness);
 
-        translate(v = [xBarWallThickness, xBarWallThickness, xBarWallThickness])
-        cylindricalFiletEdge(xBarY, xBarX-2*xBarWallThickness, xBarHeight, xBarRoundness);
+        translate(v = [xBarWallThickness, xBarSideThickness, xBarWallThickness])
+        cylindricalFiletEdge(xBarY, xBarX-2*xBarSideThickness, xBarHeight, xBarRoundness);
       }
 
       // Shave off bottom corners to reduce elephant's foot at where xBar and YBar join
@@ -47,11 +48,7 @@ module xBar() {
   }
 
   module applyYBarConnector() {
-    apply_pn() {
-
-      mirrorOtherCorner()
-      rotate(a=[0,0,-90])
-      yBarConnectorFromXLug();
+    apply_n() {
 
       mirrorOtherCorner()
       rotate(a=[0,0,-90])
