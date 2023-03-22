@@ -7,6 +7,9 @@ include <../../helper/screws.scad>
 translate(v=[10,20,-2 - sideWallZHingeTotalClearance])
 *hingeModule();
 
+
+// TODO this is pretty weak
+
 module hingeModule() {
 
   applyHingePole()
