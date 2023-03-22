@@ -37,7 +37,9 @@ module yBarConnectorFromX_N() {
     backFaceLength = 5,
     backFaceScale = 1.2);
 
-    translate(v = [-inf50/2, y, z])
-    rotate(a = [0, 90, 0])
-    cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf50, $fn = 32);
+    // TODO clean this up
+    translate(v = [-6, y, z])
+    rotate(a = [0, -90, 0])
+    counterSunkHead_N(rackFrameScrewType, screwExtension=inf10, headExtension=inf10);
 }
+
