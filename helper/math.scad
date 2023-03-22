@@ -24,6 +24,7 @@ module mirror4XY(p, dx, dy) {
     children(0);
 }
 
+// TODO: rename to simple align
 module align(a,b) {
 
     rot_axis = cross(a,b);
