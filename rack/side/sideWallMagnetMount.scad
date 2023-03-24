@@ -3,7 +3,7 @@ include <../config.scad>
 include <./sideWallVariables.scad>
 include <../sharedVariables.scad>
 include <../../helper/halfspace.scad>
-include <../../misc/magnet.scad>
+include <../../helper/magnet.scad>
 
 module sideWallMagnetMount() {
   // oriented so that the xy face is the side wall's inner face

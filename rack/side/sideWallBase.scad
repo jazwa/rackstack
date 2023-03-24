@@ -1,6 +1,6 @@
 include <../../helper/math.scad>
 include <../../helper/halfspace.scad>
-include <../../misc/magnet.scad>
+include <../../helper/magnet.scad>
 include <../config.scad>
 
 include <./sideWallMagnetMount.scad>

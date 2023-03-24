@@ -3,7 +3,7 @@ include <../config.scad>
 include <./sideWallVariables.scad>
 include <../sharedVariables.scad>
 include <../../helper/halfspace.scad>
-include <../../misc/magnet.scad>
+include <../../helper/magnet.scad>
 include <../../helper/screws.scad>
 
 translate(v=[10,-5,-(2+sideWallZHingeTotalClearance)])
