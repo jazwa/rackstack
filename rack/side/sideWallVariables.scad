@@ -5,7 +5,7 @@ include <../../helper/magnet.scad>
 
 sideWallConnW = 7;
 sideWallConnD = 20;
-sideWallConnH = 2;
+sideWallConnH = 3;
 sideWallConnLugDepression = sideWallConnH;
 
 yBarScrewHoleToOuterYEdge = 3.5;
