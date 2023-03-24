@@ -2,7 +2,7 @@ include <../helper/math.scad>
 include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
 include <../helper/screws.scad>
-include <../misc/magnet.scad>
+include <../helper/magnet.scad>
 include <./config.scad>
 include <./mainRail.scad>
 

@@ -1,4 +1,4 @@
-include <../../../misc/magnet.scad>
+include <../../../helper/magnet.scad>
 include <../../../math.scad>
 $fn=64;
 

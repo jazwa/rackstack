@@ -2,4 +2,4 @@
 
 ### TODO
 
-![Banner](resources/banner.png)
+![Banner](media/banner.png)

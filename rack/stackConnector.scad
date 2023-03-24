@@ -1,6 +1,6 @@
 include <../helper/math.scad>
 include <../helper/common.scad>
-include <../misc/magnet.scad>
+include <../helper/magnet.scad>
 include <../helper/screws.scad>
 
 include <./config.scad>
