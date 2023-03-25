@@ -6,7 +6,7 @@ railFootThickness = 3;
 
 railTotalHeight = screwDiff * (numRailScrews + 1) + 2 * railFootThickness;
 
-railFrontThickness = 6; // Make sure that the nuts for the chosen screw type can slot within the front face
+railFrontThickness = 8; // Make sure that the nuts for the chosen screw type can slot within the front face
 railSideMountThickness = 2.5;
 
 // Distance between the middle of a screw mount and the rail's vertical edges
