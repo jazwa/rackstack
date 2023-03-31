@@ -28,7 +28,8 @@ module mainRail() {
       translate(v = [0, railFrontThickness, 0]) {
         translate(v = [railSideMountThickness, 0, 0])
         railFeet();
-        translate(v = [railSideMountThickness, 0, railTotalHeight-railFootThickness])
+        translate(v = [railSideMountThickness, 0, railTotalHeight])
+        mirror(v=[0,0,1])
         railFeet();
       }
     }
@@ -62,8 +63,8 @@ module mainRail() {
     difference() {
       cube(size = [frontFaceWidth - railSideMountThickness, sideSupportDepth, railFootThickness]);
 
-      translate(v = [5, 4, 0])
-      cylinder(r = screwRadiusSlacked(rackFrameScrewType), h = inf10, $fn = 32);
+      translate(v = [5, 4, railFootThickness])
+      counterSunkHead_N(rackFrameScrewType, screwExtension=inf10, headExtension=inf10);
     }
   }
 }
