@@ -6,7 +6,6 @@ include <./sharedVariables.scad>
 
 *mainRail();
 
-// Also known as the z-bar :)
 module mainRail() {
 
     b = 0.75; // bevel value

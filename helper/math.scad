@@ -23,18 +23,3 @@ module mirror4XY(p, dx, dy) {
     translate(v=[px+dx, py+dy, 0])
     children(0);
 }
-
-// TODO: rename to simple align
-module align(a,b) {
-
-    rot_axis = cross(a,b);
-
-    if (rot_axis == [0,0,0]) {
-        error("Can't align - provided vectors are parallel");
-    }
-
-    angle = acos(a*b/(norm(a)*norm(b)));
-
-    rotate(v=rot_axis, a=angle)
-        children(0);
-}
