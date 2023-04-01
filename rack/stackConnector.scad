@@ -13,12 +13,12 @@ connectorTaperStartHeight = 3;
 
 connectorTopR = 3;
 
-connectorRectPlugSlack = -0.1;
-connectorRectSocketSlack = 0.1;
+connectorRectPlugSlack = -0.2;
+connectorRectSocketSlack = 0.2;
 
 connectorBottomToScrew = 6;
 
-*stackConnectorPlug();
+stackConnectorBottom();
 
 module stackConnectorBase(rectSlack, topSlack=0.0) {
 
@@ -96,4 +96,27 @@ module stackConnectorPlug() {
     rotate(a=[90,0,0])
     hexNutPocket_N(rackFrameScrewType, openSide=false);
   }
+}
+
+module stackConnectorDual() {
+
+  space = 0.5; // extra space inbetween
+
+  translate(v=[0,0,space])
+  stackConnectorPlug();
+
+  mirror(v=[0,0,1])
+  stackConnectorPlug();
+
+  cube(size=[connectorRectWidth+connectorRectPlugSlack, connectorRectDepth+connectorRectPlugSlack, space]);
+}
+
+
+module stackConnectorBottom() {
+
+  height = 2; // space between bottom and floor
+
+  stackConnectorPlug();
+  translate(v=[0,0,-height])
+  cube(size=[connectorRectWidth+connectorRectPlugSlack, connectorRectDepth+connectorRectPlugSlack, height]);
 }

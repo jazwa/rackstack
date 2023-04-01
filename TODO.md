@@ -3,7 +3,7 @@
 ### Actual TODO
 
 - Finish refactoring files to use the application style, like in `yBar.scad` 
-- Implement better build script using python
+- Implement better build script using python !!!
 - Start working on actual cases
 - Figure out why sidewall build is so slow
 

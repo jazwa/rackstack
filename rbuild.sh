@@ -2,7 +2,9 @@
 
 STL_TARGET_DIR=stl
 RACK_DIR=rack/print
+RACK_MOUNT_DIR=rack-mount/print
 RACK_TARGET_DIR="$STL_TARGET_DIR"/"$RACK_DIR"
+RACK_MOUNT_TARGET_DIR="$STL_TARGET_DIR"/"$RACK_MOUNT_DIR"
 
 echo "Starting build"
 
@@ -50,6 +52,16 @@ build_scad_file() {
   openscad -o "$target_file_name" "$source_file_name"
 }
 
+build_rack_mount_scad_file() {
+  local source_item=$1;
+  local source_file_name="$RACK_MOUNT_DIR"/"$source_item".scad
+  local target_file_name="$RACK_MOUNT_TARGET_DIR"/"$source_item".stl
+
+  echo "Building" "$source_file_name" "to" "$target_file_name"
+
+  openscad -o "$target_file_name" "$source_file_name"
+}
+
 build_scad_dir() {
 
   for ITEM in "$RACK_DIR"/*.scad; do
@@ -57,6 +69,13 @@ build_scad_dir() {
     local base_item="$(basename "${ITEM}")";
 
     build_scad_file "${base_item%.*}";
+  done
+
+  for ITEM in "$RACK_MOUNT_DIR"/*.scad; do
+
+    local base_item="$(basename "${ITEM}")";
+
+    build_rack_mount_scad_file "${base_item%.*}";
   done
 
 }
