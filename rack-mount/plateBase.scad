@@ -1,5 +1,7 @@
-
 include <./common.scad>
+
+
+plateBase(U=2, plateThickness=3, screwType="m4", filletR=2);
 
 module plateBase(U, plateThickness, screwType, screwToXEdge=4, screwToYEdge=4, filletR=2) {
 
@@ -30,5 +32,3 @@ module plateBase(U, plateThickness, screwType, screwToXEdge=4, screwToYEdge=4, f
     }
 
 }
-
-plateBase(U=2, plateThickness=3, screwType="m4", filletR=2);

@@ -18,7 +18,7 @@ connectorRectSocketSlack = 0.2;
 
 connectorBottomToScrew = 6;
 
-stackConnectorBottom();
+*stackConnectorBottom();
 
 module stackConnectorBase(rectSlack, topSlack=0.0) {
 

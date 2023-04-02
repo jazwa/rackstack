@@ -13,10 +13,10 @@ include <./hingeModule.scad>
 echo("Side Wall Height", sideWallZ);
 echo("Side Wall Depth", sideWallY);
 
-translate(v = [hingePoleDx ,hingePoleDy, 10])
-rotate(a=[0,0,-120])
-translate(v = [-hingePoleDx ,-hingePoleDy, 0])
-*sideWallBase();
+//translate(v = [hingePoleDx ,hingePoleDy, 10])
+//rotate(a=[0,0,-120])
+//translate(v = [-hingePoleDx ,-hingePoleDy, 0])
+sideWallBase();
 
 module sideWallBase() {
 
