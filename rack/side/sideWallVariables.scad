@@ -2,6 +2,7 @@
 include <../config.scad>
 include <../sharedVariables.scad>
 include <../../helper/magnet.scad>
+include <../../helper/slack.scad>
 
 sideWallConnW = 7;
 sideWallConnD = 20;
@@ -18,7 +19,7 @@ innerSideWallToYBarMagnetConn = magnetFaceToSideWallConnOuterYEdge + sideWallSlo
 
 hingePoleR = 2;
 hingePoleH = 5;
-hingeHoleR = hingePoleR + 0.2;
+hingeHoleR = hingePoleR + radiusXYSlack;
 
 
 sideWallZHingeSlack = 0.3;
