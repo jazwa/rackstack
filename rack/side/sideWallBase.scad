@@ -16,7 +16,7 @@ echo("Side Wall Depth", sideWallY);
 //translate(v = [hingePoleDx ,hingePoleDy, 10])
 //rotate(a=[0,0,-120])
 //translate(v = [-hingePoleDx ,-hingePoleDy, 0])
-sideWallBase();
+*sideWallBase();
 
 module sideWallBase() {
 
@@ -27,25 +27,24 @@ module sideWallBase() {
 
   module sideWallBase() {
 
-    module sideWallShellHelper(x,y,z,r) {
-      translate(v=[r, r, 0])
+    module sideWallShellHelper(x, y, z, r) {
+      translate(v = [r, r, 0])
       minkowski() {
-        cube(size = [x-r, y - 2*r, z]);
+        cube(size = [x-r, y-2*r, z]);
         sphere(r = r);
       }
     }
 
     intersection() {
       difference() {
-        sideWallShellHelper(sideWallX,sideWallY,sideWallZ, baseRoundness);
-
-        translate(v=[sideWallThickness, sideWallThickness,0])
-        sideWallShellHelper(sideWallX,sideWallY - 2*sideWallThickness, sideWallZ, baseRoundness - sideWallThickness);
+        sideWallShellHelper(sideWallX, sideWallY, sideWallZ, baseRoundness);
+        translate(v = [sideWallThickness, sideWallThickness, 0])
+        sideWallShellHelper(sideWallX, sideWallY-2*sideWallThickness, sideWallZ, baseRoundness-sideWallThickness);
       }
-
-      halfspace(vpos=[-1,0,0], p=[sideWallX,0,0]);
-      halfspace(vpos=[0,0,-1], p=[0,0,sideWallZ]);
-      halfspace(vpos=[0,0,1], p=[0,0,0]);
+      halfspace(vpos = [-1, 0, 0], p = [sideWallX, 0, 0]);
+      halfspace(vpos = [0, 0, -1], p = [0, 0, sideWallZ]);
+      halfspace(vpos = [0, 0, 1], p = [0, 0, 0]);
+      halfspace(vpos = [1, 0, 0], p = [0, 0, 0]);
     }
   }
 
@@ -126,5 +125,24 @@ module sideWallBase() {
 
       children(0);
     }
+  }
+}
+
+module sideWallVerticalRibs(numRibs, ribZ, ribYDiff, ribR=1, ribExtrusion=1) {
+
+  intersection() {
+    for (i = [0:numRibs-1]) {
+      translate(v = [sideWallThickness, i*ribYDiff, (sideWallZ-ribZ)/2])
+
+      translate(v = [ribExtrusion-ribR, 0, 0])
+      hull() {
+        translate(v = [0, 0, ribZ-ribR])
+        sphere(r = ribR);
+        translate(v = [0, 0, ribR])
+        sphere(r = ribR);
+      }
+    }
+
+    halfspace(vpos=[1,0,0], p=[0,0,0]);
   }
 }
