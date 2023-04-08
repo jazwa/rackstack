@@ -1,0 +1,109 @@
+ The following keystrokes are available in the main editor window.
+ Alternative keys are shown in parentheses:
+
+^G     (F1)      Display this help text
+^X     (F2)      Close the current buffer / Exit from nano
+^O     (F3)      Write the current buffer (or the marked region) to disk
+^R     (Ins)     Insert another file into current buffer (or into new buffer)
+
+^W     (F6)      Search forward for a string or a regular expression
+^\     (M-R)     Replace a string or a regular expression
+^K     (F9)      Cut current line (or marked region) and store it in cutbuffer
+^U     (F10)     Paste the contents of cutbuffer at current cursor position
+
+^T               Execute a function or an external command
+^J     (F4)      Justify the current paragraph
+
+^C     (F11)     Display the position of the cursor
+^/     (M-G)     Go to line and column number
+
+M-U              Undo the last operation
+M-E              Redo the last undone operation
+
+M-A    (^6)      Mark text starting from the cursor position
+M-6    (M-^)     Copy current line (or marked region) and store it in cutbuffer
+
+M-]              Go to the matching bracket
+
+^Q               Search backward for a string or a regular expression
+M-Q              Search next occurrence backward
+M-W              Search next occurrence forward
+
+^B     (◂)       Go back one character
+^F     (▸)       Go forward one character
+^◂     (M-Space) Go back one word
+^▸     (^Space)  Go forward one word
+^A     (Home)    Go to beginning of current line
+^E     (End)     Go to end of current line
+
+^P     (▴)       Go to previous line
+^N     (▾)       Go to next line
+M-▴    (M--)     Scroll up one line without moving the cursor textually
+M-▾    (M-+)     Scroll down one line without moving the cursor textually
+
+^▴     (M-7)     Go to previous block of text
+^▾     (M-8)     Go to next block of text
+M-(    (M-9)     Go to beginning of paragraph; then of previous paragraph
+M-)    (M-0)     Go just beyond end of paragraph; then of next paragraph
+
+^Y     (PgUp)    Go one screenful up
+^V     (PgDn)    Go one screenful down
+M-\    (^Home)   Go to the first line of the file
+M-/    (^End)    Go to the last line of the file
+
+M-◂    (M-<)     Switch to the previous file buffer
+M-▸    (M->)     Switch to the next file buffer
+
+^I     (Tab)     Insert a tab at the cursor position (or indent marked lines)
+^M     (Enter)   Insert a newline at the cursor position
+
+^H     (Bsp)     Delete the character to the left of the cursor
+^D     (Del)     Delete the character under the cursor
+M-Bsp  (Sh-^Del) Delete backward from cursor to word start
+^Del             Delete forward from cursor to next word start
+M-T              Cut from the cursor position to the end of the file
+
+M-J              Justify the entire file
+M-D              Count the number of lines, words, and characters
+M-V              Insert the next keystroke verbatim
+
+		 Suspend the editor (return to the shell)
+^L               Refresh (redraw) the current screen
+
+M-}              Indent the current line (or marked lines)
+M-{    (Sh-Tab)  Unindent the current line (or marked lines)
+
+M-3              Comment/uncomment the current line (or marked lines)
+^]               Try and complete the current word
+
+M-:              Start/stop recording a macro
+M-;              Run the last recorded macro
+
+M-Ins            Place or remove an anchor at the current line
+M-PgUp           Jump backward to the nearest anchor
+M-PgDn           Jump forward to the nearest anchor
+
+M-Del            Throw away the current line (or marked region)
+
+F12              Invoke the spell checker, if available
+M-B              Invoke the linter, if available
+M-F              Invoke a program to format/arrange/manipulate the buffer
+
+^L               Center the line where the cursor is
+
+^S               Save file without prompting
+
+M-Z		 Hidden interface enable/disable
+M-X		 Help mode enable/disable
+M-C		 Constant cursor position display enable/disable
+M-S		 Soft wrapping of overlong lines enable/disable
+M-N		 Line numbering enable/disable
+M-P		 Whitespace display enable/disable
+M-Y		 Color syntax highlighting enable/disable
+
+M-H		 Smart home key enable/disable
+M-I		 Auto indent enable/disable
+M-K		 Cut to end enable/disable
+M-L		 Hard wrapping of overlong lines enable/disable
+M-O		 Conversion of typed tabs to spaces enable/disable
+M-M		 Mouse support enable/disable

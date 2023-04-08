@@ -1,6 +1,7 @@
 include <../../helper/math.scad>
 include <../../helper/halfspace.scad>
 include <../../helper/magnet.scad>
+include <../../helper/slack.scad>
 include <../config.scad>
 
 include <./sideWallMagnetMount.scad>
@@ -59,7 +60,11 @@ module sideWallBase() {
       }
 
       union() {
-        hingeHole();
+        hingeHole(extraZ=2);
+
+        translate(v=[0,0,sideWallZ])
+        mirror(v=[0,0,1])
+        hingeHole(extraZ=2);
 
         // Trim parts of the wall for rotational clearance
         halfspace(p=[0, sideWallY-2.5, 0], vpos=[-0.5,1,0]); // flat area to limit rotation against the main rail
@@ -81,9 +86,9 @@ module sideWallBase() {
       cube(size=[eps, 2*hingeHoleShellR, sideWallZ]);
     }
 
-    module hingeHole() {
+    module hingeHole(extraZ) {
       translate(v = [hingePoleDx , hingePoleDy, 0])
-      cylinder(r = hingeHoleR, h = sideWallZ);
+      cylinder(r = hingeHoleR, h = hingePoleH+extraZ);
     }
   }
 
@@ -130,19 +135,34 @@ module sideWallBase() {
 
 module sideWallVerticalRibs(numRibs, ribZ, ribYDiff, ribR=1, ribExtrusion=1) {
 
+  ribRampLength = 5;
+
   intersection() {
     for (i = [0:numRibs-1]) {
-      translate(v = [sideWallThickness, i*ribYDiff, (sideWallZ-ribZ)/2])
 
+      translate(v = [sideWallThickness, i*ribYDiff, (sideWallZ-ribZ)/2])
       translate(v = [ribExtrusion-ribR, 0, 0])
-      hull() {
-        translate(v = [0, 0, ribZ-ribR])
-        sphere(r = ribR);
-        translate(v = [0, 0, ribR])
-        sphere(r = ribR);
-      }
+      verticalRib(ribExtend=4, ribWidth=2);
     }
 
     halfspace(vpos=[1,0,0], p=[0,0,0]);
+  }
+
+
+  module verticalRib(ribExtend, ribWidth) {
+    minkowski() {
+      hull() {
+        cube(size = [eps, ribWidth, eps]);
+
+        translate(v = [0, 0, ribRampLength])
+        cube(size = [ribExtend, ribWidth, ribZ-2*ribRampLength]);
+
+        translate(v = [0, 0, ribZ])
+        cube(size = [eps, ribWidth, eps]);
+      }
+
+      sphere(r=0.5);
+    }
+
   }
 }
