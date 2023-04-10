@@ -32,7 +32,10 @@ module sideWallBase() {
       translate(v = [r, r, 0])
       minkowski() {
         cube(size = [x-r, y-2*r, z]);
-        sphere(r = r);
+
+        if (r > 0) {
+          sphere(r = r);
+        }
       }
     }
 
@@ -40,7 +43,7 @@ module sideWallBase() {
       difference() {
         sideWallShellHelper(sideWallX, sideWallY, sideWallZ, baseRoundness);
         translate(v = [sideWallThickness, sideWallThickness, 0])
-        sideWallShellHelper(sideWallX, sideWallY-2*sideWallThickness, sideWallZ, baseRoundness-sideWallThickness);
+        sideWallShellHelper(sideWallX, sideWallY-2*sideWallThickness, sideWallZ, max(0,baseRoundness-sideWallThickness));
       }
       halfspace(vpos = [-1, 0, 0], p = [sideWallX, 0, 0]);
       halfspace(vpos = [0, 0, -1], p = [0, 0, sideWallZ]);
@@ -133,16 +136,17 @@ module sideWallBase() {
   }
 }
 
-module sideWallVerticalRibs(numRibs, ribZ, ribYDiff, ribR=1, ribExtrusion=1) {
+module sideWallVerticalRibs(numRibs, ribZ, ribYDiff, ribExtrusion=1) {
 
   ribRampLength = 5;
+  ribWidth = 2;
 
   intersection() {
     for (i = [0:numRibs-1]) {
 
       translate(v = [sideWallThickness, i*ribYDiff, (sideWallZ-ribZ)/2])
-      translate(v = [ribExtrusion-ribR, 0, 0])
-      verticalRib(ribExtend=4, ribWidth=2);
+      translate(v = [ribExtrusion-ribWidth, 0, 0])
+      verticalRib(ribExtend=4, ribWidth=ribWidth);
     }
 
     halfspace(vpos=[1,0,0], p=[0,0,0]);
@@ -150,18 +154,22 @@ module sideWallVerticalRibs(numRibs, ribZ, ribYDiff, ribR=1, ribExtrusion=1) {
 
 
   module verticalRib(ribExtend, ribWidth) {
+
+    roundness = 0.5;
+
     minkowski() {
       hull() {
+        translate(v=[0,0,roundness])
         cube(size = [eps, ribWidth, eps]);
 
         translate(v = [0, 0, ribRampLength])
-        cube(size = [ribExtend, ribWidth, ribZ-2*ribRampLength]);
+        cube(size = [ribExtend, ribWidth, ribZ-2*(ribRampLength+roundness)]);
 
-        translate(v = [0, 0, ribZ])
+        translate(v = [0, 0, ribZ-roundness])
         cube(size = [eps, ribWidth, eps]);
       }
 
-      sphere(r=0.5);
+      sphere(r=roundness);
     }
 
   }
