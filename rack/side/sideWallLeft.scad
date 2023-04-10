@@ -30,10 +30,10 @@ module sideWallLeft() {
     apply_p() {
       union() {
         translate(v = [0, 82, 0])
-        sideWallVerticalRibs(numRibs = 2, ribZ = sideWallZ-20, ribYDiff = 8, ribR = 3, ribExtrusion = 1.5);
+        sideWallVerticalRibs(numRibs = 2, ribZ = sideWallZ, ribYDiff = 8, ribExtrusion = 1.5);
 
-        translate(v = [0, 12, 0])
-        sideWallVerticalRibs(numRibs = 3, ribZ = sideWallZ-20, ribYDiff = 8, ribR = 3, ribExtrusion = 1.5);
+        translate(v = [0, 18, 0])
+        sideWallVerticalRibs(numRibs = 2, ribZ = sideWallZ, ribYDiff = 8, ribExtrusion = 1.5);
       }
       children(0);
     }
