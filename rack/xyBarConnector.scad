@@ -1,4 +1,5 @@
 include <../helper/screws.scad>
+include <../helper/slack.scad>
 include <../helper/dovetail.scad>
 include <../helper/halfspace.scad>
 include <./config.scad>
@@ -14,8 +15,15 @@ module xBarConnectorFromY_N() {
 
 module xBarConnectorFromY_P() {
     rotate(a=[0,0,-90])
-    dovetail(topWidth = 15, bottomWidth = 12, height = 2, length = yBarHeight, headExtension = 1, baseExtension = 2, frontFaceLength = 2,
-    frontFaceScale = 0.85,
+    dovetail(
+    topWidth = 15,
+    bottomWidth = 12,
+    height = 2,
+    length = yBarHeight,
+    headExtension = 1,
+    baseExtension = 2,
+    frontFaceLength = 2,
+    frontFaceScale = 0.95,
     backFaceLength = 5,
     backFaceScale = 1.2);
 }
@@ -24,15 +32,22 @@ module xBarConnectorFromY_P() {
 module yBarConnectorFromX_N() {
     y = 27;
     z = 6;
-    slack = 0.4;
+    slack = xySlack;
 
     translate(v=[-0.5,14,0])
     mirror(v=[1,0,0])
     rotate(a=[0,0,-90])
-    dovetail(topWidth = 15+slack, bottomWidth = 12+slack, height = 2+slack, length = yBarHeight, headExtension = 1, baseExtension = 2, frontFaceLength = 0.5,
-    frontFaceScale = 1.1,
+    dovetail(
+    topWidth = 15+slack,
+    bottomWidth = 12+slack,
+    height = 2+slack,
+    length = yBarHeight,
+    headExtension = 1,
+    baseExtension = 2,
+    frontFaceLength = 0.5,
+    frontFaceScale = 1.05,
     backFaceLength = 5,
-    backFaceScale = 1.3);
+    backFaceScale = 1.2);
 
     // TODO clean this up
     translate(v = [-6, y, z])
