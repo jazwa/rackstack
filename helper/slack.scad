@@ -13,11 +13,10 @@
     - This shouldn't be used to compensate for more serious part shrinkage (> +-0.5mm differences)
 */
 
-xSlack = 0.3;
+// TODO change this
+xySlack = 0.25;
 
-ySlack = 0.3;
-
-radiusXYSlack = max(xSlack, ySlack)/2;
+radiusXYSlack = xySlack/2;
 
 zSlack = 0.0; // TODO figure out nice default value for this. keep in mind z shrinkage
 

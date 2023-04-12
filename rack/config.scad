@@ -8,7 +8,7 @@
 */
 include <./profiles.scad>
 
-profileName = "default";
+profileName = "micro";
 profile = getProfile(profileName);
 
 // echo("Profile:", profile);
