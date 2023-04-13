@@ -1,5 +1,6 @@
 include <./config.scad>
 include <../helper/screws.scad>
+include <../helper/slack.scad>
 include <../helper/math.scad>
 include <../helper/halfspace.scad>
 include <./sharedVariables.scad>
@@ -70,10 +71,12 @@ module mainRail() {
 
 module railFeetSlot_N() {
 
-  slotSlack = 0.2;
+  slotSlack = xySlack;
+  slotZSlack = zSlack;
+
   union() {
-    translate(v=[-slotSlack/2, -slotSlack/2,0])
-    cube(size = [railTotalWidth + slotSlack, railTotalDepth + slotSlack, railFootThickness]);
+    translate(v=[-slotZSlack/2, -slotSlack/2,0])
+    cube(size = [railTotalWidth+slotZSlack, railTotalDepth + slotSlack, railFootThickness]);
 
     translate(v = [railSideMountThickness + 5, railFrontThickness + 4 , -m3HeatSetInsertSlotHeightSlacked])
     heatSetInsertSlot_N(rackFrameScrewType);

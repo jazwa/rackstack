@@ -14,7 +14,7 @@
 */
 
 // TODO change this
-xySlack = 0.25;
+xySlack = 0.2;
 
 radiusXYSlack = xySlack/2;
 
