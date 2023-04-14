@@ -53,6 +53,11 @@ module heatSetInsertSlot_N(screwType, topExtension=inf50) {
   }
 }
 
+function heatSetInsertSlotRadiusSlacked(screwType) =
+  (screwType == "m3")
+  ? m3HeatSetInsertSlotRadiusSlacked
+  : error("Unsupported screw type");
+
 function screwRadiusSlacked(screwType) =
   (screwType == "m3")
   ? m3RadiusSlacked
