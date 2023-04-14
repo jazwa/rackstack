@@ -1,4 +1,5 @@
 include <../helper/common.scad>
+include <../helper/slack.scad>
 include <../helper/halfspace.scad>
 include <../helper/screws.scad>
 include <./config.scad>
@@ -35,35 +36,26 @@ module yBarBasePlateMount_P() {
 
 module yBarBasePlateMount_N() {
 
-
   translate(v=[_heatSetX, _heatSetY, m3HeatSetInsertSlotHeightSlacked + _baseConnRecession])
   mirror(v=[0,0,1])
-    heatSetInsertSlot_N(rackFrameScrewType, topExtension=inf10);
+  heatSetInsertSlot_N(rackFrameScrewType, topExtension=inf10);
 
   hull() {
-    translate(v = [_heatSetX, _heatSetY, 0])
-    cylinder(r=_baseConnY/2, h=_baseConnRecession);
+    translate(v = [_heatSetX, _heatSetY, _baseConnRecession+overhangSlack])
+    roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType)+radiusXYSlack);
 
-    translate(v = [inf50, _heatSetY-_baseConnY/2, 0])
-    cube(size = [eps, _baseConnY, _baseConnRecession]);
+    translate(v = [_heatSetX, _heatSetY, 0])
+    roundCutSlice(radius = _baseConnY/2 + radiusXYSlack);
   }
 
-  hull() {
-    translate(v = [_heatSetX, _heatSetY, 0])
-    cylinder(r=_baseConnY/2+0.25, h=eps);
-
-    translate(v = [inf50, _heatSetY-_baseConnY/2, 0])
-    cube(size = [eps, _baseConnY + 0.5, eps]);
-
-    translate(v = [_heatSetX, _heatSetY, 1])
-    cylinder(r=_baseConnY/2, h=eps);
-
-    translate(v = [inf50, _heatSetY-_baseConnY/2, 1])
-    cube(size = [eps, _baseConnY, eps]);
-  }
 }
 
-*difference() {
-  yBarBasePlateMount_P();
-  yBarBasePlateMount_N();
+module roundCutSlice(radius, length=inf50) {
+
+  hull() {
+    cylinder(r = radius, h = eps);
+
+    translate(v = [length, -radius, 0])
+    cube(size = [eps, radius*2, eps]);
+  }
 }

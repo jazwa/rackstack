@@ -55,13 +55,9 @@ module xyPlate() {
     module yBarConnector() {
       difference() {
         hull() {
-          cylinder(r = _baseConnY/2 - slack/2, h = _baseConnRecession);
-
-          translate(v = [1-connPosX, -_baseConnY/2, 0])
-          cube(size = [eps, _baseConnY-slack, _baseConnRecession]);
-
-          translate(v = [5-connPosX, -_baseConnY/2, 0])
-          cube(size = [eps, _baseConnY-slack, eps]);
+          translate(v=[0,0,_baseConnRecession])
+          roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType)+radiusXYSlack, length=5);
+          roundCutSlice(radius = _baseConnY/2 + radiusXYSlack, length=15);
         }
 
         cylinder(r=screwRadiusSlacked(rackFrameScrewType), h=inf, center=true);
