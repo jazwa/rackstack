@@ -9,7 +9,7 @@ include <./sharedVariables.scad>
 
 module mainRail() {
 
-    b = 0.75; // bevel value
+    b = 0.5; // bevel value
     intersection() {
       mainRailSharp();
       halfspace(vpos=[1,1,0], p=[b,b,0]);
