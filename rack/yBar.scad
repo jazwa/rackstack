@@ -56,7 +56,7 @@ module yBar() {
   module applyStackConnector() {
     apply_n() {
       mirrorOtherCorner()
-      translate(v = [5, 5, 0])
+      translate(v = [connectorXEdgeToYBarXEdge, connectorYEdgeToYBarYEdge, 0])
       stackConnectorSocket_N();
 
       children(0);

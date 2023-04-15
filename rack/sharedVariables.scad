@@ -51,3 +51,15 @@ yBarWallThickness = 3;
 yBarRoundness = baseRoundness;
 
 joinCornerDepth = 32;
+
+// It's actually the railSlotToInnerYEdge of the yBar, it'll be nice to be able to refer to it like yBar.railSlotToInnerYEdge
+xBarX = maxUnitWidth - 2*railSlotToInnerYEdge;
+xBarY = 32;
+xBarHeight = 15;
+
+xBarWallThickness = 2;
+xBarSideThickness = 6;
+xBarRoundness = baseRoundness;
+
+rackTotalWidth = 2*yBarWidth + xBarX;
+rackTotalDepth = yBarDepth;
