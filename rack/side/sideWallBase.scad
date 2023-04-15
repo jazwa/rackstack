@@ -54,7 +54,10 @@ module sideWallBase() {
 
   module applyHingeConnector() {
 
-    hingeHoleShellR = hingeHoleR+1;
+    hingeHoleShellR = hingePoleR+1;
+
+    hingeHoleH = hingePoleH-sideWallConnLugDepression;
+    assert(hingeHoleH > 1);
 
     apply_pn() {
       hull() {
@@ -63,11 +66,11 @@ module sideWallBase() {
       }
 
       union() {
-        hingeHole(extraZ=2);
+        hingeHole(extraZ=1);
 
         translate(v=[0,0,sideWallZ])
         mirror(v=[0,0,1])
-        hingeHole(extraZ=2);
+        hingeHole(extraZ=1);
 
         // Trim parts of the wall for rotational clearance
         halfspace(p=[0, sideWallY-2.5, 0], vpos=[-0.5,1,0]); // flat area to limit rotation against the main rail
@@ -90,8 +93,8 @@ module sideWallBase() {
     }
 
     module hingeHole(extraZ) {
-      translate(v = [hingePoleDx , hingePoleDy, 0])
-      cylinder(r = hingeHoleR, h = hingePoleH+extraZ);
+      translate(v = [hingePoleDx, hingePoleDy, 0])
+      cylinder(r = hingePoleR+radiusXYSlack, h = hingeHoleH+extraZ);
     }
   }
 

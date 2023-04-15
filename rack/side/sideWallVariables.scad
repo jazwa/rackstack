@@ -3,6 +3,7 @@ include <../config.scad>
 include <../sharedVariables.scad>
 include <../../helper/magnet.scad>
 include <../../helper/slack.scad>
+include <../../helper/dowel.scad>
 
 sideWallConnW = 7;
 sideWallConnD = 20;
@@ -17,10 +18,8 @@ magnetMountShellRadius = magnetRSlacked + 1;
 
 innerSideWallToYBarMagnetConn = magnetFaceToSideWallConnOuterYEdge + sideWallSlotToOuterYEdge - sideWallThickness;
 
-hingePoleR = 2;
-hingePoleH = 5;
-hingeHoleR = hingePoleR + radiusXYSlack;
-
+hingePoleR = dowelPinR;
+hingePoleH = dowelPinH;
 
 sideWallZHingeSlack = 0.3;
 sideWallZGapClearance = 0.5;
@@ -35,4 +34,4 @@ sideWallXGapClearance = 0.2;
 sideWallX = (yBarWidth-(railTotalWidth+railSlotToInnerYEdge)) - sideWallXGapClearance;
 
 hingePoleDx = sideWallSlotToOuterYEdge + sideWallConnW/2.0;
-hingePoleDy = sideWallY - (sideWallSlotToOuterXEdge + hingeHoleR);
+hingePoleDy = sideWallY - (sideWallSlotToOuterXEdge + (hingePoleR+radiusXYSlack));

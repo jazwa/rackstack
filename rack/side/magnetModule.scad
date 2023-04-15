@@ -26,7 +26,7 @@ module magnetModule() {
       cube(size = [connW, connD, sideWallConnLugDepression]);
 
       // TODO: pattern for this? beef up mirror4XY?
-      cVal = 0.5;
+      cVal = 0.25;
       halfspace(p=[0,cVal,0], vpos=[0,1,1]);
       halfspace(p=[cVal,0,0], vpos=[1,0,1]);
       halfspace(p=[connW-cVal,0,0], vpos=[-1,0,1]);
