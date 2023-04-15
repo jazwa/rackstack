@@ -5,6 +5,9 @@ include <../helper/screws.scad>
 
 include <./config.scad>
 
+connectorYEdgeToYBarYEdge = 5;
+connectorXEdgeToYBarXEdge = 5;
+
 connectorRectWidth = 10;
 connectorRectDepth = 10;
 connectorTotalHeight = 10;

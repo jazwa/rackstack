@@ -2,18 +2,9 @@ include <../helper/cylindricalFilet.scad>
 include <../helper/screws.scad>
 include <./config.scad>
 include <./xyBarConnector.scad>
-
+include <./sharedVariables.scad>
 // Temporary
 include <./yBar.scad>
-
-// It's actually the railSlotToInnerYEdge of the yBar, it'll be nice to be able to refer to it like yBar.railSlotToInnerYEdge
-xBarX = maxUnitWidth - 2*railSlotToInnerYEdge;
-xBarY = 32;
-xBarHeight = 15;
-
-xBarWallThickness = 2;
-xBarSideThickness = 6;
-xBarRoundness = baseRoundness;
 
 *xBar();
 
