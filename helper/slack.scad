@@ -23,3 +23,7 @@ zSlack = 0.0; // TODO figure out nice default value for this. keep in mind z shr
 overhangSlack = 0.4;
 
 supportedOverhangSlack = 0.4;
+
+
+// special slack cases
+xBarYBarDovetailSlack = xySlack*2;

@@ -58,7 +58,7 @@ xBarY = 32;
 xBarHeight = 15;
 
 xBarWallThickness = 2;
-xBarSideThickness = 6;
+xBarSideThickness = 8;
 xBarRoundness = baseRoundness;
 
 rackTotalWidth = 2*yBarWidth + xBarX;

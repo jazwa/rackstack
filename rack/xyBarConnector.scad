@@ -32,7 +32,7 @@ module xBarConnectorFromY_P() {
 module yBarConnectorFromX_N() {
     y = 27;
     z = 6;
-    slack = xySlack;
+    slack = xBarYBarDovetailSlack;
 
     translate(v=[-0.5,14,0])
     mirror(v=[1,0,0])
