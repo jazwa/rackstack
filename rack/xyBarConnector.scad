@@ -50,7 +50,7 @@ module yBarConnectorFromX_N() {
     backFaceScale = 1.2);
 
     // TODO clean this up
-    translate(v = [-6, y, z])
+    translate(v = [-xBarSideThickness, y, z])
     rotate(a = [0, -90, 0])
     counterSunkHead_N(rackFrameScrewType, screwExtension=inf10, headExtension=inf10);
 }

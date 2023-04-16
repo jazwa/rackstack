@@ -13,8 +13,7 @@
     - This shouldn't be used to compensate for more serious part shrinkage (> +-0.5mm differences)
 */
 
-// TODO change this
-xySlack = 0.2;
+xySlack = 0.4;
 
 radiusXYSlack = xySlack/2;
 
@@ -25,5 +24,5 @@ overhangSlack = 0.4;
 supportedOverhangSlack = 0.4;
 
 
-// special slack cases
-xBarYBarDovetailSlack = xySlack*2;
+// special slack cases, change if neccessary
+xBarYBarDovetailSlack = xySlack;
