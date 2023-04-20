@@ -12,8 +12,11 @@ include <./config.scad>
 partList = ["yBar", "xBar", "mainRail", "xyPlate", "sideModule"];
 
 // Default is to apply the positive first
-module applyConnector(on,to) {
+module applyConnector(on,to, trans) {
 
+  //apply_pn() {
+
+  //}
 }
 
 module connectorPositive(on, to) {

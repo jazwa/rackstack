@@ -1,5 +1,6 @@
 include <./stackConnector.scad>
 include <../helper/halfspace.scad>
+include <../helper/slack.scad>
 include <./sharedVariables.scad>
 
 // Distance from midpoint of stack connectors to each other
@@ -12,12 +13,12 @@ stackConnectorFeet();
 module stackConnectorFeet() {
 
   bandThickness = 2;
-  height = 14;
+  height = 18;
   protrusionAngle = 30;
 
 
   // stack connectors along rack x axis
-  translate(v=[-(stackConnectorDx+connectorRectWidth)/2,-connectorRectDepth/2,0])
+  translate(v=[-(stackConnectorDx+connectorRectWidth)/2,-connectorRectDepth/2,2-overhangSlack])
   mirror(v=[0,0,1]) {
     translate(v = [stackConnectorDx, 0, 0])
     stackConnectorBottom();
@@ -32,16 +33,17 @@ module stackConnectorFeet() {
     intersection() {
       translate(v=[0,0,2])
       difference() {
-        roundedCube(rackTotalWidth, inf50, height, 3, center = true);
+        roundedCube(rackTotalWidth, inf50, height, 5, center = true);
 
         translate(v=[0,0,3])
         roundedCube(rackTotalWidth-6, inf50, height-6, 3, center = true);
       }
 
-      halfspace(vpos=[0,1,0],p=[0,-5,2]);
+      halfspace(vpos=[0,1,-0.8],p=[0,-8,2]);
       halfspace(vpos=[0,-1,0.75],p=[0,5,2]);
 
       halfspace(vpos=[0,-1,0],p=[0,14,2]);
+      halfspace(vpos=[0,1,0],p=[0,-5,2]);
     }
 
   }
