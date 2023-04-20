@@ -6,6 +6,7 @@
 - Implement better build script using python !!!
 - Start working on actual cases
 - Figure out why sidewall build is so slow
+- Tidy up imports
 
 ### Ideas
 - Clean up `sharedVariables.scad`!!!
