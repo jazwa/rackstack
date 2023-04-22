@@ -13,12 +13,10 @@ module hingeModule() {
   applyYBarScrewMount()
   base();
 
-  connSlack = 0.05;
-  connW = sideWallConnW - connSlack;
-  connD = sideWallConnD - connSlack;
+  connW = sideWallConnW;
+  connD = sideWallConnD;
 
   module base() {
-    translate(v=[connSlack, connSlack,0])
     intersection() {
 
       union() {

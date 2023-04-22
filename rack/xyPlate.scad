@@ -1,3 +1,4 @@
+include <../helper/slack.scad>
 include <./yBar.scad>
 include <./xBar.scad>
 
@@ -9,17 +10,16 @@ module xyPlate() {
   plateBody();
 
   module plateBody() {
-    slack = 0.5;
-    plateBodyX = xBarX - slack;
-    plateBodyY = (yBarDepth - 2*xBarY) - slack;
+    plateBodyX = xBarX - xySlack;
+    plateBodyY = (yBarDepth - 2*xBarY) - xySlack;
     plateBodyH = xBarWallThickness;
 
-    translate(v=[slack/2, slack/2, 0])
+    translate(v=[xySlack/2, xySlack/2, 0])
     cube(size=[plateBodyX, plateBodyY, plateBodyH]);
   }
 
   module applyYBarConnectors() {
-    slack = 0.3;
+
     // TODO rename _heatSetX to something more indicative of yBarBasePlateConnector
     connDx = xBarX + 2*_heatSetX; // X distance between connectors
     connDy = yBarDepth - 2*basePlateScrewMountToYBarXZFace; // Y distance between connectors
@@ -56,8 +56,8 @@ module xyPlate() {
       difference() {
         hull() {
           translate(v=[0,0,_baseConnRecession])
-          roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType)+radiusXYSlack, length=5);
-          roundCutSlice(radius = _baseConnY/2 + radiusXYSlack, length=15);
+          roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType), length=5);
+          roundCutSlice(radius = _baseConnY/2, length=15);
         }
 
         cylinder(r=screwRadiusSlacked(rackFrameScrewType), h=inf, center=true);
