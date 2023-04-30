@@ -1,9 +1,13 @@
-include <../helper/math.scad>
-include <../helper/common.scad>
-include <../helper/magnet.scad>
-include <../helper/screws.scad>
+include <../../helper/screws.scad>
+include <../../helper/common.scad>
+include <../../helper/matrix.scad>
+include <../../helper/slack.scad>
+include <../../helper/dovetail.scad>
+include <../../helper/halfspace.scad>
 
-include <./config.scad>
+include <../sharedVariables.scad>
+
+include <../config.scad>
 
 connectorYEdgeToYBarYEdge = 5;
 connectorXEdgeToYBarXEdge = 5;
@@ -20,8 +24,6 @@ connectorRectPlugSlack = -0.2;
 connectorRectSocketSlack = 0.2;
 
 connectorBottomToScrew = 6;
-
-*stackConnectorBottom();
 
 module stackConnectorBase(rectSlack, topSlack=0.0) {
 
@@ -56,7 +58,7 @@ module stackConnectorBase(rectSlack, topSlack=0.0) {
 }
 
 
-module stackConnectorSocket_N() {
+module onYBarStackConnectorNegative() {
 
   wSlacked = connectorRectWidth + connectorRectSocketSlack;
   dSlacked = connectorRectDepth + connectorRectSocketSlack;
@@ -88,6 +90,7 @@ module stackConnectorSocket_N() {
     }
   }
 }
+
 
 module stackConnectorPlug() {
 

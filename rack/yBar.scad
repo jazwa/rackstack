@@ -1,4 +1,5 @@
 include <../helper/math.scad>
+include <../helper/matrix.scad>
 include <../helper/sphericalFilet.scad>
 include <../helper/cylindricalFilet.scad>
 include <../helper/screws.scad>
@@ -6,10 +7,9 @@ include <../helper/magnet.scad>
 include <./config.scad>
 include <./mainRail.scad>
 
+include <./connector/connectors.scad>
+
 // Connectors
-include <./stackConnector.scad>
-include <./xyBarConnector.scad>
-include <./yBarBasePlateConnector.scad>
 include <./side/yBarSideWallConnector.scad>
 include <./sharedVariables.scad>
 
@@ -17,11 +17,11 @@ include <./sharedVariables.scad>
 
 module yBar() {
 
-  applyBasePlateConnector()
-  applyStackConnector()
-  applySideWallConnector()
-  applyRailConnector()
-  applyXBarConnector()
+  applyOnYBarBothCorners(to="basePlate", trans=yBarBasePlateConnectorTrans)
+  applyOnYBarBothCorners(to="stackConnector", trans=yBarStackConnectorTrans)
+  applyOnYBarBothCorners(to="sideModule", trans=yBarSideModuleConnectorTrans)
+  applyOnYBarBothCorners(to="mainRail", trans=yBarMainRailConnectorTrans)
+  applyOnYBarBothCorners(to="xBar", trans=yBarXBarConnectorTrans)
   yBarBase();
 
   module yBarBase() {
@@ -37,78 +37,28 @@ module yBar() {
     }
   }
 
-  module applyBasePlateConnector() {
-    apply_pn() {
-      mirrorOtherCorner() {
-        translate(v = [yBarWidth-yBarBasePlateConnectorWidth, joinCornerDepth, yBarWallThickness])
-        yBarBasePlateMount_P();
-      }
-
-      mirrorOtherCorner() {
-        translate(v = [yBarWidth-yBarBasePlateConnectorWidth, joinCornerDepth, 0])
-        yBarBasePlateMount_N();
-      }
-
-      children(0);
-    }
-  }
-
-  module applyStackConnector() {
-    apply_n() {
-      mirrorOtherCorner()
-      translate(v = [connectorXEdgeToYBarXEdge, connectorYEdgeToYBarYEdge, 0])
-      stackConnectorSocket_N();
-
-      children(0);
-    }
-  }
-
-  module applySideWallConnector() {
-    apply_n() {
-      mirrorOtherCorner()
-      translate(v = [
-          yBarWidth-(railTotalWidth+railSlotToInnerYEdge+railSlotToSideWallSlot+sideWallConnectorSlotWidth),
-          sideWallSlotToXZ,
-          yBarHeight
-        ])
-      yBarSideWallConnector_N();
-
-      children(0);
-    }
-  }
-
-  module applyRailConnector() {
-
-    apply_n() {
-      mirrorOtherCorner()
-      translate(v = [yBarWidth-(railTotalWidth+railSlotToInnerYEdge), railSlotToXZ, yBarHeight-railFootThickness])
-      railFeetSlot_N();
-
-      children(0);
-    }
-  }
-
-  module applyXBarConnector() {
-    apply_pn() {
-
-      mirrorOtherCorner()
-      translate(v=[yBarWidth + 0.5,14,0])
-      xBarConnectorFromY_P();
-
-      mirrorOtherCorner()
-      translate(v = [yBarWidth+eps, 0, 0])
-      xBarConnectorFromY_N();
-
-      children(0);
-    }
-  }
-
-  module mirrorOtherCorner() {
-    children(0);
-
-    translate(v = [0, yBarDepth, 0])
-    mirror(v = [0, 1, 0])
+  // Helper module to apply connectors to both corners
+  module applyOnYBarBothCorners(to, trans) {
+    applyConnector(on="yBar", to=to, trans=trans)
+    applyConnector(on="yBar", to=to, trans=yBarMirrorOtherCornerTrans * trans)
     children(0);
   }
-
 }
+
+yBarMirrorOtherCornerTrans = translate(v = [0, yBarDepth, 0]) * mirror(v = [0, 1, 0]);
+
+yBarBasePlateConnectorTrans = translate(v = [yBarWidth-yBarBasePlateConnectorWidth, joinCornerDepth, 0]);
+
+yBarStackConnectorTrans = translate(v = [connectorXEdgeToYBarXEdge, connectorYEdgeToYBarYEdge, 0]);
+
+yBarSideModuleConnectorTrans = translate(v = [
+    yBarWidth-(railTotalWidth+railSlotToInnerYEdge+railSlotToSideWallSlot+sideWallConnectorSlotWidth),
+  sideWallSlotToXZ,
+  yBarHeight]);
+
+yBarMainRailConnectorTrans = translate(v = [
+    yBarWidth-(railTotalWidth+railSlotToInnerYEdge),
+  railSlotToXZ,
+    yBarHeight-railFootThickness]);
+
+yBarXBarConnectorTrans = translate(v = [yBarWidth+eps, 0, 0]);

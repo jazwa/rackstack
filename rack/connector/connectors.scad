@@ -1,46 +1,77 @@
 /*
   Connector factory
 */
-include <../helper/screws.scad>
-include <../helper/slack.scad>
-include <../helper/dovetail.scad>
-include <../helper/halfspace.scad>
-include <./config.scad>
+include <../../helper/screws.scad>
+include <../../helper/common.scad>
+include <../../helper/matrix.scad>
+include <../../helper/slack.scad>
+include <../../helper/dovetail.scad>
+include <../../helper/halfspace.scad>
+include <../config.scad>
+
+include <./xBarYBarConnectors.scad>
+include <./mainRailYBarConnectors.scad>
+include <./sideModuleYBarConnectors.scad>
+include <./stackYBarConnectors.scad>
+include <./basePlateYBarConnectors.scad>
 
 // WIP
-
 partList = ["yBar", "xBar", "mainRail", "xyPlate", "sideModule"];
 
+mirror(v=[1,0,0])
+*connectorDebug(on="xBar", to="yBar", trans=identity);
+
+*connectorDebug(on="yBar", to="xBar", trans=identity);
+
 // Default is to apply the positive first
-module applyConnector(on,to, trans) {
+module applyConnector(on, to, trans) {
 
-  //apply_pn() {
+  apply_pn() {
+    multmatrix(trans)
+    connectorPositive(on=on, to=to);
 
-  //}
+    multmatrix(trans)
+    connectorNegative(on=on, to=to);
+
+    children(0);
+  }
+}
+
+
+module connectorDebug(on, to, trans) {
+
+  color([0,1,0])
+  multmatrix(trans)
+  connectorPositive(on=on, to=to);
+
+  color([1,0,0])
+  multmatrix(trans)
+  connectorNegative(on=on, to=to);
+
+}
+
+
+module applyConnectorDebug(on,to,trans) {
+
+  echo("on: ", on, "-- to:", to);
+
+  apply_p() {
+    multmatrix(trans)
+    connectorDebug(on=on,to=to,trans=trans);
+
+    children(0);
+  }
 }
 
 module connectorPositive(on, to) {
 
   if (on == "yBar" && to == "xBar") {
     onYBarToXBarPositive();
+  } else if (on == "yBar" && to == "basePlate") {
+    onYBarBasePlateConnectorPositive();
+  } else if (on == "mainRail" && to == "yBar") {
+    onMainRailYBarConnectorPositive();
   }
-
-
-  module onYBarToXBarPositive() {
-    rotate(a=[0,0,-90])
-    dovetail(
-    topWidth = 15,
-    bottomWidth = 12,
-    height = 2,
-    length = yBarHeight,
-    headExtension = 1,
-    baseExtension = 2,
-    frontFaceLength = 2,
-    frontFaceScale = 0.95,
-    backFaceLength = 5,
-    backFaceScale = 1.2);
-  }
-
 }
 
 module connectorNegative(on, to) {
@@ -51,44 +82,14 @@ module connectorNegative(on, to) {
     onXBarToYBarNegative();
   } else if (on == "yBar" && to == "sideModule") {
     onYBarSideModuleNegative();
+  } else if (on == "yBar" && to == "mainRail") {
+    onYBarToMainRailNegative();
+  } else if (on == "yBar" && to == "stackConnector") {
+    onYBarStackConnectorNegative();
+  } else if (on == "yBar" && to == "basePlate") {
+    onYBarBasePlateConnectorNegative();
+  } else if (on == "mainRail" && to == "yBar") {
+    onMainRailYBarConnectorNegative();
   }
-
-
-  module onYBarToXBarNegative() {
-    y = 27;
-    z = 6;
-    translate(v = [-m3HeatSetInsertSlotHeightSlacked, y, z])
-    rotate(a = [0, 90, 0])
-    heatSetInsertSlot_N(rackFrameScrewType);
-
-  }
-
-  module onXBarToYBarNegative() {
-    y = 27;
-    z = 6;
-    slack = xySlack;
-
-    translate(v=[-0.5,14,0])
-    mirror(v=[1,0,0])
-    rotate(a=[0,0,-90])
-    dovetail(topWidth = 15+slack, bottomWidth = 12+slack, height = 2+slack, length = yBarHeight,
-             headExtension = 1, baseExtension = 2, frontFaceLength = 0.5, frontFaceScale = 1.05,
-             backFaceLength = 5, backFaceScale = 1.2);
-
-    // TODO clean this up
-    translate(v = [-6, y, z])
-    rotate(a = [0, -90, 0])
-    counterSunkHead_N(rackFrameScrewType, screwExtension=inf10, headExtension=inf10);
-  }
-
-  module onYBarSideModuleNegative() {
-    translate(v = [-xySlack/2, -xySlack/2, -sideWallConnLugDepression])
-    cube(size = [sideWallConnW+xySlack, sideWallConnD+xySlack, sideWallConnLugDepression]);
-
-    translate(v = [yBarScrewHoleToOuterYEdge, yBarScrewHoleToFrontXEdge, -(m3HeatSetInsertSlotHeightSlacked+sideWallConnLugDepression)])
-    heatSetInsertSlot_N(rackFrameScrewType);
-  }
-
 
 }
-
