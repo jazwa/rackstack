@@ -1,16 +1,17 @@
 include <../helper/cylindricalFilet.scad>
 include <../helper/screws.scad>
+include <../helper/matrix.scad>
+
 include <./config.scad>
-include <./xyBarConnector.scad>
 include <./sharedVariables.scad>
-// Temporary
-include <./yBar.scad>
+include <./connector/connectors.scad>
 
 *xBar();
 
 module xBar() {
 
-  applyYBarConnector()
+  applyConnector(on="xBar", to="yBar", trans=xBarMirrorOtherCornerTrans * xBarYBarConnectorTrans)
+  applyConnector(on="xBar", to="yBar", trans=xBarYBarConnectorTrans)
   xBarBase();
 
   module xBarBase() {
@@ -29,24 +30,8 @@ module xBar() {
     }
   }
 
-  module mirrorOtherCorner() {
-    children(0);
-
-    translate(v = [0, xBarX, 0])
-    mirror(v = [0, 1, 0]) {
-      children(0);
-    }
-  }
-
-  module applyYBarConnector() {
-    apply_n() {
-
-      mirrorOtherCorner()
-      rotate(a=[0,0,-90])
-      yBarConnectorFromX_N();
-
-      children(0);
-    }
-  }
-
 }
+
+xBarYBarConnectorTrans = rotate(a=[0,0,-90]);
+
+xBarMirrorOtherCornerTrans = translate(v = [0, xBarX, 0]) * mirror(v = [0, 1, 0]);

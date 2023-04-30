@@ -1,9 +1,13 @@
-include <../helper/common.scad>
-include <../helper/slack.scad>
-include <../helper/halfspace.scad>
-include <../helper/screws.scad>
-include <./config.scad>
-include <./sharedVariables.scad>
+include <../../helper/screws.scad>
+include <../../helper/common.scad>
+include <../../helper/matrix.scad>
+include <../../helper/slack.scad>
+include <../../helper/dovetail.scad>
+include <../../helper/halfspace.scad>
+
+include <../sharedVariables.scad>
+
+include <../config.scad>
 
 _mountX = 12;
 _mountY = 14;
@@ -27,14 +31,15 @@ _heatSetY = _mountY - _innerYFaceToScrew;
 basePlateScrewMountToYBarXZFace = _heatSetY + joinCornerDepth; // Distance to the nearest YBar XZ face
 basePlateScrewMountToYBarYZFace =  (yBarWidth+_heatSetX) - yBarBasePlateConnectorWidth;
 
-module yBarBasePlateMount_P() {
+module onYBarBasePlateConnectorPositive() {
+  translate(v=[0,0,yBarWallThickness])
   intersection() {
     cube(size = [_mountX, _mountY, _mountZ]);
     halfspace(vpos=[0, -1, -1], p=[0, _mountY-1, _mountZ-1]);
   }
 }
 
-module yBarBasePlateMount_N() {
+module onYBarBasePlateConnectorNegative() {
 
   translate(v=[_heatSetX, _heatSetY, m3HeatSetInsertSlotHeightSlacked + _baseConnRecession])
   mirror(v=[0,0,1])
@@ -48,14 +53,16 @@ module yBarBasePlateMount_N() {
     roundCutSlice(radius = _baseConnY/2 + radiusXYSlack);
   }
 
-}
 
-module roundCutSlice(radius, length=inf50) {
 
-  hull() {
-    cylinder(r = radius, h = eps);
+  module roundCutSlice(radius, length=inf50) {
 
-    translate(v = [length, -radius, 0])
-    cube(size = [eps, radius*2, eps]);
+    hull() {
+      cylinder(r = radius, h = eps);
+
+      translate(v = [length, -radius, 0])
+      cube(size = [eps, radius*2, eps]);
+    }
   }
+
 }
