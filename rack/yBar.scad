@@ -8,9 +8,6 @@ include <./config.scad>
 include <./mainRail.scad>
 
 include <./connector/connectors.scad>
-
-// Connectors
-include <./side/yBarSideWallConnector.scad>
 include <./sharedVariables.scad>
 
 *yBar();
