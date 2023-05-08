@@ -4,7 +4,7 @@ include <./sideWallBase.scad>
 
 module sideWallLeft() {
 
-  applyEpicVentilation()
+  //applyEpicVentilation()
   applySideWallVerticalRibs()
   render()
   sideWallBase();

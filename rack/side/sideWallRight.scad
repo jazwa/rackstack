@@ -4,7 +4,7 @@ include <./sideWallBase.scad>
 
 module sideWallRight() {
 
-  applyEpicVentilation()
+  //applyEpicVentilation()
   mirror(v=[1,0,0])
   applySideWallVerticalRibs()
   render()
