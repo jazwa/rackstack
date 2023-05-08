@@ -14,7 +14,7 @@ module mainRail() {
 
   applyBevels()
   applyConnector(on="mainRail", to="yBar", trans=yBarConnectorTrans)
-  applyConnector(on="mainRail", to="yBar", trans=mirrorOtherSideTrans * yBarConnectorTrans)
+  applyConnector(on="mainRail", to="yBar", trans=mirrorMainRailOtherSideTrans * yBarConnectorTrans)
   mainRailBase();
 
   module mainRailBase() {
@@ -54,8 +54,6 @@ module mainRail() {
 
   yBarConnectorTrans = identity;
 
-  mirrorOtherSideTrans = translate(v = [0, 0, railTotalHeight]) * mirror(v=[0,0,1]);
-
   module applyBevels() {
     b = 0.5; // bevel value
     apply_n() {
@@ -70,3 +68,7 @@ module mainRail() {
   }
 
 }
+
+// used in assembly
+mirrorMainRailOtherSideTrans = translate(v = [0, 0, railTotalHeight]) * mirror(v=[0,0,1]);
+

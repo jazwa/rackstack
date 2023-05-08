@@ -5,6 +5,8 @@ include <./yBar.scad>
 include <./xBar.scad>
 include <./side/magnetModule.scad>
 include <./side/hingeModule.scad>
+include <./side/sideWallRight.scad>
+include <./side/sideWallLeft.scad>
 
 assemblyInstructions();
 
@@ -54,6 +56,11 @@ module assemblyInstructions () {
         cylinder($fn = 6, r = 1.5);
       }
     }
+  }
+
+  module hingeDowel() {
+    color([0,1,1])
+    cylinder(h=dowelPinH, r=dowelPinR);
   }
 
   module arrow(length) {
@@ -116,19 +123,16 @@ module assemblyInstructions () {
     }
   }
 
-
-
   module attachSideConnectorModulesToYBars(elevation=0) {
     // attach side connector modules to y bars
 
-    screwXBarAndYBar(screwExtension=0);
-
     // side module to front corner ybar
     function sideModuleTrans(t=0) =
-      translate(v=[sideWallConnW,0,t-sideWallConnLugDepression])
-      * yBarSideModuleConnectorTrans
+        translate(v=[sideWallConnW,0,t-sideWallConnLugDepression])
+        * yBarSideModuleConnectorTrans
       * mirror(v=[1,0,0]); // mirror for magnetModule
 
+    screwXBarAndYBar(screwExtension=0);
 
     multmatrix(sideModuleTrans(elevation))
     union() {
@@ -163,9 +167,6 @@ module assemblyInstructions () {
     }
   }
 
-
-  connectXYTrayWithMainRails(elevation=5);
-
   module connectXYTrayWithMainRails(elevation=5) {
 
     attachSideConnectorModulesToYBars();
@@ -179,27 +180,85 @@ module assemblyInstructions () {
       caseScrewA();
     }
 
-    multmatrix(mainRailTrans(elevation=10))
+    multmatrix(mainRailTrans(elevation=elevation))
     railAndScrew(elevation=elevation);
 
-    multmatrix(yBarMirrorOtherCornerTrans * mainRailTrans(elevation=10))
+    multmatrix(yBarMirrorOtherCornerTrans * mainRailTrans(elevation=elevation))
     railAndScrew(elevation=elevation);
 
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * mainRailTrans(elevation=10))
+    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * mainRailTrans(elevation=elevation))
     railAndScrew(elevation=elevation);
 
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * mainRailTrans(elevation=10))
+    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * mainRailTrans(elevation=elevation))
     railAndScrew(elevation=elevation);
   }
 
+  module insertDowelsIntoSideWall(t=10) {
 
-  module insertDowelsIntoSideWall() {
+    hingeHoleH = hingePoleH-sideWallConnLugDepression;
+
+    sideWallLeft();
+
+    translate(v=[hingePoleDx,hingePoleDy, (sideWallZ-hingeHoleH) + t])
+    hingeDowel();
+
+    translate(v=[hingePoleDx,hingePoleDy, (hingeHoleH-hingePoleH)-t])
+    hingeDowel();
 
   }
 
+  //propUpBottomXYTraywithSideWalls(t=0,r=0);
 
-  module connectXYTraysWithSideWalls() {
+  module propUpBottomXYTraywithSideWalls(t=0, r=0) {
 
+    function sideWallToYBarTrans(t=0,r=0) =
+        yBarMirrorOtherCornerTrans *
+        yBarSideModuleConnectorTrans * // bring to y bar space
+        mirror(v=[0,1,0]) *
+        translate(v=[0,0,t]) *
+        translate(v=[sideWallConnW/2.0, -hingePoleR, sideWallZHingeTotalClearance]) * // bring to side module space
+        rotate(a=[0,0,-r]) *
+        translate(v=[-hingePoleDx, -hingePoleDy, 0]);
+
+    connectXYTrayWithMainRails(elevation=0);
+
+    multmatrix(sideWallToYBarTrans(t=t, r=r))
+    insertDowelsIntoSideWall(t=0);
+
+    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * sideWallToYBarTrans(t=t,r=r))
+    insertDowelsIntoSideWall(t=0);
+  }
+
+  attachXYTrays(t=0);
+
+  module attachXYTrays(t=0) {
+
+    function upperXYTrayTrans(t=0) = yBarMainRailConnectorTrans * mirrorMainRailOtherSideTrans * inv4x4(yBarMainRailConnectorTrans);
+
+    module singleScrew(t=0) {
+      translate(v = [railSideMountThickness+5, railFrontThickness+4, railFootThickness + 2*t])
+      caseScrewA();
+    }
+
+    translate(v=[0,0,t])
+    multmatrix(upperXYTrayTrans(t=0)) {
+      attachSideConnectorModulesToYBars();
+
+      multmatrix(yBarMainRailConnectorTrans)
+      singleScrew(t=t);
+
+      multmatrix(yBarMirrorOtherCornerTrans * yBarMainRailConnectorTrans)
+      singleScrew(t=t);
+
+      multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * yBarMainRailConnectorTrans)
+      singleScrew(t=t);
+
+      multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * yBarMirrorOtherCornerTrans * yBarMainRailConnectorTrans)
+      singleScrew(t=t);
+
+    }
+
+    propUpBottomXYTraywithSideWalls(t=0,r=10);
   }
 
 
