@@ -84,6 +84,17 @@ module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
   }
 }
 
+module hexNut(screwType) {
+  if (screwType == "m3") {
+    translate(v=[0,0,-m3HexNutThickness/2])
+    difference() {
+      cylinder(r=m3HexNutWidthAcrossCorners/2, h=m3HexNutThickness, $fn=6);
+      cylinder(r=m3Radius,h=inf10);
+    }
+  } else {
+    error("Unsupported screw type");
+  }
+}
 
 module hexNutPocket_N(screwType, openSide=true) {
   if (screwType == "m3") {

@@ -1,4 +1,3 @@
-include <./stackConnector.scad>
 include <../helper/halfspace.scad>
 include <../helper/slack.scad>
 include <./sharedVariables.scad>
@@ -7,8 +6,7 @@ include <./sharedVariables.scad>
 stackConnectorDx = rackTotalWidth - 2*(connectorXEdgeToYBarXEdge + connectorRectWidth/2);
 stackConnectorDy = rackTotalDepth - 2*(connectorYEdgeToYBarYEdge + connectorRectDepth/2);
 
-
-stackConnectorFeet();
+*stackConnectorFeet();
 
 module stackConnectorFeet() {
 
@@ -16,16 +14,18 @@ module stackConnectorFeet() {
   height = 18;
   protrusionAngle = 30;
 
-
-  // stack connectors along rack x axis
-  translate(v=[-(stackConnectorDx+connectorRectWidth)/2,-connectorRectDepth/2,2-overhangSlack])
+  translate(v = [stackConnectorDx/2, 0, 2])
   mirror(v=[0,0,1]) {
-    translate(v = [stackConnectorDx, 0, 0])
-    stackConnectorBottom();
+    // stack connectors along rack x axis
+    translate(v = [-(stackConnectorDx+connectorRectWidth)/2, -connectorRectDepth/2, 2-overhangSlack])
+    mirror(v = [0, 0, 1]) {
+      translate(v = [stackConnectorDx, 0, 0])
+      stackConnectorBottom();
 
-    stackConnectorBottom();
+      stackConnectorBottom();
+    }
+    band();
   }
-  band();
 
 
   module band() {
@@ -40,9 +40,9 @@ module stackConnectorFeet() {
       }
 
       halfspace(vpos=[0,1,-0.8],p=[0,-8,2]);
-      halfspace(vpos=[0,-1,0.75],p=[0,5,2]);
+      halfspace(vpos=[0,-1,0.75],p=[0,6,2]);
 
-      halfspace(vpos=[0,-1,0],p=[0,14,2]);
+      halfspace(vpos=[0,-1,0],p=[0,16,2]);
       halfspace(vpos=[0,1,0],p=[0,-5,2]);
     }
 

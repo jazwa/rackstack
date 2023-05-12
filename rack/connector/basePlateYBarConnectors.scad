@@ -53,16 +53,14 @@ module onYBarBasePlateConnectorNegative() {
     roundCutSlice(radius = _baseConnY/2 + radiusXYSlack);
   }
 
+}
 
+module roundCutSlice(radius, length=inf50) {
 
-  module roundCutSlice(radius, length=inf50) {
+  hull() {
+    cylinder(r = radius, h = eps);
 
-    hull() {
-      cylinder(r = radius, h = eps);
-
-      translate(v = [length, -radius, 0])
-      cube(size = [eps, radius*2, eps]);
-    }
+    translate(v = [length, -radius, 0])
+    cube(size = [eps, radius*2, eps]);
   }
-
 }
