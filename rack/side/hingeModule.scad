@@ -50,7 +50,7 @@ module hingeModule() {
         translate(v = [sideWallConnW/2.0, hingePoleR + radiusXYSlack, 0])
         cylinder(r = hingePoleR + radiusXYSlack, h = inf50);
 
-        translate(v = [sideWallConnW/2.0, , 0])
+        translate(v = [sideWallConnW/2.0, 0 , 0])
         cube(size=[2, 5, inf50], center=true);
       }
 

@@ -11,8 +11,8 @@ include <../sharedVariables.scad>
 include <./magnetModule.scad>
 include <./hingeModule.scad>
 
-echo("Side Wall Height", sideWallZ);
-echo("Side Wall Depth", sideWallY);
+//echo("Side Wall Height", sideWallZ);
+//echo("Side Wall Depth", sideWallY);
 
 //translate(v = [hingePoleDx ,hingePoleDy, 10])
 //rotate(a=[0,0,-120])

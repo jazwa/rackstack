@@ -58,6 +58,11 @@ function heatSetInsertSlotRadiusSlacked(screwType) =
   ? m3HeatSetInsertSlotRadiusSlacked
   : error("Unsupported screw type");
 
+function heatSetInsertSlotHeightSlacked(screwType) =
+  (screwType == "m3")
+  ? m3HeatSetInsertSlotHeightSlacked
+  : error("Unsupported screw type");
+
 function screwRadiusSlacked(screwType) =
   (screwType == "m3")
   ? m3RadiusSlacked

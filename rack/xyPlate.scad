@@ -32,10 +32,6 @@ module xyPlate() {
 
   module applyYBarConnectors() {
 
-    // TODO ren
-    echo("connPosX", connPosX);
-    echo("connPosY", connPosY);
-
     apply_p() {
       union() {
         translate(v=[connPosX, connPosY, 0])

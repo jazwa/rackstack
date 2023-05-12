@@ -17,6 +17,10 @@ module assemblyInstructions () {
   // Instruction List (in order)
   // TODO: add steps to glue magnets and add heatset inserts
 
+  //render()
+  // addHeatSetInsertsYBar(at=$t);
+  // addMagnetsToMagnetModules(at=$t);
+  // addMagnetsToSideWall(at=$t);
   // attachXBarWithYBar(at=$t);
   // screwXBarAndYBar(at=$t);
   // attachSideConnectorModulesToYBars(at=$t);
@@ -32,16 +36,86 @@ module assemblyInstructions () {
   // end instructions
   final();
 
+
+  module addHeatSetInsertsYBar(at=0) {
+    t = lerp(a=10,b=0,t=at);
+
+    yBar();
+
+    heatSetHeight = heatSetInsertSlotHeightSlacked(rackFrameScrewType) * 0.95;
+
+    function sideModuleHeatSetTrans(t=0) =
+      translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,t-(heatSetHeight+sideWallConnLugDepression)]) *
+      yBarSideModuleConnectorTrans;
+
+    function mainRailHeatSetTrans(t=0) =
+      translate(v=[mainRailHeatSetOnYBarDx,mainRailHeatSetOnYBarDy,t-heatSetHeight]) *
+      yBarMainRailConnectorTrans;
+
+    function xBarHeatSetTrans(t=0) =
+      translate(v=[t-heatSetHeight,27,6]) *
+      yBarXBarConnectorTrans *
+      rotate(a=[0,90,0]);
+
+    module heatSetInsertsOneCorner(t=0) {
+      multmatrix(sideModuleHeatSetTrans(t = t))
+      heatSetInsert();
+
+      multmatrix(mainRailHeatSetTrans(t = t))
+      heatSetInsert();
+
+      multmatrix(xBarHeatSetTrans(t = t))
+      heatSetInsert();
+    }
+
+    heatSetInsertsOneCorner(t=t);
+
+    multmatrix(yBarMirrorOtherCornerTrans)
+    heatSetInsertsOneCorner(t=t);
+
+  }
+
+  module addMagnetsToMagnetModules(at=0) {
+    t = lerp(a=8,b=0,t=at);
+
+    magnetModule();
+
+    function insertMagnetTrans(t=0) =
+      translate(v=[sideWallConnW-(magnetFaceToSideWallConnOuterYEdge+magnetHSlacked) + t,
+                   magnetModuleMagnetMountDy,
+                   magnetModuleMagnetMountDz]) *
+      rotate(a=[0,90,0]);
+
+    multmatrix(insertMagnetTrans(t=t))
+    magnet();
+  }
+
+  module addMagnetsToSideWall(at=0) {
+    t = lerp(a=8,b=0,t=at);
+
+    sideWallLeft();
+
+    function insertMagnetTrans(t=0) =
+      translate(v=[sideWallThickness+t, magnetMountToYBarFront, magnetMountToYBarTop-sideWallZHingeTotalClearance]) *
+      rotate(a=[0,90,0]);
+
+    multmatrix(insertMagnetTrans(t=t))
+    magnet();
+
+    multmatrix(translate(v=[0,0,sideWallZ - 2*(magnetMountToYBarTop- sideWallZHingeTotalClearance)]) * insertMagnetTrans(t=t))
+    magnet();
+  }
+
   module attachXBarWithYBar(at=0) {
 
     t = lerp(a=20, b=0, t=at);
 
     // assemble x-y bar trays
     multmatrix(translate(v = [0, 0, t]))
-    yBar();
+    addHeatSetInsertsYBar(at=1);
 
     multmatrix(translate(v = [0, 0, t])*xBarSpaceToYBarSpace*xBarMirrorOtherCornerTrans*yBarSpaceToXBarSpace)
-    yBar();
+    addHeatSetInsertsYBar(at=1);
 
     multmatrix(xBarSpaceToYBarSpace)
     xBar();
@@ -58,10 +132,10 @@ module assemblyInstructions () {
       translate(v=[27,xBarSideThickness + extension,6]) * rotate(a=[270,0,0]);
 
     // screw to connect x and y bars
-    yBar();
+    addHeatSetInsertsYBar(at=1);
 
     multmatrix(xBarSpaceToYBarSpace*xBarMirrorOtherCornerTrans*yBarSpaceToXBarSpace)
-    yBar();
+    addHeatSetInsertsYBar(at=1);
 
     multmatrix(xBarSpaceToYBarSpace)
     union() {
@@ -99,7 +173,7 @@ module assemblyInstructions () {
 
     multmatrix(sideModuleTrans(elevation))
     union() {
-      magnetModule();
+      addMagnetsToMagnetModules(at=1);
 
       translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
       caseScrewA();
@@ -107,7 +181,7 @@ module assemblyInstructions () {
 
     multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * sideModuleTrans(elevation))
     union() {
-      magnetModule();
+      addMagnetsToMagnetModules(at=1);
 
       translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
       caseScrewA();
@@ -164,7 +238,7 @@ module assemblyInstructions () {
 
     hingeHoleH = hingePoleH-sideWallConnLugDepression;
 
-    sideWallLeft();
+    addMagnetsToSideWall(at=1);
 
     translate(v=[hingePoleDx,hingePoleDy, (sideWallZ-hingeHoleH) + t])
     hingeDowel();
@@ -372,6 +446,17 @@ module assemblyInstructions () {
   module hingeDowel() {
     color([0,1,1])
     cylinder(h=dowelPinH, r=dowelPinR);
+  }
+
+  module heatSetInsert() {
+    color([1,0,1])
+    scale(v=[0.95,0.95,0.95])
+    heatSetInsertSlot_N(screwType=rackFrameScrewType, topExtension=0);
+  }
+
+  module magnet() {
+    color([1,0,1])
+    cylinder(r=magnetR, h=magnetH);
   }
 
   module arrow(length) {
