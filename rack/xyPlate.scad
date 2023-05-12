@@ -1,13 +1,25 @@
 include <../helper/slack.scad>
 include <./yBar.scad>
 include <./xBar.scad>
+include <./connector/connectors.scad>
 
-xyPlate();
+*xyPlate();
+
+
+xyPlateConnDx = xBarX + 2*_heatSetX; // X distance between connectors
+xyPlateConnDy = yBarDepth - 2*basePlateScrewMountToYBarXZFace; // Y distance between connectors
 
 module xyPlate() {
 
+  translate(v=-[connPosX,connPosY,0]) // center around one of the YBarConnector holes
   applyYBarConnectors()
   plateBody();
+
+  connYBarCornerDx = yBarWidth; // distance from a plate body corner and the nearest yBar corner
+  connYBarCornerDy = xBarY; // distance from a plate body corner and the nearest yBar corner
+
+  connPosX = basePlateScrewMountToYBarYZFace - connYBarCornerDx; // distance between plateBody corner at (0,0,0) and the related corner
+  connPosY = basePlateScrewMountToYBarXZFace - connYBarCornerDy;
 
   module plateBody() {
     plateBodyX = xBarX - xySlack;
@@ -20,30 +32,23 @@ module xyPlate() {
 
   module applyYBarConnectors() {
 
-    // TODO rename _heatSetX to something more indicative of yBarBasePlateConnector
-    connDx = xBarX + 2*_heatSetX; // X distance between connectors
-    connDy = yBarDepth - 2*basePlateScrewMountToYBarXZFace; // Y distance between connectors
-
-    connYBarCornerDx = yBarWidth; // distance from a plate body corner and the nearest yBar corner
-    connYBarCornerDy = xBarY; // distance from a plate body corner and the nearest yBar corner
-
-    connPosX = basePlateScrewMountToYBarYZFace - connYBarCornerDx; // distance between plateBody corner at (0,0,0) and the related corner
-    connPosY = basePlateScrewMountToYBarXZFace - connYBarCornerDy;
-
+    // TODO ren
+    echo("connPosX", connPosX);
+    echo("connPosY", connPosY);
 
     apply_p() {
       union() {
         translate(v=[connPosX, connPosY, 0])
         yBarConnector();
 
-        translate(v=[connPosX, connPosY+connDy, 0])
+        translate(v=[connPosX, connPosY+xyPlateConnDy, 0])
         yBarConnector();
 
-        translate(v=[connPosX+connDx, connPosY, 0])
+        translate(v=[connPosX+xyPlateConnDx, connPosY, 0])
         rotate(a=[0,0,180])
         yBarConnector();
 
-        translate(v=[connPosX+connDx, connPosY+connDy, 0])
+        translate(v=[connPosX+xyPlateConnDx, connPosY+xyPlateConnDy, 0])
         rotate(a=[0,0,180])
         yBarConnector();
 

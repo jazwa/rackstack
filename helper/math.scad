@@ -23,3 +23,5 @@ module mirror4XY(p, dx, dy) {
     translate(v=[px+dx, py+dy, 0])
     children(0);
 }
+
+function lerp(a, b, t) = (b * t + a * (1 - t));
