@@ -9,6 +9,9 @@ include <../../helper/screws.scad>
 translate(v=[10,-5,-(2+sideWallZHingeTotalClearance)])
 *magnetModule();
 
+magnetModuleMagnetMountDy = magnetMountToYBarFront - sideWallSlotToXZ;
+magnetModuleMagnetMountDz = magnetMountToYBarTop + sideWallConnLugDepression;
+
 module magnetModule() {
 
   applyYBarScrewMount()
@@ -42,11 +45,6 @@ module magnetModule() {
   }
 
   module applyMagnetMount() {
-
-    magnetMountDx = magnetMountShellRadius;
-    magnetMountDy = magnetMountToYBarFront - sideWallSlotToXZ;
-    magnetMountDz = magnetMountToYBarTop + sideWallConnLugDepression;
-
     apply_pn() {
       magnetMountShell();
       magnetMountHole();
@@ -55,7 +53,7 @@ module magnetModule() {
 
     module magnetMountShell() {
       hull() {
-        translate(v = [0, magnetMountDy, magnetMountDz])
+        translate(v = [0, magnetModuleMagnetMountDy, magnetModuleMagnetMountDz])
         rotate(a = [0, 90, 0])
         cylinder(r = magnetMountShellRadius, h = sideWallConnW-magnetFaceToSideWallConnOuterYEdge);
 
@@ -66,8 +64,8 @@ module magnetModule() {
 
     module magnetMountHole() {
       translate(v = [sideWallConnW-(magnetFaceToSideWallConnOuterYEdge+magnetHSlacked),
-        magnetMountDy,
-        magnetMountDz])
+        magnetModuleMagnetMountDy,
+        magnetModuleMagnetMountDz])
       rotate(a = [0, 90, 0])
       cylinder(r = magnetRSlacked, h = magnetHSlacked);
     }
