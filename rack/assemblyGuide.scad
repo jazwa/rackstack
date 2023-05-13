@@ -17,7 +17,7 @@ module assemblyInstructions () {
   // Instruction List (in order)
   // TODO: add steps to glue magnets and add heatset inserts
 
-  //render()
+  render()
   // addHeatSetInsertsYBar(at=$t);
   // addMagnetsToMagnetModules(at=$t);
   // addMagnetsToSideWall(at=$t);
@@ -34,11 +34,11 @@ module assemblyInstructions () {
   // attachXYPlates(at=$t);
 
   // end instructions
-  final();
+  finalDouble();
 
 
   module addHeatSetInsertsYBar(at=0) {
-    t = lerp(a=10,b=0,t=at);
+    t = lerp(a=10,b=0.35,t=at); // non zero b for exposing the heatset gears for diagramming
 
     yBar();
 
@@ -59,13 +59,13 @@ module assemblyInstructions () {
 
     module heatSetInsertsOneCorner(t=0) {
       multmatrix(sideModuleHeatSetTrans(t = t))
-      heatSetInsert();
+      heatSetInsert(rackFrameScrewType);
 
       multmatrix(mainRailHeatSetTrans(t = t))
-      heatSetInsert();
+      heatSetInsert(rackFrameScrewType);
 
       multmatrix(xBarHeatSetTrans(t = t))
-      heatSetInsert();
+      heatSetInsert(rackFrameScrewType);
     }
 
     heatSetInsertsOneCorner(t=t);
@@ -300,6 +300,45 @@ module assemblyInstructions () {
     propUpBottomXYTraywithSideWalls(at=1,r=0);
   }
 
+  module attachXYPlates(at=0) {
+
+    t = lerp(a=10,b=0,t=at);
+
+    // TODO fix xyPlate transformations
+    function xyPlateToYBarTrans() = translate(v=[6,6,0]) * yBarBasePlateConnectorTrans;
+
+    attachXYTrays(at=1);
+
+    multmatrix(xyPlateToYBarTrans())
+    xyPlateWithScrews(t=t);
+
+    multmatrix(upperXYTrayTrans * xyPlateToYBarTrans())
+    xyPlateWithScrews(t=t);
+
+    module xyPlateWithScrews(t=0) {
+
+      module screw(t=0) {
+        translate(v=[0,0,-t])
+        mirror(v=[0,0,1])
+        caseScrewA();
+      }
+
+      translate(v=[0,0,-t])
+      xyPlate();
+
+      screw(t=2*t);
+
+      translate(v=[xyPlateConnDx, 0,0])
+      screw(t=2*t);
+
+      translate(v=[0, xyPlateConnDy,0])
+      screw(t=2*t);
+
+      translate(v=[xyPlateConnDx, xyPlateConnDy,0])
+      screw(t=2*t);
+    }
+  }
+
   module slideHexNutToFeet(at=0) {
 
     t = lerp(a=8, b=0, t=at);
@@ -307,7 +346,6 @@ module assemblyInstructions () {
     module slideNut() {
       rotate(a = [0, 0, 90])
       rotate(a = [90, 0, 0])
-      color([0, 1, 1])
       hexNut(rackFrameScrewType);
     }
 
@@ -324,7 +362,7 @@ module assemblyInstructions () {
 
     t = lerp(a=10,b=0,t=at);
 
-    attachXYTrays(at=1);
+    attachXYPlates(at=1);
 
     multmatrix(feetToYBarTrans(t=t))
     slideHexNutToFeet(at=1);
@@ -357,47 +395,15 @@ module assemblyInstructions () {
     insertFeet(at=1);
   }
 
-  module attachXYPlates(at=0) {
 
-    t = lerp(a=10,b=0,t=at);
-
-    // TODO fix xyPlate transformations
-    function xyPlateToYBarTrans() = translate(v=[6,6,0]) * yBarBasePlateConnectorTrans;
-
+  module finalSingle() {
     screwFeet(at=1);
-
-    multmatrix(xyPlateToYBarTrans())
-    xyPlateWithScrews(t=t);
-
-    multmatrix(upperXYTrayTrans * xyPlateToYBarTrans())
-    xyPlateWithScrews(t=t);
-
-    module xyPlateWithScrews(t=0) {
-
-      module screw(t=0) {
-        translate(v=[0,0,-t])
-        mirror(v=[0,0,1])
-        caseScrewA();
-      }
-
-      translate(v=[0,0,-t])
-      xyPlate();
-
-      screw(t=2*t);
-
-      translate(v=[xyPlateConnDx, 0,0])
-      screw(t=2*t);
-
-      translate(v=[0, xyPlateConnDy,0])
-      screw(t=2*t);
-
-      translate(v=[xyPlateConnDx, xyPlateConnDy,0])
-      screw(t=2*t);
-    }
   }
 
-  module final() {
+  module finalDouble() {
+    translate(v=[0,0,140])
     attachXYPlates(at=1);
+    screwFeet(at=1);
   }
 
   xBarSpaceToYBarSpace =
@@ -448,11 +454,6 @@ module assemblyInstructions () {
     cylinder(h=dowelPinH, r=dowelPinR);
   }
 
-  module heatSetInsert() {
-    color([1,0,1])
-    scale(v=[0.95,0.95,0.95])
-    heatSetInsertSlot_N(screwType=rackFrameScrewType, topExtension=0);
-  }
 
   module magnet() {
     color([1,0,1])
