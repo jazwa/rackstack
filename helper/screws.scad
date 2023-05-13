@@ -70,6 +70,13 @@ function screwRadiusSlacked(screwType) =
   ? m4RadiusSlacked
   : error("Unsupported screw type");
 
+function hexNutThickness(screwType) =
+  (screwType == "m3")
+  ? m3HexNutThickness
+  : (screwType == "m4")
+  ? m4HexNutThickness
+  : error("Unsupported screw type");
+
 
 module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
 
@@ -89,13 +96,19 @@ module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
   }
 }
 
-module hexNut(screwType) {
+module hexNut(screwType, center=true) {
   color([0, 1, 1])
   if (screwType == "m3") {
-    translate(v=[0,0,-m3HexNutThickness/2])
+    translate(v = [0, 0,-m3HexNutThickness/2])
     difference() {
       cylinder(r=m3HexNutWidthAcrossCorners/2, h=m3HexNutThickness, $fn=6);
-      cylinder(r=m3Radius,h=inf10);
+      cylinder(r=m3Radius,h=inf10, center=true);
+    }
+  } else if (screwType == "m4") {
+    translate(v = [0, 0,-m4HexNutThickness/2])
+    difference() {
+      cylinder(r=m4HexNutWidthAcrossCorners/2, h=m4HexNutThickness, $fn=6);
+      cylinder(r=m4Radius,h=inf10, center=true);
     }
   } else {
     error("Unsupported screw type");

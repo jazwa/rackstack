@@ -104,20 +104,6 @@ module stackConnectorPlug() {
   }
 }
 
-module stackConnectorDual() {
-
-  space = 0.5; // extra space inbetween
-
-  translate(v=[0,0,space])
-  stackConnectorPlug();
-
-  mirror(v=[0,0,1])
-  stackConnectorPlug();
-
-  cube(size=[connectorRectWidth+connectorRectPlugSlack, connectorRectDepth+connectorRectPlugSlack, space]);
-}
-
-
 module stackConnectorBottom() {
 
   height = 2; // space between bottom and floor

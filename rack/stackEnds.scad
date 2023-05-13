@@ -5,8 +5,19 @@ include <./sharedVariables.scad>
 // Distance from midpoint of stack connectors to each other
 stackConnectorDx = rackTotalWidth - 2*(connectorXEdgeToYBarXEdge + connectorRectWidth/2);
 stackConnectorDy = rackTotalDepth - 2*(connectorYEdgeToYBarYEdge + connectorRectDepth/2);
+stackConnectorDualSpacing = 0.5;
 
-*stackConnectorFeet();
+module stackConnectorDual() {
+  translate(v=[0,0,stackConnectorDualSpacing/2])
+  stackConnectorPlug();
+
+  mirror(v=[0,0,1])
+  translate(v=[0,0,stackConnectorDualSpacing/2])
+  stackConnectorPlug();
+
+  translate(v=[0,0,-stackConnectorDualSpacing/2])
+  cube(size=[connectorRectWidth+connectorRectPlugSlack, connectorRectDepth+connectorRectPlugSlack, stackConnectorDualSpacing]);
+}
 
 module stackConnectorFeet() {
 
@@ -26,7 +37,6 @@ module stackConnectorFeet() {
     }
     band();
   }
-
 
   module band() {
 
