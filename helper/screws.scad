@@ -90,6 +90,7 @@ module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
 }
 
 module hexNut(screwType) {
+  color([0, 1, 1])
   if (screwType == "m3") {
     translate(v=[0,0,-m3HexNutThickness/2])
     difference() {
@@ -99,6 +100,28 @@ module hexNut(screwType) {
   } else {
     error("Unsupported screw type");
   }
+}
+
+module heatSetInsert(screwType) {
+  color([0, 1, 1])
+  if (screwType == "m3") {
+    difference() {
+      union() {
+        cylinder(h = m3HeatSetInsertSlotHeight, r = m3HeatSetInsertSlotRadius);
+
+        // teeth
+        for (i=[0:8]) {
+          rotate(a=[0,0,360/8 * i])
+          cube(size = [2.5, 0.5, m3HeatSetInsertSlotHeight]);
+        }
+      }
+
+      cylinder(h = inf10, r = m3Radius);
+    }
+  }
+
+
+
 }
 
 module hexNutPocket_N(screwType, openSide=true) {
