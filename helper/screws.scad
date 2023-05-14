@@ -97,7 +97,7 @@ module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
 }
 
 module hexNut(screwType, center=true) {
-  color([0, 1, 1])
+  color([1, 1, 1])
   if (screwType == "m3") {
     translate(v = [0, 0,-m3HexNutThickness/2])
     difference() {
