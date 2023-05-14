@@ -1,6 +1,6 @@
 # rackstack
 
----
+![mini](media/renders/mini-cropped.png)
 
 A parametric 3d-printable (mini) rack system.
 
@@ -9,14 +9,8 @@ A parametric 3d-printable (mini) rack system.
 - ***No cage nuts!*** 
 - ***Stackable:*** Individual racks can be easily stacked together. Mix and match different color and design combinations!
 
-
-![mini](media/renders/mini-cropped.png)
-
-
 ### Renders
 See the [renders for difference parametric profiles here](media/renders)
-
----
 
 ## Features
 
@@ -30,13 +24,10 @@ Individual racks can be stacked and fastened together.
 There's also cool magnetic side doors.
 ![swivelSideDoor](media/features/swivel.gif)
 
----
 
 ## Assembly
 
 ### BOM
-
----
 
 ## Configuring + Generating STLs
 
