@@ -34,14 +34,14 @@ module assemblyInstructions () {
 
   // Final builds:
   // render()
-  // finalSingle();
+   finalSingle();
   // finalDouble();
 
 
   // Features:
-   render()
-  slideInNuts(at=$t);
-  // stackable(at=$t); // recommended at least 15 frames for animation
+  // render()
+  // slideInNuts(at=$t);
+  // stackable(at=$t); // recommended at least 32 frames for animation
   // sideSwivel(at=$t);
 
 
@@ -485,8 +485,7 @@ module assemblyInstructions () {
   }
 
   module sideSwivel(at=0) {
-
-    r = lerp(a=0,b=2*110,t=at) % 110;
+    r = abs(lerp(a=-110,b=110,t=at));
 
     finalSingle(r=r);
   }
@@ -536,7 +535,7 @@ module assemblyInstructions () {
 
 
   module caseScrewA() {
-    color([0,1,1]) {
+    color([1,1,1]) {
       difference() {
         scale(v = [0.9, 0.9, 0.9])
         counterSunkHead_N(rackFrameScrewType, screwExtension = 6, headExtension = 0.5);
@@ -547,7 +546,7 @@ module assemblyInstructions () {
   }
 
   module caseScrewB() {
-    color([0,1,1]) {
+    color([1,1,1]) {
       difference() {
         scale(v = [0.9, 0.9, 0.9])
         counterSunkHead_N(rackFrameScrewType, screwExtension = 10, headExtension = 0.5);
@@ -564,7 +563,7 @@ module assemblyInstructions () {
 
 
   module magnet() {
-    color([1,0,1])
+    color([1,1,1])
     cylinder(r=magnetR, h=magnetH);
   }
 
