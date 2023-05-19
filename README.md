@@ -1,6 +1,6 @@
 # rackstack
 
-![display](media/renders/rackDisplay.png)
+![display](media/renders/rackDisplayRounded.png)
 
 ### A parametric 3d-printable mini rack system
 - ***Mount Anything:*** Perfect for organizing SBCs, mini PCs, small switches, power hubs, etc.
