@@ -10,9 +10,15 @@ include <./side/sideWallLeft.scad>
 include <./stackEnds.scad>
 include <./xyPlate.scad>
 
+include <../rack-mount/side-rail/dualMount.scad>
+
 assemblyInstructions();
 
 module assemblyInstructions () {
+
+  screwMask = false;
+  plasticMask = true;
+  sideSupportRailMask = true;
 
   // Instruction List (in order)
   // render()
@@ -37,7 +43,6 @@ module assemblyInstructions () {
    finalSingle();
   // finalDouble();
 
-
   // Features:
   // render()
   // slideInNuts(at=$t);
@@ -48,7 +53,9 @@ module assemblyInstructions () {
   module addHeatSetInsertsYBar(at=0) {
     t = lerp(a=10,b=0.35,t=at); // non zero b for exposing the heatset gears for diagramming
 
-    yBar();
+    if (!plasticMask) {
+      yBar();
+    }
 
     heatSetHeight = heatSetInsertSlotHeightSlacked(rackFrameScrewType) * 0.95;
 
@@ -76,17 +83,21 @@ module assemblyInstructions () {
       heatSetInsert(rackFrameScrewType);
     }
 
-    heatSetInsertsOneCorner(t=t);
+    if (!screwMask) {
+      heatSetInsertsOneCorner(t = t);
 
-    multmatrix(yBarMirrorOtherCornerTrans)
-    heatSetInsertsOneCorner(t=t);
+      multmatrix(yBarMirrorOtherCornerTrans)
+      heatSetInsertsOneCorner(t = t);
+    }
 
   }
 
   module addMagnetsToMagnetModules(at=0) {
     t = lerp(a=8,b=0,t=at);
 
-    magnetModule();
+    if (!plasticMask) {
+      magnetModule();
+    }
 
     function insertMagnetTrans(t=0) =
       translate(v=[sideWallConnW-(magnetFaceToSideWallConnOuterYEdge+magnetHSlacked) + t,
@@ -101,7 +112,9 @@ module assemblyInstructions () {
   module addMagnetsToSideWall(at=0) {
     t = lerp(a=8,b=0,t=at);
 
-    sideWallLeft();
+    if (!plasticMask) {
+      sideWallLeft();
+    }
 
     function insertMagnetTrans(t=0) =
       translate(v=[sideWallThickness+t, magnetMountToYBarFront, magnetMountToYBarTop-sideWallZHingeTotalClearance]) *
@@ -125,11 +138,13 @@ module assemblyInstructions () {
     multmatrix(translate(v = [0, 0, t])*xBarSpaceToYBarSpace*xBarMirrorOtherCornerTrans*yBarSpaceToXBarSpace)
     addHeatSetInsertsYBar(at=1);
 
-    multmatrix(xBarSpaceToYBarSpace)
-    xBar();
+    if (!plasticMask) {
+      multmatrix(xBarSpaceToYBarSpace)
+      xBar();
 
-    multmatrix(yBarMirrorOtherCornerTrans*xBarSpaceToYBarSpace)
-    xBar();
+      multmatrix(yBarMirrorOtherCornerTrans*xBarSpaceToYBarSpace)
+      xBar();
+    }
   }
 
   module screwXBarAndYBar(at=0) {
@@ -147,7 +162,8 @@ module assemblyInstructions () {
 
     multmatrix(xBarSpaceToYBarSpace)
     union() {
-      xBar();
+
+      if (!plasticMask) { xBar(); }
 
       multmatrix(xBarYBarScrewTrans(screwExtension))
       caseScrewB();
@@ -158,7 +174,7 @@ module assemblyInstructions () {
 
     multmatrix(yBarMirrorOtherCornerTrans*xBarSpaceToYBarSpace)
     union() {
-      xBar();
+      if (!plasticMask) { xBar(); }
 
       multmatrix(xBarYBarScrewTrans(screwExtension))
       caseScrewB();
@@ -197,7 +213,10 @@ module assemblyInstructions () {
 
     multmatrix(yBarMirrorOtherCornerTrans * sideModuleTrans(elevation))
     union() {
-      hingeModule();
+
+      if (!plasticMask) {
+        hingeModule();
+      }
 
       translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
       caseScrewA();
@@ -205,7 +224,9 @@ module assemblyInstructions () {
 
     multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * sideModuleTrans(elevation))
     union() {
-      hingeModule();
+      if (!plasticMask) {
+        hingeModule();
+      }
 
       translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
       caseScrewA();
@@ -221,7 +242,10 @@ module assemblyInstructions () {
     function mainRailTrans(elevation) = translate(v=[0,0,elevation]) * yBarMainRailConnectorTrans;
 
     module railAndScrew(elevation) {
-      mainRail();
+
+      if (!plasticMask) {
+        mainRail();
+      }
 
       translate(v=[railSideMountThickness + 5, railFrontThickness + 4,railFootThickness + 2*elevation])
       caseScrewA();
@@ -322,8 +346,10 @@ module assemblyInstructions () {
         caseScrewA();
       }
 
-      translate(v=[0,0,-t])
-      xyPlate();
+      if (!plasticMask) {
+        translate(v = [0, 0, -t])
+        xyPlate();
+      }
 
       screw(t=2*t);
 
@@ -343,9 +369,11 @@ module assemblyInstructions () {
     t = lerp(a=8, b=0, t=at);
 
     module slideNut() {
-      rotate(a = [0, 0, 90])
-      rotate(a = [90, 0, 0])
-      hexNut(rackFrameScrewType);
+      if (!screwMask) {
+        rotate(a = [0, 0, 90])
+        rotate(a = [90, 0, 0])
+        hexNut(rackFrameScrewType);
+      }
     }
 
     translate(v=[0,t,connectorBottomToScrew + 0.5]) // where does this come from again? slack?
@@ -354,7 +382,9 @@ module assemblyInstructions () {
     translate(v=[stackConnectorDx,t,connectorBottomToScrew + 0.5]) // where does this come from again? slack?
     slideNut();
 
-    stackConnectorFeet();
+    if (!plasticMask) {
+      stackConnectorFeet();
+    }
   }
 
   module insertFeet(at=0,r=0) {
@@ -397,15 +427,46 @@ module assemblyInstructions () {
 
   module finalSingle(r=0) {
     screwFeet(at=1,r=r);
+
+    for (i = [1, 5, 9, 13, 17]) {
+      translate(v = [2, frontScrewSpacing+railFrontThickness+railSlotToXZ, i*10])
+      multmatrix(yBarMainRailConnectorTrans)
+      union() {
+        if (!sideSupportRailMask) {
+          sideSupportRailBase("lBracket");
+        }
+
+        rotate(a = [0, -90, 0])
+        caseScrewA();
+
+        translate(v = [0, sideRailScrewMountDist, 0])
+        rotate(a = [0, -90, 0])
+        caseScrewA();
+      }
+    }
+
+    multmatrix(xBarSpaceToYBarSpace*xBarMirrorOtherCornerTrans*yBarSpaceToXBarSpace)
+    for (i = [1, 5, 9, 13, 17]) {
+      translate(v = [2, frontScrewSpacing+railFrontThickness+railSlotToXZ, i*10])
+      multmatrix(yBarMainRailConnectorTrans)
+      union() {
+        if (!sideSupportRailMask) {
+          sideSupportRailBase("lBracket");
+        }
+        rotate(a=[0,-90,0])
+        caseScrewA();
+
+        translate(v=[0,sideRailScrewMountDist,0])
+        rotate(a=[0,-90,0])
+        caseScrewA();
+      }
+    }
   }
+
 
   module finalDouble(r=0) {
-    multmatrix(secondStackTrans)
-    attachXYPlates(at=1,r=r);
-
-    screwFeet(at=1,r=r);
+    stackable(at=1,r=r);
   }
-
 
   module slideInNuts(at=0) {
 
@@ -445,7 +506,7 @@ module assemblyInstructions () {
     stackConnectorDual();
   }
 
-  module stackable(at=0) {
+  module stackable(at=0,r=0) {
 
     t1 = lerp(a=0, b=1,  t=min(3*at, 1));
     t2 = lerp(a=30, b=0, t=min(max(3*at-1,0),1));
@@ -465,8 +526,10 @@ module assemblyInstructions () {
       caseScrewB();
     }
 
-    translate(v=[0,0,t2/2])
-    stackConnectors();
+    if (!plasticMask) {
+      translate(v = [0, 0, t2/2])
+      stackConnectors();
+    }
 
     if (at >= 2/3) {
       multmatrix(secondStackTrans)
@@ -478,9 +541,9 @@ module assemblyInstructions () {
 
     translate(v=[0,0,t2])
     multmatrix(secondStackTrans)
-    attachXYPlates(at=1);
+    attachXYPlates(at=1,r=r);
 
-    screwFeet(at=1);
+    screwFeet(at=1,r=20);
 
   }
 
@@ -488,10 +551,6 @@ module assemblyInstructions () {
     r = abs(lerp(a=-110,b=110,t=at));
 
     finalSingle(r=r);
-  }
-
-  module parametric() {
-
   }
 
   xBarSpaceToYBarSpace =
@@ -535,36 +594,44 @@ module assemblyInstructions () {
 
 
   module caseScrewA() {
-    color([1,1,1]) {
-      difference() {
-        scale(v = [0.9, 0.9, 0.9])
-        counterSunkHead_N(rackFrameScrewType, screwExtension = 6, headExtension = 0.5);
+    if (!screwMask) {
+      color([1, 1, 1]) {
+        difference() {
+          scale(v = [0.9, 0.9, 0.9])
+          counterSunkHead_N(rackFrameScrewType, screwExtension = 6, headExtension = 0.5);
 
-        cylinder($fn = 6, r = 1.5);
+          cylinder($fn = 6, r = 1.5);
+        }
       }
     }
   }
 
   module caseScrewB() {
-    color([1,1,1]) {
-      difference() {
-        scale(v = [0.9, 0.9, 0.9])
-        counterSunkHead_N(rackFrameScrewType, screwExtension = 10, headExtension = 0.5);
+    if (!screwMask) {
+      color([1, 1, 1]) {
+        difference() {
+          scale(v = [0.9, 0.9, 0.9])
+          counterSunkHead_N(rackFrameScrewType, screwExtension = 10, headExtension = 0.5);
 
-        cylinder($fn = 6, r = 1.5);
+          cylinder($fn = 6, r = 1.5);
+        }
       }
     }
   }
 
   module hingeDowel() {
-    color([0,1,1])
-    cylinder(h=dowelPinH, r=dowelPinR);
+    if (!screwMask) {
+      color([0, 1, 1])
+      cylinder(h = dowelPinH, r = dowelPinR);
+    }
   }
 
 
   module magnet() {
-    color([1,1,1])
-    cylinder(r=magnetR, h=magnetH);
+    if (!screwMask) {
+      color([1, 1, 1])
+      cylinder(r = magnetR, h = magnetH);
+    }
   }
 
   module arrow(length) {

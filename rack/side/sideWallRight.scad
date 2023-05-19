@@ -6,8 +6,8 @@ module sideWallRight() {
 
   //applyEpicVentilation()
   mirror(v=[1,0,0])
-  applySideWallVerticalRibs()
-  render()
+  //applySideWallVerticalRibs()
+  //render()
   sideWallBase();
 
   module applyEpicVentilation() {
