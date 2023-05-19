@@ -2,26 +2,29 @@ include <../../helper/common.scad>
 include <../../helper/math.scad>
 include <../../helper/screws.scad>
 include <../../rack/config.scad>
+include <../../rack/sharedVariables.scad>
 
 *sideSupportRailBase("lBracket");
+// TODO: make this parametric
+
+// distance between front and back main rail screw mounts
+sideRailScrewMountDist = yBarDepth - 2*(frontScrewSpacing + railFrontThickness + railSlotToXZ); // TODO use transformation matrices
 
 module sideSupportRailBase(type) {
 
-  railLength = 100;
-  railBaseThickness = 2;
-  railBaseWidth = 18;
-  railSideThickness = 2;
-  railSideHeight = 12;
-  sideDy = -2;
-
-  frontMountPad = 10; // depends on y of box to be mounted TODO calculate this
-  sideMountPad = 10; // depends on x of box TODO calculate this
-  // distance between front and back main rail screw mounts
-  screwMountDist = 62; // TODO calculate this instead of hardcode
   // vertical distance between local origin and main rail screw mount
   screwMountGlobalDz = screwDiff / 2.0;
 
+  railLength = sideRailScrewMountDist + 30; // TODO calculate this
+  railBaseThickness = 2;
+  railBaseWidth = 18;
+  railSideThickness = 2;
+  railSideHeight = 15;
+  sideDy = -2;
+  frontMountPad = 10; // depends on y of box to be mounted TODO calculate this
+  sideMountPad = 10; // depends on x of box TODO calculate this
 
+  translate(v=[sideMountPad,-(frontMountPad + 5),-5])
   applyMainRailMounts()
   sideSupportRailBaseHolder();
 
@@ -41,7 +44,7 @@ module sideSupportRailBase(type) {
       union() {
         dualMount();
 
-        translate(v=[0,screwMountDist,0])
+        translate(v=[0,sideRailScrewMountDist,0])
         dualMount();
       }
 
