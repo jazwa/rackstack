@@ -1,4 +1,4 @@
-include <../stackConnector.scad>
+include <../stackEnds.scad>
 
 // Oriented for 3d printing. No supports required.
 stackConnectorBottom();
