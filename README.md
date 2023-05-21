@@ -33,6 +33,16 @@ TODO
 - 2 dowel pins
 - 8 magnets
 
+| Item                        | Quantity     | Comment                                               |
+|-----------------------------|--------------|-------------------------------------------------------|
+| M3x5 FHCS                   | left-aligned |                                                       |
+| M3x8 FHCS                   | centered     |                                                       |
+| M3 hex nut                  | 4            |                                                       |
+| M3 Brass Heatset Insert ()  | 32           |                                                       |
+| 3x10mm steel dowel pin      | 4            | Not strict: dimensions can be changed. Please see ... |
+| 6x2mm neodymium disc magnet | 8            | 6mm diameter, 2mm height                              |
+|                             |              |                                                       |
+
 
 ## Configuring + Generating STLs
 

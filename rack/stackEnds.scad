@@ -1,6 +1,7 @@
 include <../helper/halfspace.scad>
 include <../helper/slack.scad>
 include <./sharedVariables.scad>
+include <./connector/connectors.scad>
 
 // Distance from midpoint of stack connectors to each other
 stackConnectorDx = rackTotalWidth - 2*(connectorXEdgeToYBarXEdge + connectorRectWidth/2);
