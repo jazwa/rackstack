@@ -19,29 +19,20 @@ These STLs are generated from the files in [rack/print](rack/print), and [rack-m
 (supports, orientation) can be found in their respective `.scad` files.
 
 ### Assembly Instructions
-
+Please see [the assembly README here](./assembly)
 ### BOM
 
-TODO
+WIP
 
-- A bunch of m3 screws for constructing the actual rack.
-- A bunch of m4 screws for the main rails
-- Some heatset inserts
-- A bunch of m3 hex nuts
-- m3 allen key (preferably with a rounded end)
-- m4 allen key
-- 2 dowel pins
-- 8 magnets
-
-| Item                        | Quantity     | Comment                                               |
-|-----------------------------|--------------|-------------------------------------------------------|
-| M3x5 FHCS                   | left-aligned |                                                       |
-| M3x8 FHCS                   | centered     |                                                       |
-| M3 hex nut                  | 4            |                                                       |
-| M3 Brass Heatset Insert ()  | 32           |                                                       |
-| 3x10mm steel dowel pin      | 4            | Not strict: dimensions can be changed. Please see ... |
-| 6x2mm neodymium disc magnet | 8            | 6mm diameter, 2mm height                              |
-|                             |              |                                                       |
+| Item                        | Quantity | Comment                                               |
+|-----------------------------|----------|-------------------------------------------------------|
+| M3x6 FHCS                   | 24       |                                                       |
+| M3x10 FHCS                  | 12       |                                                       |
+| M3 hex nut                  | 4        |                                                       |
+| M3 Brass Heatset Insert     | 32       |                                                       |
+| 3x10mm steel dowel pin      | 4        | Not strict: dimensions can be changed. Please see ... |
+| 6x2mm neodymium disc magnet | 8        | 6mm diameter, 2mm height                              |
+|                             |          |                                                       |
 
 
 ## Configuring + Generating STLs
