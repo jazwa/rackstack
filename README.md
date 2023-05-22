@@ -32,9 +32,14 @@ WIP
 | M3 Brass Heatset Insert     | 32       |                                                       |
 | 3x10mm steel dowel pin      | 4        | Not strict: dimensions can be changed. Please see ... |
 | 6x2mm neodymium disc magnet | 8        | 6mm diameter, 2mm height                              |
-|                             |          |                                                       |
 
 
 ## Configuring + Generating STLs
 
-TODO
+WIP
+
+Requirements:
+  - `openscad` cli command (Only runs on Linux?)
+  - `python3`
+
+`python3 rbuild.py --help`
