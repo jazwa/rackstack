@@ -13,7 +13,7 @@
     - This shouldn't be used to compensate for more serious part shrinkage (> +-0.5mm differences)
 */
 
-xySlack = 0.4;
+xySlack = 0.3;
 
 radiusXYSlack = xySlack/2;
 
