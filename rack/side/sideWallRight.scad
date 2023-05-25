@@ -6,7 +6,7 @@ module sideWallRight() {
 
   //applyEpicVentilation()
   mirror(v=[1,0,0])
-  //applySideWallVerticalRibs()
+  applySideWallVerticalRibs()
   //render()
   sideWallBase();
 
@@ -14,7 +14,7 @@ module sideWallRight() {
 
     apply_n() {
       for (i = [1:8]) {
-        translate(v = [-10, 35, i*10+8])
+        translate(v = [0, 41, i * 18 + 10])
         vent();
       }
       children(0);
@@ -31,13 +31,9 @@ module sideWallRight() {
 
   module applySideWallVerticalRibs() {
     apply_p() {
-      union() {
-        translate(v = [0, 82, 0])
-        sideWallVerticalRibs(numRibs = 2, ribZ = sideWallZ, ribYDiff = 8, ribExtrusion = 1.5);
+      translate(v = [0, 20, 0])
+      sideWallVerticalRibs(numRibs = 9, ribZ = sideWallZ, ribYDiff = 20, ribExtrusion = 1.5);
 
-        translate(v = [0, 18, 0])
-        sideWallVerticalRibs(numRibs = 2, ribZ = sideWallZ, ribYDiff = 8, ribExtrusion = 1.5);
-      }
       children(0);
     }
   }
