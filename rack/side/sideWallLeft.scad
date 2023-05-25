@@ -4,15 +4,14 @@ include <./sideWallBase.scad>
 
 module sideWallLeft() {
 
+  applySideWallVerticalRibs()
   //applyEpicVentilation()
-  //applySideWallVerticalRibs()
-  //render()
   sideWallBase();
 
   module applyEpicVentilation() {
     apply_n() {
       for (i = [1:8]) {
-        translate(v = [0, 35, i * 10 + 8])
+        translate(v = [0, 41, i * 18 + 10])
         vent();
       }
       children(0);
@@ -20,21 +19,19 @@ module sideWallLeft() {
 
     module vent() {
       minkowski() {
-        sphere(r=1);
-        cube(size = [10, 40, 3]);
+        rotate(a=[0,90,0])
+        cylinder(r=1,h=1);
+
+        cube(size = [10, 80, 5]);
       }
     }
   }
 
   module applySideWallVerticalRibs() {
     apply_p() {
-      union() {
-        translate(v = [0, 82, 0])
-        sideWallVerticalRibs(numRibs = 2, ribZ = sideWallZ, ribYDiff = 8, ribExtrusion = 1.5);
+      translate(v = [0, 20, 0])
+      sideWallVerticalRibs(numRibs = 9, ribZ = sideWallZ, ribYDiff = 20, ribExtrusion = 1.5);
 
-        translate(v = [0, 18, 0])
-        sideWallVerticalRibs(numRibs = 2, ribZ = sideWallZ, ribYDiff = 8, ribExtrusion = 1.5);
-      }
       children(0);
     }
   }
