@@ -1,6 +1,7 @@
 include <../../helper/screws.scad>
 include <../../helper/common.scad>
 include <../../helper/matrix.scad>
+include <../../helper/halfspace.scad>
 include <../../helper/slack.scad>
 include <../../helper/dovetail.scad>
 include <../../helper/halfspace.scad>
@@ -10,7 +11,8 @@ include <../sharedVariables.scad>
 include <../config.scad>
 
 mainRailHeatSetOnYBarDx = railSideMountThickness + 5;
-mainRailHeatSetOnYBarDy = railFrontThickness + 4;
+mainRailHeatSetOnYBarDy = railFrontThickness + 2;
+
 module onYBarToMainRailNegative() {
 
   slotSlack = xySlack;
@@ -20,20 +22,30 @@ module onYBarToMainRailNegative() {
     translate(v=[-slotZSlack/2, -slotSlack/2,0])
     cube(size = [railTotalWidth+slotZSlack, railTotalDepth + slotSlack, railFootThickness]);
 
-    translate(v = [mainRailHeatSetOnYBarDx, mainRailHeatSetOnYBarDy, -m3HeatSetInsertSlotHeightSlacked])
-    heatSetInsertSlot_N(rackFrameScrewType);
+    translate(v = [mainRailHeatSetOnYBarDx, mainRailHeatSetOnYBarDy, -5])
+    rotate(a=[-45,0,0])
+    hexNutPocket_N("m3", openSide=false, backSpace=5);
   }
 }
 
-
 module onMainRailYBarConnectorPositive() {
-
   cube(size = [frontFaceWidth, sideSupportDepth+railFrontThickness, railFootThickness]);
+
+  // TODO magic numbers
+  hull() {
+    cube(size = [frontFaceWidth, railFrontThickness+8, railFootThickness+4]);
+    translate(v = [0, railFrontThickness+14, 0])
+    cube(size = [frontFaceWidth, 1, railFootThickness]);
+  }
 }
 
 
 module onMainRailYBarConnectorNegative() {
 
-  translate(v = [mainRailHeatSetOnYBarDx, mainRailHeatSetOnYBarDy, railFootThickness])
-  counterSunkHead_N(rackFrameScrewType, screwExtension=inf10, headExtension=inf10);
+screwOffset = 9;
+
+  translate(v = [mainRailHeatSetOnYBarDx, mainRailHeatSetOnYBarDy + screwOffset, -5 + screwOffset])
+  rotate(a=[-45,0,0])
+  counterSunkHead_N(rackFrameScrewType, screwExtension=inf50, headExtension=inf50);
+
 }

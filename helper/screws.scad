@@ -137,20 +137,27 @@ module heatSetInsert(screwType) {
 
 }
 
-module hexNutPocket_N(screwType, openSide=true) {
+module hexNutPocket_N(screwType, openSide=true, backSpace=inf10, bridgeFront=false, bridgeBack=false ) {
+
+  heightSlack = bridgeFront || bridgeBack ? overhangSlack: xySlack;
+
   if (screwType == "m3") {
-    hexNutPocketHelper_N(m3RadiusSlacked, m3HexNutWidthAcrossCorners / 2 + 0.3, m3HexNutThickness + 0.3, openSide=openSide);
+    hexNutPocketHelper_N(m3RadiusSlacked, m3HexNutWidthAcrossCorners / 2 + 0.3, m3HexNutThickness + heightSlack, openSide=openSide, backSpace=backSpace, bridgeFront=bridgeFront, bridgeBack=bridgeBack);
   } else if (screwType == "m4") {
-    hexNutPocketHelper_N(m4RadiusSlacked, m4HexNutWidthAcrossCorners / 2 + 0.1, m4HexNutThickness + 0.2, openSide=openSide);
+    hexNutPocketHelper_N(m4RadiusSlacked, m4HexNutWidthAcrossCorners / 2 + 0.1, m4HexNutThickness + heightSlack, openSide=openSide, backSpace=backSpace, bridgeFront=bridgeFront, bridgeBack=bridgeBack);
   } else {
     error("Unsupported screw type");
   }
 }
 
-module hexNutPocketHelper_N(innerRadius, widthAcrossCorners, thickness, openSide=true) {
+module hexNutPocketHelper_N(innerRadius, widthAcrossCorners, thickness, openSide=true, backSpace=inf10, bridgeFront=false, bridgeBack=false) {
+
+  assert (!(bridgeFront && bridgeBack));
+  assert (!(openSide && bridgeFront));
+
   union() {
     hull() {
-      // hexagonal cylinder representing where the nut should fit
+      // hexagonal prism representing where the nut should fit
       cylinder(r = widthAcrossCorners, h = thickness, center = true, $fn = 6);
 
       // negative volume for sliding in the nut
@@ -158,9 +165,36 @@ module hexNutPocketHelper_N(innerRadius, widthAcrossCorners, thickness, openSide
       cylinder(r = widthAcrossCorners, h = thickness, center = true, $fn = 6);
     }
 
-    // negative volume for screw lead
-    translate(v = [0, 0, - 10])
-    cylinder(r = innerRadius, h = inf50, $fn = 32);
+    // negative volume for screw
+    union() {
+      // screw lead spacing
+      translate(v = [0, 0, -backSpace])
+      cylinder(r = innerRadius, h = backSpace, $fn = 32);
+
+      cylinder(r=innerRadius, h=inf50, $fn=32);
+
+      if (bridgeFront) {
+        union() {
+          // first bridge layer
+          translate(v=[0,0,thickness/2 + 0.2/2])
+          cube(size=[2*innerRadius, GtoF(widthAcrossCorners)*2, 0.2], center=true);
+
+          translate(v=[0,0,thickness/2+ 0.3])
+          cube(size=[2*innerRadius, 2*innerRadius, 0.2], center=true);
+        }
+      }
+
+      if (bridgeBack) {
+        union() {
+          // first bridge layer
+          translate(v=[0,0,-(thickness/2 + 0.2/2)])
+          cube(size=[2*innerRadius, GtoF(widthAcrossCorners)*2, 0.2], center=true);
+
+          translate(v=[0,0,-(thickness/2+ 0.3)])
+          cube(size=[2*innerRadius, 2*innerRadius, 0.2], center=true);
+        }
+      }
+    }
 
     if (openSide) {
       hull() {

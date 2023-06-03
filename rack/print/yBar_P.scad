@@ -7,7 +7,10 @@ include <../xBar.scad>
 yBar();
 
 
-translate(v=[40,0,0])
-mirror(v=[1,0,0])
-rotate(a=[0,0,90])
-*xBar();
+*difference() {
+  translate(v=[2,0,0])
+  cube(size=[16,10,6], center=true);
+  hexNutPocket_N("m3", openSide = false, backSpace = 5, bridgeFront = true);
+}
+
+*hexNutPocket_N("m3", openSide = false, backSpace = 5, bridgeBack = true);

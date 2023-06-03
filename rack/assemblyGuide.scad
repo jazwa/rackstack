@@ -17,7 +17,7 @@ assemblyInstructions();
 module assemblyInstructions () {
 
   screwMask = false;
-  plasticMask = true;
+  plasticMask = false;
   sideSupportRailMask = true;
 
   // Instruction List (in order)
@@ -28,7 +28,7 @@ module assemblyInstructions () {
   // attachXBarWithYBar(at=$t);
   // screwXBarAndYBar(at=$t);
   // attachSideConnectorModulesToYBars(at=$t);
-  // connectXYTrayWithMainRails(at=$t);
+  // connectXYTrayWithMainRails(at=1);
   // insertDowelsIntoSideWall(at=$t);
   // propUpBottomXYTraywithSideWalls(at=$t);
   // attachXYTrays(at=$t);
@@ -40,7 +40,7 @@ module assemblyInstructions () {
 
   // Final builds:
   // render()
-   finalSingle();
+  // finalSingle();
   // finalDouble();
 
   // Features:

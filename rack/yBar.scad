@@ -50,12 +50,14 @@ yBarStackConnectorTrans = translate(v = [connectorXEdgeToYBarXEdge, connectorYEd
 
 yBarSideModuleConnectorTrans = translate(v = [
     yBarWidth-(railTotalWidth+railSlotToInnerYEdge+railSlotToSideWallSlot+sideWallConnectorSlotWidth),
-  sideWallSlotToXZ,
-  yBarHeight]);
+    sideWallSlotToXZ,
+    yBarHeight
+  ]);
 
 yBarMainRailConnectorTrans = translate(v = [
     yBarWidth-(railTotalWidth+railSlotToInnerYEdge),
-  railSlotToXZ,
-    yBarHeight-railFootThickness]);
+    railSlotToXZ,
+    yBarHeight-railFootThickness
+  ]);
 
 yBarXBarConnectorTrans = translate(v = [yBarWidth+eps, 0, 0]);
