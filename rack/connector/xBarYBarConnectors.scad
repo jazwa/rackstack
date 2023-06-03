@@ -42,9 +42,10 @@ module onXBarToYBarNegative() {
 module onYBarToXBarNegative() {
   y = 27;
   z = 6;
-  translate(v = [-m3HeatSetInsertSlotHeightSlacked, y, z])
+  translate(v = [-5, y, z])
+  rotate(a = [180, 0, 0])
   rotate(a = [0, 90, 0])
-  heatSetInsertSlot_N(rackFrameScrewType);
+  hexNutPocket_N("m3", openSide=false, backSpace=5);
 
 }
 

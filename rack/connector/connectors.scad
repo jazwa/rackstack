@@ -15,9 +15,6 @@ include <./sideModuleYBarConnectors.scad>
 include <./stackYBarConnectors.scad>
 include <./basePlateYBarConnectors.scad>
 
-// WIP
-partList = ["yBar", "xBar", "mainRail", "xyPlate", "sideModule"];
-
 mirror(v=[1,0,0])
 *connectorDebug(on="xBar", to="yBar", trans=identity);
 

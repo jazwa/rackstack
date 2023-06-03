@@ -19,9 +19,9 @@ radiusXYSlack = xySlack/2;
 
 zSlack = 0.0; // TODO figure out nice default value for this. keep in mind z shrinkage
 
-overhangSlack = 0.6;
+overhangSlack = 0.4;
 
-supportedOverhangSlack = 0.5;
+supportedOverhangSlack = 0.4;
 
 
 // special slack cases, change if neccessary

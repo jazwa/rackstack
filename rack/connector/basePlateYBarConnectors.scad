@@ -41,9 +41,9 @@ module onYBarBasePlateConnectorPositive() {
 
 module onYBarBasePlateConnectorNegative() {
 
-  translate(v=[_heatSetX, _heatSetY, m3HeatSetInsertSlotHeightSlacked + _baseConnRecession])
+  translate(v=[_heatSetX, _heatSetY, 4 + _baseConnRecession])
   mirror(v=[0,0,1])
-  heatSetInsertSlot_N(rackFrameScrewType, topExtension=inf10);
+  hexNutPocket_N("m3", openSide=false, backSpace=5, bridgeBack=true);
 
   hull() {
     translate(v = [_heatSetX, _heatSetY, _baseConnRecession+overhangSlack])

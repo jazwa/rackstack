@@ -8,10 +8,10 @@
 */
 include <./profiles.scad>
 
-profileName = "default";
+profileName = "micro";
 profile = getProfile(profileName);
 
-// echo("Profile:", profile);
+defaultLayerHeight = 0.3;
 
 function getConfig(name) = getConfigValue(profile, name);
 
