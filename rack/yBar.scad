@@ -27,7 +27,7 @@ module yBar() {
         sphericalFiletEdge(yBarWidth, yBarDepth, yBarHeight, yBarRoundness);
 
         translate(v = [yBarWallThickness, joinCornerDepth, yBarWallThickness])
-        cylindricalFiletEdge(yBarWidth, yBarDepth-2*joinCornerDepth, yBarHeight, yBarRoundness);
+        cylindricalFiletEdge(yBarWidth, yBarDepth-2*joinCornerDepth, yBarHeight, yBarRoundness-yBarWallThickness);
       }
 
       halfspace(vpos=[-1, 0, 1], p=[yBarWidth-1, 0,0]);

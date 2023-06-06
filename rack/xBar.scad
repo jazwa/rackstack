@@ -21,7 +21,7 @@ module xBar() {
         cylindricalFiletEdge(xBarY, xBarX, xBarHeight, xBarRoundness);
 
         translate(v = [xBarWallThickness, xBarSideThickness, xBarWallThickness])
-        cylindricalFiletEdge(xBarY, xBarX-2*xBarSideThickness, xBarHeight, xBarRoundness);
+        cylindricalFiletEdge(xBarY, xBarX-2*xBarSideThickness, xBarHeight, xBarRoundness-xBarWallThickness);
       }
 
       // Shave off bottom corners to reduce elephant's foot at where xBar and YBar join
