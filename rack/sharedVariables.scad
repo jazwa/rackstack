@@ -59,7 +59,7 @@ xBarX = maxUnitWidth - 2*railSlotToInnerYEdge;
 xBarY = 32;
 xBarHeight = 15;
 
-xBarWallThickness = 2;
+xBarWallThickness = 3;
 xBarSideThickness = 8;
 xBarRoundness = baseRoundness;
 
