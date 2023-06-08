@@ -20,18 +20,30 @@ These STLs are generated from the files in [rack/print](rack/print), and [rack-m
 
 ### Assembly Instructions
 Please see [the assembly README here](./assembly)
-### BOM
 
-WIP
+### Required Tools:
+- 3d FDM Printer - build size requirements depend on configure rack size. (TODO explain)
+- M3 Allen Key
+- M4 Allen Key
 
-| Item                        | Quantity | Comment                                               |
-|-----------------------------|----------|-------------------------------------------------------|
-| M3x6 FHCS                   | 24       |                                                       |
-| M3x10 FHCS                  | 12       |                                                       |
-| M3 hex nut                  | 4        |                                                       |
-| M3 Brass Heatset Insert     | 32       |                                                       |
-| 3x10mm steel dowel pin      | 4        | Not strict: dimensions can be changed. Please see ... |
-| 6x2mm neodymium disc magnet | 8        | 6mm diameter, 2mm height                              |
+### BOM - Single Rack:
+
+| Item | Name                        | Quantity | Comment                   |
+|------|-----------------------------|----------|---------------------------|
+|      | M3x8 FHCS                   | 16       | Get double!               |
+|      | M3x10 FHCS                  | 4        | ☝️                        |
+|      | M3x12 FHCS                  | 16       | ☝️                        |
+|      | M3 hex nut                  | 36       | ☝️                        |
+|      | 3x10mm steel dowel pin      | 4        | 3mm diameter, 10mm height |
+|      | 6x2mm neodymium disc magnet | 8        | 6mm diameter, 2mm height  |
+ 
+#### Notes: 
+
+- Omitted actual plastic for printing. Any conventional 3d printing plastic should do (PLA, PETG, ABS),
+but beware of PLA's thermal limits. Higher infill is recommended for all parts.
+- For joining two racks, you will need 8 M3 hex nuts, and 8 M3x10 FHCS (TODO confirm)
+- Main front rails are mounted using M4 hex nuts and screws.
+- Side rails are mounted using M3 screws
 
 
 ## Configuring + Generating STLs
@@ -39,7 +51,7 @@ WIP
 WIP
 
 Requirements:
-  - `openscad` cli command (Only runs on Linux?)
+  - `openscad` cli command (Only runs on Linux)
   - `python3`
 
 `python3 rbuild.py --help`
