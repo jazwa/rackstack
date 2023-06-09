@@ -28,14 +28,14 @@ Please see [the assembly README here](./assembly)
 
 ### BOM - Single Rack:
 
-| Item | Name                        | Quantity | Comment                   |
-|------|-----------------------------|----------|---------------------------|
-|      | M3x8 FHCS                   | 16       | Get double!               |
-|      | M3x10 FHCS                  | 4        | ☝️                        |
-|      | M3x12 FHCS                  | 16       | ☝️                        |
-|      | M3 hex nut                  | 36       | ☝️                        |
-|      | 3x10mm steel dowel pin      | 4        | 3mm diameter, 10mm height |
-|      | 6x2mm neodymium disc magnet | 8        | 6mm diameter, 2mm height  |
+| Item                              | Name                        | Quantity | Comment                   |
+|-----------------------------------|-----------------------------|----------|---------------------------|
+| ![M3x8](media/bom/m3_8_test.gif)  | M3x8 FHCS                   | 16       | Get double!               |
+| ![M3x8](media/bom/m3_10_test.gif) | M3x10 FHCS                  | 4        | ☝️                        |
+| ![M3x8](media/bom/m3_12_test.gif) | M3x12 FHCS                  | 16       | ☝️                        |
+|                                   | M3 hex nut                  | 36       | ☝️                        |
+|                                   | 3x10mm steel dowel pin      | 4        | 3mm diameter, 10mm height |
+|                                   | 6x2mm neodymium disc magnet | 8        | 6mm diameter, 2mm height  |
  
 #### Notes: 
 
