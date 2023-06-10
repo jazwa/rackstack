@@ -28,14 +28,14 @@ Please see [the assembly README here](./assembly)
 
 ### BOM - Single Rack:
 
-| Item                                          | Name                        | Quantity | Comment                   |
-|-----------------------------------------------|-----------------------------|----------|---------------------------|
-| <img src="media/bom/m3_8.gif"  height="60">   | M3x8 FHCS                   | 16       | Get double!               |
-| <img src="media/bom/m3_10.gif"  height="60">  | M3x10 FHCS                  | 4        | ☝️                        |
-| <img src="media/bom/m3_12.gif"  height="60">  | M3x12 FHCS                  | 16       | ☝️                        |
-| <img src="media/bom/m3_hex.gif"  height="60"> | M3 hex nut                  | 36       | ☝️                        |
-| <img src="media/bom/dowel.gif"  height="60">  | 3x10mm steel dowel pin      | 4        | 3mm diameter, 10mm height |
-| <img src="media/bom/magnet.gif"  height="60"> | 6x2mm neodymium disc magnet | 8        | 6mm diameter, 2mm height  |
+| Item                                          | Name                      | Quantity | Comment                   |
+|-----------------------------------------------|---------------------------|----------|---------------------------|
+| <img src="media/bom/m3_8.gif"  height="60">   | M3x8 FHCS                 | 16       | Get double!               |
+| <img src="media/bom/m3_10.gif"  height="60">  | M3x10 FHCS                | 4        | ☝️                        |
+| <img src="media/bom/m3_12.gif"  height="60">  | M3x12 FHCS                | 16       | ☝️                        |
+| <img src="media/bom/m3_hex.gif"  height="60"> | M3 hex nut                | 36       | ☝️                        |
+| <img src="media/bom/dowel.gif"  height="60">  | 3x10 steel dowel pin      | 4        | 3mm diameter, 10mm height |
+| <img src="media/bom/magnet.gif"  height="60"> | 6x2 neodymium disc magnet | 8        | 6mm diameter, 2mm height  |
  
 #### Notes: 
 
