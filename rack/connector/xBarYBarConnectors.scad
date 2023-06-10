@@ -35,22 +35,6 @@ module onXBarToYBarNegative() {
   translate(v = [-xBarSideThickness, y, z])
   rotate(a = [0, -90, 0])
   counterSunkHead_N(rackFrameScrewType, screwExtension=inf10, headExtension=inf10);
-
-  // lugs for snap fit and hold in place
-  translate(v=[-0.1,3,13.5])
-  lug();
-
-  translate(v=[-0.1,26,13.5])
-  lug();
-}
-
-module onXBarToYBarPositive() {
-  // lugs for snap fit and hold in place
-  translate(v=[-0.1,3,2])
-  lug();
-
-  translate(v=[-0.1,26,2])
-  lug();
 }
 
 
@@ -62,13 +46,6 @@ module onYBarToXBarNegative() {
   rotate(a = [180, 0, 0])
   rotate(a = [0, 90, 0])
   hexNutPocket_N("m3", openSide=false, backSpace=5);
-
-  // lugs for snap fit and hold in place
-  translate(v=[-0.1,3,2])
-  lug();
-
-  translate(v=[-0.1,26,2])
-  lug();
 }
 
 module onYBarToXBarPositive() {
@@ -87,26 +64,8 @@ module onYBarToXBarPositive() {
       backFaceLength = 5,
       backFaceScale = 1.2
   );
-
-  // lugs for snap fit and hold in place
-  translate(v=[-0.1,3,13.5])
-  lug();
-
-  translate(v=[-0.1,26,13.5])
-  lug();
 }
 
 
 xBarConnectorToYBarConnectorTrans = mirror(v=[1,0,0]);
 yBarConnectorToXBarConnectorTrans = mirror(v=[-1,0,0]);
-
-
-
-module lug() {
-  hull() {
-    sphere(r=0.5);
-
-    translate(v=[0,2,0])
-    sphere(r=0.5);
-  }
-}

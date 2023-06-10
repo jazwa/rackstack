@@ -66,8 +66,6 @@ module connectorPositive(on, to) {
     onYBarToXBarPositive();
   } else if (on == "yBar" && to == "basePlate") {
     onYBarBasePlateConnectorPositive();
-  } else if (on == "xBar" && to == "yBar") {
-    onXBarToYBarPositive();
   } else if (on == "mainRail" && to == "yBar") {
     onMainRailYBarConnectorPositive();
   }
