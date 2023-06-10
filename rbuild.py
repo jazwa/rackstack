@@ -4,6 +4,7 @@ import argparse
 import subprocess
 import os
 import sys
+from stl import mesh, stl
 
 
 # For actual dimensions, please see profiles.scad.
@@ -82,7 +83,10 @@ def run_build(build_var, config_var):
 
 def build_single(build_dir, target_dir, filename, config):
     print('Building:', filename, 'from', build_dir, 'to', target_dir)
-    run_openscad(construct_openscad_args(build_dir, target_dir, filename, config))
+    openscad_args = construct_openscad_args(build_dir, target_dir, filename, config)
+    run_openscad(openscad_args)
+
+    convert_text_stl_to_binary(openscad_args[1])
 
 
 def construct_openscad_args(build_dir, target_dir, filename, config):
@@ -126,6 +130,15 @@ def run_openscad(options=['-h']):
         print('OpenSCAD command not found! '
               'Please make sure that you have OpenSCAD installed and can run OpenSCAD CLI commands. '
               '(Currently need Linux for this)')
+
+
+def convert_text_stl_to_binary(file_path):
+    mesh_data = mesh.Mesh.from_file(file_path)
+
+    # Remove the original file
+    os.remove(file_path)
+
+    mesh_data.save(file_path, mode=stl.Mode.BINARY)
 
 
 def assert_os():
