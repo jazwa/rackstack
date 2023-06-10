@@ -28,22 +28,22 @@ Please see [the assembly README here](./assembly)
 
 ### BOM - Single Rack:
 
-| Item                                                     | Name                      | Quantity | Comment                   |
-|----------------------------------------------------------|---------------------------|----------|---------------------------|
-| <img src="media/bom/m3_8.gif"  height="60" width="72">   | M3x8 FHCS                 | 16       | Get double!               |
-| <img src="media/bom/m3_10.gif"  height="60" width="72">  | M3x10 FHCS                | 4        | ☝️                        |
-| <img src="media/bom/m3_12.gif"  height="60" width="72">  | M3x12 FHCS                | 16       | ☝️                        |
-| <img src="media/bom/m3_hex.gif"  height="60" width="72"> | M3 hex nut                | 36       | ☝️                        |
-| <img src="media/bom/dowel.gif"  height="60" width="72">  | 3x10 steel dowel pin      | 4        | 3mm diameter, 10mm height |
-| <img src="media/bom/magnet.gif"  height="60" width="72"> | 6x2 neodymium disc magnet | 8        | 6mm diameter, 2mm height  |
+| Item                                                     | Name                      | Quantity | Comment                                                                                                                   |
+|----------------------------------------------------------|---------------------------|----------|---------------------------------------------------------------------------------------------------------------------------|
+| <img src="media/bom/m3_8.gif"  height="60" width="72">   | M3x8 FHCS                 | 16       | Spares are useful and inexpensive. If you plan on eventually stacking multiple racks together don't hesitate to get more. |
+| <img src="media/bom/m3_10.gif"  height="60" width="72">  | M3x10 FHCS                | 4        | ☝️                                                                                                                        |
+| <img src="media/bom/m3_12.gif"  height="60" width="72">  | M3x12 FHCS                | 16       | ☝️                                                                                                                        |
+| <img src="media/bom/m3_hex.gif"  height="60" width="72"> | M3 hex nut                | 36       | ☝️                                                                                                                        |
+| <img src="media/bom/dowel.gif"  height="60" width="72">  | 3x10 steel dowel pin      | 4        | 3mm diameter, 10mm height                                                                                                 |
+| <img src="media/bom/magnet.gif"  height="60" width="72"> | 6x2 neodymium disc magnet | 8        | 6mm diameter, 2mm height                                                                                                  |
  
-#### Notes: 
+#### Notes:
 
 - Omitted actual plastic for printing. Any conventional 3d printing plastic should do (PLA, PETG, ABS),
 but beware of PLA's thermal limits. Higher infill is recommended for all parts.
 - For joining two racks, you will need 8 M3 hex nuts, and 8 M3x10 FHCS (TODO confirm)
-- Main front rails are mounted using M4 hex nuts and screws.
-- Side rails are mounted using M3 screws
+- Main front rails use M4 hex nuts and screws.
+- Side rails are mounted using M3 hex nuts and screws
 
 
 ## Configuring + Generating STLs
