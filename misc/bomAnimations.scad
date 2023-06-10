@@ -4,12 +4,13 @@ include <../helper/dowel.scad>
 
 $vpr=[85,0,25];
 //$vpd=40;
+//$vpd=30;
 $vpd=25;
 $vpf=20;
 
 
 
-// m3FHCS(length=8,tilt=45,r=360*$t);
+//m3FHCS(length=8,tilt=45,r=360*$t);
  magnet(tilt=90, r=360*$t);
 // hingeDowel(tilt=90,r=360*$t);
 // m3Hex(tilt=90,r=360*$t);
