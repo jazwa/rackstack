@@ -8,7 +8,9 @@
 */
 include <./profiles.scad>
 
+// Manually set this variable to toggle profiles
 profileName = "micro";
+
 profile = getProfile(profileName);
 
 defaultLayerHeight = 0.3;

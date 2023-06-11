@@ -12,26 +12,29 @@
 
 _profileConfigs = [
     ["default", [
-      ["maxUnitWidth", 205],
-      ["maxUnitDepth", 205],
+      ["maxUnitWidth", 170],
+      ["maxUnitDepth", 180],
+      ["numRailScrews", 18],
       ["screwDiff", 10],
-      ["numRailScrews", 20],
       ["mainRailScrewType", "m4"],
       ["mainRailSideMountScrewType", "m4"],
       ["rackFrameScrewType", "m3"],
       ["baseRoundness", 5],
     ]],
-    ["micro", [
+    ["nano", [
       ["maxUnitWidth", 105],
       ["maxUnitDepth", 105],
-      ["numRailScrews", 10],
-      ["baseRoundness", 5]
+      ["numRailScrews", 10]
+    ]],
+    ["micro", [
+      ["maxUnitWidth", 170],
+      ["maxUnitDepth", 180],
+      ["numRailScrews", 18]
     ]],
     ["mini", [
       ["maxUnitWidth", 205],
       ["maxUnitDepth", 205],
-      ["numRailScrews", 20],
-      ["baseRoundness", 5]
+      ["numRailScrews", 20]
     ]]
   ];
 

@@ -4,21 +4,22 @@ import argparse
 import subprocess
 import os
 import sys
-from stl import mesh, stl
 
 
 # For actual dimensions, please see profiles.scad.
 class BuildSizeConfig:
+    NANO = 'nano'
     MINI = 'mini'
     MICRO = 'micro'
-    DEFAULT = 'default'
 
 
 RACK_BUILD_DIR = './rack/print'
 RACK_MOUNT_BUILD_DIR = './rack-mount/print'
 
-RACK_BUILD_TARGET_DIR = './stl/rack'
-RACK_MOUNT_BUILD_TARGET_DIR = './stl/rack-mount'
+BUILD_PARENT_DIR = './stl'
+
+RACK_BUILD_TARGET_SUB_DIR = 'rack'
+RACK_MOUNT_BUILD_TARGET_SUB_DIR = 'rack-mount'
 
 
 def main():
@@ -43,8 +44,8 @@ def main():
 
     parser.add_argument(
         '-c',
-        default='default',
-        choices=[BuildSizeConfig.MINI, BuildSizeConfig.MICRO, BuildSizeConfig.DEFAULT],
+        default=BuildSizeConfig.MINI,
+        choices=[BuildSizeConfig.NANO, BuildSizeConfig.MINI, BuildSizeConfig.MICRO],
         help='Build size config profile. This will determine the size of the rack you wish to generate. '
              'For actual dimensions, please see profiles.scad.'
     )
@@ -58,13 +59,22 @@ def main():
 
 
 def run_build(build_var, config_var):
+
+    rackBuildDirFull = os.path.join(BUILD_PARENT_DIR, config_var, RACK_BUILD_TARGET_SUB_DIR)
+    rackMountBuildDirFull = os.path.join(BUILD_PARENT_DIR, config_var, RACK_MOUNT_BUILD_TARGET_SUB_DIR)
+
+    if not os.path.exists(rackBuildDirFull):
+        os.makedirs(rackBuildDirFull)
+
+    if not os.path.exists(rackMountBuildDirFull):
+        os.makedirs(rackMountBuildDirFull)
+
     if build_var == 'all':
         for dir_file in os.listdir(RACK_BUILD_DIR):
-            build_single(RACK_BUILD_DIR, RACK_BUILD_TARGET_DIR, dir_file, config_var)
+            build_single(RACK_BUILD_DIR, rackBuildDirFull, dir_file, config_var)
 
         for dir_file in os.listdir(RACK_MOUNT_BUILD_DIR):
-            build_single(RACK_MOUNT_BUILD_DIR, RACK_MOUNT_BUILD_TARGET_DIR, dir_file, config_var)
-
+            build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, dir_file, config_var)
         return
 
     filename_rack = find_rack(build_var)
@@ -75,10 +85,10 @@ def run_build(build_var, config_var):
         return
 
     if filename_rack:
-        build_single(RACK_BUILD_DIR, RACK_BUILD_TARGET_DIR, filename_rack, config_var)
+        build_single(RACK_BUILD_DIR, rackBuildDirFull, filename_rack, config_var)
 
     if filename_rack_mount:
-        build_single(RACK_MOUNT_BUILD_DIR, RACK_MOUNT_BUILD_TARGET_DIR, filename_rack, config_var)
+        build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, filename_rack, config_var)
 
 
 def build_single(build_dir, target_dir, filename, config):
@@ -86,14 +96,12 @@ def build_single(build_dir, target_dir, filename, config):
     openscad_args = construct_openscad_args(build_dir, target_dir, filename, config)
     run_openscad(openscad_args)
 
-    convert_text_stl_to_binary(openscad_args[1])
-
 
 def construct_openscad_args(build_dir, target_dir, filename, config):
     source = os.path.join(build_dir, filename)
     target = os.path.join(target_dir, os.path.splitext(filename)[0] + '.stl')
 
-    return ['-o', target, source]
+    return ['-D', 'profileName=\"' + config + '\"', '-o', target, source]
 
 
 def find_rack(filename):
@@ -121,24 +129,15 @@ def find_scad_file(directory, filename):
     return None
 
 
-def run_openscad(options=['-h']):
-    command = ['openscad', '-q'] + options
+def run_openscad(options):
+    command = ['openscad', '-q', '--export-format', 'binstl'] + options
     try:
         subprocess.check_output(command, universal_newlines=True, stderr=subprocess.DEVNULL)
 
     except FileNotFoundError:
         print('OpenSCAD command not found! '
               'Please make sure that you have OpenSCAD installed and can run OpenSCAD CLI commands. '
-              '(Currently need Linux for this)')
-
-
-def convert_text_stl_to_binary(file_path):
-    mesh_data = mesh.Mesh.from_file(file_path)
-
-    # Remove the original file
-    os.remove(file_path)
-
-    mesh_data.save(file_path, mode=stl.Mode.BINARY)
+              '(Currently needs Linux for this)')
 
 
 def assert_os():
