@@ -30,8 +30,7 @@ def main():
     parser = argparse.ArgumentParser(
         prog='rbuild',
         description='CLI-based helper utility to build project items. '
-                    'This includes both the rack and also rack-mount items',
-        epilog='That\'s all folks!'
+                    'This includes both the rack and also rack-mount items'
     )
 
     parser.add_argument(
@@ -44,24 +43,43 @@ def main():
 
     parser.add_argument(
         '-c',
-        default=BuildSizeConfig.MINI,
+        default=BuildSizeConfig.MICRO,
         choices=[BuildSizeConfig.NANO, BuildSizeConfig.MINI, BuildSizeConfig.MICRO],
         help='Build size config profile. This will determine the size of the rack you wish to generate. '
              'For actual dimensions, please see profiles.scad.'
     )
 
+    parser.add_argument(
+        '-t',
+        default="",
+        help='Target directory to build STLs in (is under the /stl directory). Default target directory is based on '
+             'the config.'
+    )
+
+    parser.add_argument(
+        '-dz',
+        default=0,
+        help='Override number of rail screws (ie override rail height). Defaults to profile settings.'
+    )
+
     args = parser.parse_args()
+    run_build(args)
+
+
+def run_build(args):
 
     build_var = args.b
     config_var = args.c
+    target_var = args.t
+    dz = args.dz
 
-    run_build(build_var, config_var)
+    if target_var != "":
+        final_target_directory_name = target_var
+    else:
+        final_target_directory_name = config_var
 
-
-def run_build(build_var, config_var):
-
-    rackBuildDirFull = os.path.join(BUILD_PARENT_DIR, config_var, RACK_BUILD_TARGET_SUB_DIR)
-    rackMountBuildDirFull = os.path.join(BUILD_PARENT_DIR, config_var, RACK_MOUNT_BUILD_TARGET_SUB_DIR)
+    rackBuildDirFull = os.path.join(BUILD_PARENT_DIR, final_target_directory_name, RACK_BUILD_TARGET_SUB_DIR)
+    rackMountBuildDirFull = os.path.join(BUILD_PARENT_DIR, final_target_directory_name, RACK_MOUNT_BUILD_TARGET_SUB_DIR)
 
     if not os.path.exists(rackBuildDirFull):
         os.makedirs(rackBuildDirFull)
@@ -71,10 +89,10 @@ def run_build(build_var, config_var):
 
     if build_var == 'all':
         for dir_file in os.listdir(RACK_BUILD_DIR):
-            build_single(RACK_BUILD_DIR, rackBuildDirFull, dir_file, config_var)
+            build_single(RACK_BUILD_DIR, rackBuildDirFull, dir_file, config_var, dz)
 
         for dir_file in os.listdir(RACK_MOUNT_BUILD_DIR):
-            build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, dir_file, config_var)
+            build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, dir_file, config_var, dz)
         return
 
     filename_rack = find_rack(build_var)
@@ -85,23 +103,30 @@ def run_build(build_var, config_var):
         return
 
     if filename_rack:
-        build_single(RACK_BUILD_DIR, rackBuildDirFull, filename_rack, config_var)
+        build_single(RACK_BUILD_DIR, rackBuildDirFull, filename_rack, config_var, dz)
 
     if filename_rack_mount:
-        build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, filename_rack, config_var)
+        build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, filename_rack, config_var, dz)
 
 
-def build_single(build_dir, target_dir, filename, config):
+def build_single(build_dir, target_dir, filename, config, dz):
     print('Building:', filename, 'from', build_dir, 'to', target_dir)
-    openscad_args = construct_openscad_args(build_dir, target_dir, filename, config)
+    openscad_args = construct_openscad_args(build_dir, target_dir, filename, config, dz)
     run_openscad(openscad_args)
 
 
-def construct_openscad_args(build_dir, target_dir, filename, config):
+def construct_openscad_args(build_dir, target_dir, filename, config, dz):
     source = os.path.join(build_dir, filename)
     target = os.path.join(target_dir, os.path.splitext(filename)[0] + '.stl')
 
-    return ['-D', 'profileName=\"' + config + '\"', '-o', target, source]
+    openscad_args = ['-D', 'profileName=\"' + config + '\"']
+
+    if dz != 0:
+        openscad_args += ['-D', 'numRailScrews=' + dz]
+
+    openscad_args += ['-o', target, source]
+
+    return openscad_args
 
 
 def find_rack(filename):

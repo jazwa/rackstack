@@ -12,7 +12,7 @@
 
 _profileConfigs = [
     ["default", [
-      ["maxUnitWidth", 170],
+      ["maxUnitWidth", 180],
       ["maxUnitDepth", 180],
       ["numRailScrews", 18],
       ["screwDiff", 10],
@@ -27,7 +27,7 @@ _profileConfigs = [
       ["numRailScrews", 10]
     ]],
     ["micro", [
-      ["maxUnitWidth", 170],
+      ["maxUnitWidth", 180],
       ["maxUnitDepth", 180],
       ["numRailScrews", 18]
     ]],

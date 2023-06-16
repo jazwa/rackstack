@@ -14,7 +14,7 @@ See the [renders for difference parametric profiles here](media/renders)
 
 ## Assembly
 
-Pre-generated STLs for roughly 200mm^3 (mini), 170mm^3 (micro), and 100mm^3 (nano) rack frames can be found in [stl](stl).
+Pre-generated STLs for roughly 200mm^3 (mini), 180mm^3 (micro), and 100mm^3 (nano) rack frames can be found in [stl](stl).
 These STLs are generated from the files in [rack/print](rack/print), and [rack-mount/print](rack-mount/print) - further information about printing these parts 
 (supports, orientation) can be found in these files.
 
@@ -54,13 +54,16 @@ Requirements:
   - `python3`
 
 ### Examples:
-Generate all project files for the `mini` profile:
+Generate all project files for the `micro` profile:
 
-`python3 rbuild.py -b all -c micro`
+`python3 rbuild.py -b all -c micro -t custom`
 
-Generate specific part: 
+This will build all the required STLs for a micro rack in the `stl/custom/` directory.
 
-`python3 rbuild.py -b yBar`
+
+For generating a specific part: 
+
+`python3 rbuild.py -b yBar -c micro -t custom`
 
 Generated stls are put into the `stl/` directories. The actual variable values for different profiles can be found in  
 [rack/profiles.scad](rack/profiles.scad).
