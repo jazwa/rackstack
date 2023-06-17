@@ -62,6 +62,12 @@ def main():
         help='Override number of rail screws (ie override rail height). Defaults to profile settings.'
     )
 
+    parser.add_argument(
+        '--nightly',
+        action='store_true',
+        help='Use openscad-nightly command. Should result in much faster build times.'
+    )
+
     args = parser.parse_args()
     run_build(args)
 
@@ -72,6 +78,7 @@ def run_build(args):
     config_var = args.c
     target_var = args.t
     dz = args.dz
+    nightly = args.nightly
 
     if target_var != "":
         final_target_directory_name = target_var
@@ -89,10 +96,10 @@ def run_build(args):
 
     if build_var == 'all':
         for dir_file in os.listdir(RACK_BUILD_DIR):
-            build_single(RACK_BUILD_DIR, rackBuildDirFull, dir_file, config_var, dz)
+            build_single(RACK_BUILD_DIR, rackBuildDirFull, dir_file, config_var, dz, nightly)
 
         for dir_file in os.listdir(RACK_MOUNT_BUILD_DIR):
-            build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, dir_file, config_var, dz)
+            build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, dir_file, config_var, dz, nightly)
         return
 
     filename_rack = find_rack(build_var)
@@ -103,16 +110,16 @@ def run_build(args):
         return
 
     if filename_rack:
-        build_single(RACK_BUILD_DIR, rackBuildDirFull, filename_rack, config_var, dz)
+        build_single(RACK_BUILD_DIR, rackBuildDirFull, filename_rack, config_var, dz, nightly)
 
     if filename_rack_mount:
-        build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, filename_rack, config_var, dz)
+        build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, filename_rack, config_var, dz, nightly)
 
 
-def build_single(build_dir, target_dir, filename, config, dz):
+def build_single(build_dir, target_dir, filename, config, dz, nightly):
     print('Building:', filename, 'from', build_dir, 'to', target_dir)
     openscad_args = construct_openscad_args(build_dir, target_dir, filename, config, dz)
-    run_openscad(openscad_args)
+    run_openscad(openscad_args, nightly)
 
 
 def construct_openscad_args(build_dir, target_dir, filename, config, dz):
@@ -154,8 +161,14 @@ def find_scad_file(directory, filename):
     return None
 
 
-def run_openscad(options):
-    command = ['openscad', '-q', '--export-format', 'binstl'] + options
+def run_openscad(options, nightly):
+
+    if nightly:
+        command = ['openscad-nightly', '--enable', 'all']
+    else:
+        command = ['openscad']
+
+    command += ['-q', '--export-format', 'binstl'] + options
     try:
         subprocess.check_output(command, universal_newlines=True, stderr=subprocess.DEVNULL)
 
