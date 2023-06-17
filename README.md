@@ -56,14 +56,15 @@ Requirements:
 ### Examples:
 Generate all project files for the `micro` profile:
 
-`python3 rbuild.py -b all -c micro -t custom`
+`python3 rbuild.py -b all --nightly -c micro`
 
-This will build all the required STLs for a micro rack in the `stl/custom/` directory.
-
+This will build all the required STLs for a micro rack in the `stl/custom/` directory. The `--nightly` is optional and
+means the build script will use the `openscad-nightly` command, instead of `openscad`. This usually results in much
+faster build times and is generally recommended.
 
 For generating a specific part: 
 
-`python3 rbuild.py -b yBar -c micro -t custom`
+`python3 rbuild.py -b yBar --nightly -c micro -t custom`
 
 Generated stls are put into the `stl/` directories. The actual variable values for different profiles can be found in  
 [rack/profiles.scad](rack/profiles.scad).
