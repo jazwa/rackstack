@@ -1,5 +1,6 @@
 include <./config.scad>
 include <../helper/screws.scad>
+include <../helper/filet.scad>
 include <../helper/slack.scad>
 include <../helper/math.scad>
 include <../helper/halfspace.scad>
@@ -8,7 +9,7 @@ include <../helper/matrix.scad>
 
 include <./connector/connectors.scad>
 
-*mainRail();
+mainRail();
 
 module mainRail() {
 
@@ -18,12 +19,15 @@ module mainRail() {
   mainRailBase();
 
   module mainRailBase() {
-    union() {
-      frontRailSegment();
 
-      translate(v = [railSideMountThickness, railFrontThickness, 0])
-      rotate(a = [0, 0, 90])
-      sideSupportSegment();
+    difference() {
+      union() {
+        frontRailSegment();
+
+        translate(v = [railSideMountThickness, railFrontThickness, 0])
+        rotate(a = [0, 0, 90])
+        sideSupportSegment();
+      }
     }
 
     module frontRailSegment() {
@@ -31,7 +35,7 @@ module mainRail() {
         cube(size = [frontFaceWidth, railFrontThickness, railTotalHeight]);
 
         for (i = [1:numRailScrews]) {
-          translate(v = [railScrewHoleToOuterEdge, railFrontThickness / 2, i * screwDiff + railFootThickness])
+          translate(v = [railScrewHoleToOuterEdge, railFrontThickness/2, i*screwDiff+railFootThickness])
           rotate(a = [90, 0, 0])
           hexNutPocket_N(mainRailScrewType);
         }
@@ -61,6 +65,9 @@ module mainRail() {
         halfspace(vpos = [-1, -1, 0], p = [b, b, 0]);
         halfspace(vpos = [-1, 0, -1], p = [b, 0, b]);
         halfspace(vpos = [-1, 0, 1], p = [b, 0, railTotalHeight-b]);
+
+        cylindricalFiletNegative(p0=[frontFaceWidth, 0, 0], p1=[frontFaceWidth, 0, railTotalHeight], n=[1,-1,0], r=1);
+        cylindricalFiletNegative(p0=[frontFaceWidth, railFrontThickness, railFootThickness+4], p1=[frontFaceWidth, railFrontThickness, railTotalHeight-(railFootThickness+4)], n=[1,1,0], r=1);
       }
 
       children(0);

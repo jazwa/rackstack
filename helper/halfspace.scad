@@ -10,16 +10,17 @@ module halfspace(vpos, p) {
         cube(size=[inf, inf, inf], center=true);
     } else {
         translate(p)
-        align(a=ref, b = vpos)
+        alignPlanar(a=ref, b = vpos)
         translate(v = [0, 0, -inf/2])
         cube(size = [inf, inf, inf], center = true);
     }
 
-    module align(a,b) {
-        rot_axis = cross(a,b);
-        angle = acos(a*b/(norm(a)*norm(b)));
+}
 
-        rotate(v=rot_axis, a=angle)
-        children(0);
-    }
+module alignPlanar(a,b) {
+    rot_axis = cross(a,b);
+    angle = acos(a*b/(norm(a)*norm(b)));
+
+    rotate(v=rot_axis, a=angle)
+    children(0);
 }
