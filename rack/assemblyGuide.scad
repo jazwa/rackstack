@@ -40,7 +40,7 @@ module assemblyInstructions () {
 
   // Final builds:
   // render()
-  // finalSingle();
+   finalSingle();
   // finalDouble();
 
   // Features:
