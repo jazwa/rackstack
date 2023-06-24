@@ -8,3 +8,5 @@ include <./math.scad>
 include <./matrix.scad>
 include <./screws.scad>
 include <./sine.scad>
+
+$fn=64;
