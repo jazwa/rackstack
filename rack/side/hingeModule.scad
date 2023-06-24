@@ -47,7 +47,7 @@ module hingeModule() {
 
       union() {
         translate(v = [sideWallConnW/2.0, hingePoleR + radiusXYSlack, 0])
-        cylinder(r = hingePoleR + radiusXYSlack, h = inf50);
+        cylinder(r = hingePoleR + radiusXYSlack, h = inf50, $fn=64);
 
         translate(v = [sideWallConnW/2.0, 0 , 0])
         cube(size=[2, 5, inf50], center=true);

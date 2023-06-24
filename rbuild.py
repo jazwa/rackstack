@@ -131,6 +131,9 @@ def construct_openscad_args(build_dir, target_dir, filename, config, dz):
     if dz != 0:
         openscad_args += ['-D', 'numRailScrews=' + dz]
 
+    # added this here because for some reason the current nightly build won't listen to the $fn definition in
+    # helper/common.scad
+    openscad_args += ['-D', '$fn=64']
     openscad_args += ['-o', target, source]
 
     return openscad_args
