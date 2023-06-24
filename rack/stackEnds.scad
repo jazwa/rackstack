@@ -1,5 +1,4 @@
-include <../helper/halfspace.scad>
-include <../helper/slack.scad>
+include <../helper/common.scad>
 include <./sharedVariables.scad>
 include <./connector/connectors.scad>
 

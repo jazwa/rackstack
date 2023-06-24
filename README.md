@@ -67,4 +67,4 @@ For generating a specific part:
 `python3 rbuild.py -b yBar --nightly -c micro -t custom`
 
 Generated stls are put into the `stl/` directories. The actual variable values for different profiles can be found in  
-[rack/profiles.scad](rack/profiles.scad).
+[rack/profiles.scad](config/profiles.scad).

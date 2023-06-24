@@ -1,10 +1,7 @@
-include <../helper/slack.scad>
-include <./yBar.scad>
-include <./xBar.scad>
+include <../helper/common.scad>
 include <./connector/connectors.scad>
 
-*xyPlate();
-
+xyPlate();
 
 xyPlateConnDx = xBarX + 2*_heatSetX; // X distance between connectors
 xyPlateConnDy = yBarDepth - 2*basePlateScrewMountToYBarXZFace; // Y distance between connectors

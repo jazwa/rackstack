@@ -1,11 +1,10 @@
-include <../config.scad>
-include <./sideWallVariables.scad>
+include <../../helper/common.scad>
+include <../../config/common.scad>
 include <../sharedVariables.scad>
-include <../../helper/halfspace.scad>
-include <../../helper/screws.scad>
+include <./sideWallVariables.scad>
 
 translate(v=[10,20,-2 - sideWallZHingeTotalClearance])
-*hingeModule();
+hingeModule();
 
 module hingeModule() {
 

@@ -1,14 +1,7 @@
-/*
-  Connector factory
-*/
-include <../../helper/screws.scad>
-include <../../helper/common.scad>
-include <../../helper/matrix.scad>
-include <../../helper/slack.scad>
-include <../../helper/dovetail.scad>
-include <../../helper/halfspace.scad>
-include <../config.scad>
+// Connector Aggregator and utils
 
+include <../../helper/common.scad>
+include <../../config/common.scad>
 include <./xBarYBarConnectors.scad>
 include <./mainRailYBarConnectors.scad>
 include <./sideModuleYBarConnectors.scad>

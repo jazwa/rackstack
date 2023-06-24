@@ -1,5 +1,5 @@
-include <../helper/math.scad>
-include <./config.scad>
+include <../helper/common.scad>
+include <../config/common.scad>
 include <./mainRail.scad>
 include <./yBar.scad>
 include <./xBar.scad>
@@ -12,6 +12,7 @@ include <./xyPlate.scad>
 
 include <../rack-mount/side-rail/dualMount.scad>
 
+// TODO: this is completly broken. fix this and figure out a nice way to run this with cli commands
 assemblyInstructions();
 
 module assemblyInstructions () {

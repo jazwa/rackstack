@@ -1,18 +1,10 @@
-include <../../helper/math.scad>
-include <../../helper/halfspace.scad>
-include <../../helper/magnet.scad>
-include <../../helper/slack.scad>
-include <../config.scad>
-
+include <../../helper/common.scad>
+include <../../config/common.scad>
+include <../sharedVariables.scad>
 include <./sideWallMagnetMount.scad>
 include <./sideWallVariables.scad>
-include <../sharedVariables.scad>
-
 include <./magnetModule.scad>
 include <./hingeModule.scad>
-
-//echo("Side Wall Height", sideWallZ);
-//echo("Side Wall Depth", sideWallY);
 
 //translate(v = [hingePoleDx ,hingePoleDy, 10])
 //rotate(a=[0,0,-120])

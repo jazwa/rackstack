@@ -1,9 +1,6 @@
+include <../../helper/common.scad>
+include <../../config/common.scad>
 
-include <../config.scad>
-include <../sharedVariables.scad>
-include <../../helper/magnet.scad>
-include <../../helper/slack.scad>
-include <../../helper/dowel.scad>
 
 sideWallConnW = 7;
 sideWallConnD = 20;

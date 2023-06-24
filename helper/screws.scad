@@ -1,7 +1,6 @@
 /* Some common screw dimensions and helper functions/modules */
 
 include <./math.scad>
-include <./common.scad>
 
 /********************************************************************************/
 // M3 dimensions

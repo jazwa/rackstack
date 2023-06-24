@@ -1,15 +1,9 @@
-include <./config.scad>
-include <../helper/screws.scad>
-include <../helper/filet.scad>
-include <../helper/slack.scad>
-include <../helper/math.scad>
-include <../helper/halfspace.scad>
+include <../helper/common.scad>
+include <../config/common.scad>
 include <./sharedVariables.scad>
-include <../helper/matrix.scad>
-
 include <./connector/connectors.scad>
 
-*mainRail();
+mainRail();
 
 module mainRail() {
 
