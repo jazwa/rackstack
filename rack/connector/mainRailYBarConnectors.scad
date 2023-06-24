@@ -1,14 +1,6 @@
-include <../../helper/screws.scad>
 include <../../helper/common.scad>
-include <../../helper/matrix.scad>
-include <../../helper/halfspace.scad>
-include <../../helper/slack.scad>
-include <../../helper/dovetail.scad>
-include <../../helper/halfspace.scad>
-
+include <../../config/common.scad>
 include <../sharedVariables.scad>
-
-include <../config.scad>
 
 mainRailHeatSetOnYBarDx = railSideMountThickness + 5;
 mainRailHeatSetOnYBarDy = railFrontThickness + 2;

@@ -1,4 +1,4 @@
-include <./common.scad>
+include <./math.scad>
 
 // centered on z axis
 module dovetail(

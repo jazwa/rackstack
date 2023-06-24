@@ -1,13 +1,9 @@
-include <../helper/cylindricalFilet.scad>
-include <../helper/filet.scad>
-include <../helper/screws.scad>
-include <../helper/matrix.scad>
-
-include <./config.scad>
+include <../helper/common.scad>
+include <../config/common.scad>
 include <./sharedVariables.scad>
 include <./connector/connectors.scad>
 
-*xBar();
+xBar();
 
 module xBar() {
 

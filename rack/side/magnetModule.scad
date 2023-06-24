@@ -1,13 +1,10 @@
-
-include <../config.scad>
-include <./sideWallVariables.scad>
+include <../../helper/common.scad>
+include <../../config/common.scad>
 include <../sharedVariables.scad>
-include <../../helper/halfspace.scad>
-include <../../helper/magnet.scad>
-include <../../helper/screws.scad>
+include <./sideWallVariables.scad>
 
 translate(v=[10,-5,-(2+sideWallZHingeTotalClearance)])
-*magnetModule();
+magnetModule();
 
 magnetModuleMagnetMountDy = magnetMountToYBarFront - sideWallSlotToXZ;
 magnetModuleMagnetMountDz = magnetMountToYBarTop + sideWallConnLugDepression;

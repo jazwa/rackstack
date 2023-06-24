@@ -57,6 +57,3 @@ module sineWaveHull(length, resolution, amplitudeFunction, period, shift, hullDi
         }
     }
 }
-
-
-//sineWaveHull(length, resolution, amplitudeFunction, period, shift, 10);

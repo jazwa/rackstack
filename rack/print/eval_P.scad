@@ -1,6 +1,7 @@
-include <../xBar.scad>
-include <../yBar.scad>
-include <../mainRail.scad>
+include <../sharedVariables.scad>
+use <../xBar.scad>
+use <../yBar.scad>
+use <../mainRail.scad>
 
 // Evaluation print for slack config, please see slack.scad
 // to configure tolerances

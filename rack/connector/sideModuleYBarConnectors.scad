@@ -1,12 +1,7 @@
-include <../../helper/screws.scad>
 include <../../helper/common.scad>
-include <../../helper/matrix.scad>
-include <../../helper/slack.scad>
-include <../../helper/dovetail.scad>
-include <../../helper/halfspace.scad>
+include <../../config/common.scad>
 include <../sharedVariables.scad>
 include <../side/sideWallVariables.scad>
-include <../config.scad>
 
 module onYBarSideModuleNegative() {
 

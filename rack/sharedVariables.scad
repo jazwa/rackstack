@@ -1,4 +1,4 @@
-include <./config.scad>
+include <../config/common.scad>
 
 // Main rail variables:
 

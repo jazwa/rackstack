@@ -1,6 +1,6 @@
 include <../common.scad>
 include <../rack/screws.scad>
-include <../sinusoid.scad>
+include <../sine.scad>
 
 vU = 2;
 uHeight = 10;

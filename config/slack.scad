@@ -23,6 +23,5 @@ overhangSlack = 0.4;
 
 supportedOverhangSlack = 0.4;
 
-
 // special slack cases, change if neccessary
 xBarYBarDovetailSlack = xySlack;

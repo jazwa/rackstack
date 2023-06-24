@@ -1,16 +1,9 @@
-include <../helper/math.scad>
-include <../helper/matrix.scad>
-include <../helper/sphericalFilet.scad>
-include <../helper/cylindricalFilet.scad>
-include <../helper/screws.scad>
-include <../helper/magnet.scad>
-include <./config.scad>
-include <./mainRail.scad>
-
+include <../helper/common.scad>
+include <../config/common.scad>
 include <./connector/connectors.scad>
 include <./sharedVariables.scad>
 
-*yBar();
+yBar();
 
 module yBar() {
 
