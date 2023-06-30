@@ -8,16 +8,16 @@
 
   Some important details:
     - The general philosophy for slack applications in this project is to subtract space from sockets, while not
-      modifying the plugs. TODO: enforce this
+      modifying the plugs.
     - Values are signed. Positive values can be interpreted as how much to remove from the socket along some dimension.
-    - This shouldn't be used to compensate for more serious part shrinkage (> +-0.5mm differences)
+    - This shouldn't be used to compensate for serious part shrinkage
 */
 
 xySlack = 0.3;
 
 radiusXYSlack = xySlack/2;
 
-zSlack = 0.2; // TODO figure out nice default value for this. keep in mind z shrinkage
+zSlack = 0.2;
 
 overhangSlack = 0.4;
 
