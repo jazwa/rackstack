@@ -8,17 +8,17 @@ module onXBarToYBarNegative() {
   z = 8;
   slack = xBarYBarDovetailSlack;
 
-  translate(v=[-slack,14,0])
+  translate(v=[-1,14,0])
   mirror(v=[1,0,0])
   rotate(a=[0,0,-90])
   dovetail(
       topWidth = 15+slack,
       bottomWidth = 12+slack,
-      height = 2+slack,
+      height = 2,
       length = yBarHeight,
-      headExtension = 1,
+      headExtension = 1+slack,
       baseExtension = 2,
-      frontFaceLength = 0.5,
+      frontFaceLength = 0.5, // elephant foot compensation
       frontFaceScale = 1.05,
       backFaceLength = 5,
       backFaceScale = 1.2
@@ -57,7 +57,7 @@ module onYBarToXBarNegative() {
 
 module onYBarToXBarPositive() {
 
-  translate(v=[xBarYBarDovetailSlack, 14,0]) // TODO: variable for the 14
+  translate(v=[1, 14,0]) // TODO: variable for the 14
   rotate(a=[0,0,-90])
   dovetail(
       topWidth = 15-xySlack, // figure out why we need this
@@ -67,7 +67,7 @@ module onYBarToXBarPositive() {
       headExtension = 1,
       baseExtension = 2,
       frontFaceLength = 2,
-      frontFaceScale = 0.95,
+      frontFaceScale = 0.95, // elephant foot compensation
       backFaceLength = 5,
       backFaceScale = 1.2
   );

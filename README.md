@@ -66,8 +66,8 @@ For generating a specific part:
 
 `python3 rbuild.py -b yBar --nightly -c micro -t custom`
 
-Generated stls are put into the `stl/` directories. The actual variable values for different profiles can be found in  
-[rack/profiles.scad](config/profiles.scad).
+Generated stls are put into the `stl/` directories. The actual variable values for different profiles can be found in 
+[rack/profiles.scad](config/rackFrame.scad).
 
 We recommend you start by printing the `eval_P.stl` file first, just to determine if the default slack/layer height
 configurations work for you. If parts are too tight/loose please take a look at

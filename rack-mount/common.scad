@@ -1,8 +1,7 @@
 
-include <../rack/config.scad>
 include <../rack/sharedVariables.scad>
-include <../helper/math.scad>
-include <../helper/screws.scad>
+include <../helper/common.scad>
+include <../config/common.scad>
 
 /*
   QoL redefinitions/variables/reimports for rack mount items
@@ -10,7 +9,8 @@ include <../helper/screws.scad>
 
 uDiff = screwDiff;
 
-// ...
+rackMountScrewXDist = 4;
+rackMountScrewZDist = 4;
 
 
 
