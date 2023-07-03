@@ -10,7 +10,7 @@
     - The general philosophy for slack applications in this project is to subtract space from sockets, while not
       modifying the plugs.
     - Values are signed. Positive values can be interpreted as how much to remove from the socket along some dimension.
-    - This shouldn't be used to compensate for serious part shrinkage
+    - These values depend on print orientation and it's assumed parts are printed in their recommended orientations.
 */
 
 xySlack = 0.3;
