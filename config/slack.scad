@@ -13,15 +13,15 @@
     - These values depend on print orientation and it's assumed parts are printed in their recommended orientations.
 */
 
-xySlack = 0.3;
+xySlack = 0.4;
 
 radiusXYSlack = xySlack/2;
 
-zSlack = 0.2;
+zSlack = 0.0;
 
-overhangSlack = 0.4;
+overhangSlack = 0.7;
 
-supportedOverhangSlack = 0.4;
+supportedOverhangSlack = 0.7;
 
 // special slack cases, change if neccessary
 xBarYBarDovetailSlack = xySlack;

@@ -5,7 +5,7 @@ use <./rackEars.scad>
 
 // Config variables
 //trayAlignment = "middle"; // middle, right, left
-trayWidth = 150;
+trayWidth = 110;
 trayDepth = 100;
 trayThickness = 3;
 
@@ -17,26 +17,47 @@ bottomScrewTray(u=5);
 
 module bottomScrewTray(u) {
 
-  screwDx = rackMountScrewWidth;
-  echo(screwDx);
+
+  frontLipHeight = 5;
+  backLipHeight = 5; // also applies to sides
+  lipThickness = 3;
+
+  rackEarSideThickness = 3;
+  rackEarFrontThickness = 3;
+
+  screwDx = rackMountScrewWidth; // x dist between the mount holes
   screwDz = uDiff * u;
 
   plateLength = screwDx + 2*rackMountScrewXDist;
   plateHeight = screwDz + 2*rackMountScrewZDist;
 
-  leftScrewDistToTray = 10+4+3;
-  assert(leftScrewDistToTray >= 5);
+  minScrewToTraySpacing = 8;
+
+  // TODO: toggle this based on left/right/middle alignment
+  leftScrewDistToTray = minScrewToTraySpacing + 2 +5;
 
   leftScrewGlobalX = -leftScrewDistToTray;
   rightScrewGlobalX = screwDx + leftScrewGlobalX;
 
   cube(size=[trayWidth, trayDepth, trayThickness]);
 
-  translate(v=[rackMountScrewXDist+leftScrewGlobalX+3,0,rackMountScrewZDist])
-  rackEarModule(frontThickness=3,sideThickness=3,frontWidth=leftScrewDistToTray, sideDepth=trayDepth-3, u=5);
+  translate(v=[0,0,trayThickness])
+  cube(size=[trayWidth, lipThickness, frontLipHeight]);
+
+  translate(v=[0,trayDepth-lipThickness,trayThickness])
+  cube(size=[trayWidth, lipThickness, backLipHeight]);
+
+  translate(v=[0,0,trayThickness])
+  cube(size=[lipThickness, trayDepth, backLipHeight]);
+
+  translate(v=[trayWidth-lipThickness,0,trayThickness])
+  cube(size=[lipThickness, trayDepth, backLipHeight]);
+
+  translate(v=[leftScrewGlobalX,0,rackMountScrewZDist])
+  rackEarModule(frontThickness=rackEarFrontThickness,sideThickness=rackEarSideThickness,frontWidth=leftScrewDistToTray+rackMountScrewXDist+rackEarSideThickness, sideDepth=trayDepth-lipThickness, u=u);
 
   translate(v=[rightScrewGlobalX,0,rackMountScrewZDist])
   mirror(v=[1,0,0])
-  rackEarModule(frontThickness=3,sideThickness=3,frontWidth=30, sideDepth=trayDepth-3, u=5);
+  rackEarModule(frontThickness=rackEarFrontThickness,sideThickness=rackEarSideThickness,frontWidth=rightScrewGlobalX-trayWidth+rackMountScrewXDist+rackEarSideThickness, sideDepth=trayDepth-lipThickness, u=u);
 
 }

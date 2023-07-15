@@ -4,7 +4,7 @@ include <../sharedVariables.scad>
 include <./sideWallVariables.scad>
 
 translate(v=[10,-5,-(2+sideWallZHingeTotalClearance)])
-magnetModule();
+*magnetModule();
 
 magnetModuleMagnetMountDy = magnetMountToYBarFront - sideWallSlotToXZ;
 magnetModuleMagnetMountDz = magnetMountToYBarTop + sideWallConnLugDepression;
