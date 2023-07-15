@@ -56,18 +56,18 @@ Requirements:
 ### Examples:
 Generate all project files for the `micro` profile:
 
-`python3 rbuild.py -b all --nightly -c micro`
+`python3 rbuild.py -b all -c micro`
 
-This will build all the required STLs for a micro rack in the `stl/custom/` directory. The `--nightly` is optional and
-means the build script will use the `openscad-nightly` command, instead of `openscad`. This usually results in much
-faster build times and is generally recommended.
+This will build all the required STLs for a micro rack in the `stl/custom/` directory. 
 
 For generating a specific part: 
 
-`python3 rbuild.py -b yBar --nightly -c micro -t custom`
+`python3 rbuild.py -b yBar -c micro -t custom`
 
 Generated stls are put into the `stl/` directories. The actual variable values for different profiles can be found in 
 [rack/profiles.scad](config/rackFrame.scad).
+
+`rbuild.py` also support an optional `--nightly` flag, which means the build script will use the `openscad-nightly` command, instead of `openscad`.
 
 We recommend you start by printing the `eval_P.stl` file first, just to determine if the default slack/layer height
 configurations work for you. If parts are too tight/loose please take a look at

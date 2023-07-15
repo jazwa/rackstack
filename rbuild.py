@@ -115,7 +115,6 @@ def run_build(args):
     if filename_rack_mount:
         build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, filename_rack, config_var, dz, nightly)
 
-
 def build_single(build_dir, target_dir, filename, config, dz, nightly):
     print('Building:', filename, 'from', build_dir, 'to', target_dir)
     openscad_args = construct_openscad_args(build_dir, target_dir, filename, config, dz)
@@ -171,7 +170,7 @@ def run_openscad(options, nightly):
     else:
         command = ['openscad']
 
-    command += ['-q', '--export-format', 'binstl'] + options
+    command += ['--export-format', 'binstl'] + options
     try:
         subprocess.check_output(command, universal_newlines=True, stderr=subprocess.DEVNULL)
 

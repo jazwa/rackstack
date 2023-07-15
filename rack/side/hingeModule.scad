@@ -4,7 +4,7 @@ include <../sharedVariables.scad>
 include <./sideWallVariables.scad>
 
 translate(v=[10,20,-2 - sideWallZHingeTotalClearance])
-hingeModule();
+*hingeModule();
 
 module hingeModule() {
 
