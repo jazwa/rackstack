@@ -9,14 +9,8 @@ include <../config/common.scad>
 
 uDiff = screwDiff;
 
-rackMountScrewXDist = 4;
-rackMountScrewZDist = 4;
+rackMountScrewXDist = 4.5;
+rackMountScrewZDist = 4.5;
 
-
-
-
-
-
-
-
-
+mainRailSideSupportToInnerEdge = frontFaceWidth - railSideMountThickness;
+railSupportsDx = 2*mainRailSideSupportToInnerEdge + maxUnitWidth;

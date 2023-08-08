@@ -2,6 +2,8 @@ include <./common.scad>
 use <./rackEars.scad>
 
 // Rack mount tray that supports screws on the bottom of the rack-mount item
+bottomScrewTray(u=1);
+
 
 // Config variables
 //trayAlignment = "middle"; // middle, right, left
@@ -13,9 +15,7 @@ mountPoints = [];
 mountScrewType = "m3";
 
 
-bottomScrewTray(u=1);
-
-module bottomScrewTray(u) {
+module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, mountScrewType) {
 
   frontLipHeight = 2;
   backLipHeight = 1; // also applies to sides
@@ -65,7 +65,7 @@ module bottomScrewTray(u) {
     }
   }
 
-module body() {
+  module body() {
 
     cube(size = [trayWidth, trayDepth, trayThickness]);
 
@@ -118,6 +118,6 @@ module body() {
       children(0);
     }
 
-    }
-
   }
+
+}
