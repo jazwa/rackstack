@@ -1,19 +1,6 @@
 include <./common.scad>
 use <./rackEars.scad>
 
-// Rack mount tray that supports screws on the bottom of the rack-mount item
-bottomScrewTray(u=1);
-
-
-// Config variables
-//trayAlignment = "middle"; // middle, right, left
-trayWidth = 140;
-trayDepth = 85;
-trayThickness = 3;
-
-mountPoints = [];
-mountScrewType = "m3";
-
 
 module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, mountScrewType) {
 
@@ -38,15 +25,7 @@ module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, moun
   leftScrewGlobalX = -leftScrewDistToTray;
   rightScrewGlobalX = screwDx + leftScrewGlobalX;
 
-  pointHoleRadius = screwRadiusSlacked("m3");
-  pointHoleThickness = 2;
-  pointMountElevation = 1;
-
-  points = [ // [x,y,elevation,holeRadius,holeThickness]
-      [(27.5),34, pointMountElevation, pointHoleRadius, pointHoleThickness],
-      [(27.5)+79.5,34, pointMountElevation, pointHoleRadius, pointHoleThickness]
-    ];
-
+  points=mountPoints;
 
   difference() {
     applyMountHoles(points)

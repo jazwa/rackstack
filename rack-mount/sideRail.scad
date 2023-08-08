@@ -1,7 +1,7 @@
-include <../../helper/common.scad>
-include <../../config/common.scad>
-include <../../rack/sharedVariables.scad>
-include <../common.scad>
+include <../helper/common.scad>
+include <../config/common.scad>
+include <../rack/sharedVariables.scad>
+include <./common.scad>
 
 sideSupportRailBase(u=2, double=true, top=true, baseThickness=1.5, sideThickness=4, backThickness=2, supportedZ=27.5, supportedY=101.5, supportedX=159);
 
