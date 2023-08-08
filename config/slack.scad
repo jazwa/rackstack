@@ -13,7 +13,7 @@
     - These values depend on print orientation and it's assumed parts are printed in their recommended orientations.
 */
 
-xySlack = 0.4;
+xySlack = 0.35;
 
 radiusXYSlack = xySlack/2;
 
