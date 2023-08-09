@@ -8,7 +8,7 @@ sideSupportRailBase(u=2, double=true, top=true, baseThickness=1.5, sideThickness
 // distance between front and back main rail screw mounts
 sideRailScrewMountDist = yBarDepth - 2*(frontScrewSpacing + railFrontThickness + railSlotToXZ);
 
-module sideSupportRailBase(u=2, double=true, top=true, baseThickness=2, sideThickness=2, backThickness=2, supportedZ=26.5, supportedY=101.5, supportedX=159) {
+module sideSupportRailBase(u=2, double=true, top=true, baseThickness=2, sideThickness=2, backThickness=2, supportedZ=27.5, supportedY=101.5, supportedX=159) {
 
   mountBlockHeight = 10;
   mountBlockDepth = 10;
