@@ -1,7 +1,7 @@
 // Some misc math-y utils
 
 $fn=64;
-eps=0.0001;
+eps=0.001;
 inf10 = 10;
 inf50 = 50;
 inf1000 = 1000;

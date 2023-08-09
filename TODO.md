@@ -7,6 +7,7 @@
 - Start working on actual cases
 - Figure out why sidewall build is so slow
 - Tidy up imports
+- Standardize meaning of `U`
 
 ### Ideas
 - Clean up `sharedVariables.scad`!!!

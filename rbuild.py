@@ -3,8 +3,9 @@
 import argparse
 import subprocess
 import os
-import sys
 
+PATH_TO_OPENSCAD = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
+PATH_TO_OPENSCAD_NIGHTLY = 'path/to/nightly/build'
 
 # For actual dimensions, please see profiles.scad.
 class BuildSizeConfig:
@@ -23,9 +24,9 @@ RACK_MOUNT_BUILD_TARGET_SUB_DIR = 'rack-mount'
 
 
 def main():
-    if not assert_os():
-        print("Linux Required for OpenSCAD CLI")
-        return
+
+    if not assertOpenscadExists():
+        print("Could not find OpenSCAD binary. Please make sure it's configured in rbuild.py. Currently only Darwin and Linux have been tested to work.")
 
     parser = argparse.ArgumentParser(
         prog='rbuild',
@@ -75,6 +76,10 @@ def main():
 def run_build(args):
 
     build_var = args.b
+
+    if build_var is None:
+        print("Please provide the build (-b) variable") # TODO redundant
+
     config_var = args.c
     target_var = args.t
     dz = args.dz
@@ -166,9 +171,9 @@ def find_scad_file(directory, filename):
 def run_openscad(options, nightly):
 
     if nightly:
-        command = ['openscad-nightly', '--enable', 'all']
+        command = [PATH_TO_OPENSCAD_NIGHTLY, '--enable', 'all']
     else:
-        command = ['openscad']
+        command = [PATH_TO_OPENSCAD]
 
     command += ['--export-format', 'binstl'] + options
     try:
@@ -178,14 +183,8 @@ def run_openscad(options, nightly):
         print('OpenSCAD command not found! '
               'Please make sure that you have OpenSCAD installed and can run OpenSCAD CLI commands. '
               '(Currently needs Linux for this)')
-
-
-def assert_os():
-    if sys.platform == 'linux':
-        return True
-    else:
-        return False
-
+def assertOpenscadExists():
+    return os.path.exists(PATH_TO_OPENSCAD)
 
 if __name__ == '__main__':
     main()
