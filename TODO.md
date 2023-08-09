@@ -2,15 +2,14 @@
 
 ### Actual TODO
 
-- Finish refactoring files to use the application style, like in `yBar.scad` 
-- Implement better build script using python !!!
-- Start working on actual cases
+- Finish refactoring files to use the application style, like in `yBar.scad`
 - Figure out why sidewall build is so slow
-- Tidy up imports
 - Standardize meaning of `U`
+- Standardize negative naming convention
+- Clean up `sharedVariables.scad`!!!
+- Implement instruction generation with rbuild.
 
 ### Ideas
-- Clean up `sharedVariables.scad`!!!
 - Start using matrices for transformations. Enforce strict local/global hierarchy of matrix transformations.
 - Instead of using names like 'mainRailSlotToInnerYZFace', experiment with a central distance/dimension directory. Like:
 ```openscad
