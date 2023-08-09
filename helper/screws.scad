@@ -1,5 +1,6 @@
 /* Some common screw dimensions and helper functions/modules */
 
+include <../helper/common.scad>
 include <./math.scad>
 
 /********************************************************************************/
@@ -175,22 +176,22 @@ module hexNutPocketHelper_N(innerRadius, widthAcrossCorners, thickness, openSide
       if (bridgeFront) {
         union() {
           // first bridge layer
-          translate(v=[0,0,thickness/2 + 0.2/2])
-          cube(size=[2*innerRadius, GtoF(widthAcrossCorners)*2, 0.2], center=true);
-
-          translate(v=[0,0,thickness/2+ 0.3])
-          cube(size=[2*innerRadius, 2*innerRadius, 0.2], center=true);
+          translate(v=[0,0,thickness/2 + defaultLayerHeight/2])
+          cube(size=[2*innerRadius, GtoF(widthAcrossCorners)*2, defaultLayerHeight], center=true);
+          // second bridge layer
+          translate(v=[0,0,thickness/2 + defaultLayerHeight])
+          cube(size=[2*innerRadius, 2*innerRadius, defaultLayerHeight], center=true);
         }
       }
 
       if (bridgeBack) {
         union() {
           // first bridge layer
-          translate(v=[0,0,-(thickness/2 + 0.2/2)])
-          cube(size=[2*innerRadius, GtoF(widthAcrossCorners)*2, 0.2], center=true);
-
-          translate(v=[0,0,-(thickness/2+ 0.3)])
-          cube(size=[2*innerRadius, 2*innerRadius, 0.2], center=true);
+          translate(v=[0,0,-(thickness/2 + defaultLayerHeight/2)])
+          cube(size=[2*innerRadius, GtoF(widthAcrossCorners)*2, defaultLayerHeight], center=true);
+          // second bridge layer
+          translate(v=[0,0,-(thickness/2 + defaultLayerHeight)])
+          cube(size=[2*innerRadius, 2*innerRadius, defaultLayerHeight], center=true);
         }
       }
     }

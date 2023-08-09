@@ -50,7 +50,7 @@ but beware of PLA's thermal limits. Higher infill is recommended for all parts.
 A python script: `rbuild.py` is provided to generate different project stls.
 
 Requirements:
-  - `openscad` cli command (Only runs on Linux)
+  - `openscad` cli (Currently only supported on Linux/Mac)
   - `python3`
 
 ### Examples:
