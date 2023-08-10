@@ -4,7 +4,12 @@ import argparse
 import subprocess
 import os
 
+<<<<<<< HEAD
 PATH_TO_OPENSCAD = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
+=======
+PATH_TO_OPENSCAD = 'openscad'
+PATH_TO_OPENSCAD_NIGHTLY = 'path/to/nightly/build'
+>>>>>>> 380dcb9 (update)
 
 # For actual dimensions, please see profiles.scad.
 class BuildSizeConfig:
@@ -179,7 +184,11 @@ def run_openscad(options, nightly):
 
     except FileNotFoundError:
         print('OpenSCAD command not found! '
+<<<<<<< HEAD
               'Please make sure that you have OpenSCAD installed and can run OpenSCAD CLI commands. '
+=======
+              'Please make sure that you have the OpenSCAD binary configured in rbuild.py.'
+>>>>>>> 380dcb9 (update)
               '(Currently needs Linux/Mac for this)')
 def assertOpenscadExists():
     return os.path.exists(PATH_TO_OPENSCAD)
