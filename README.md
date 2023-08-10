@@ -71,5 +71,5 @@ Generated stls are put into the `stl/` directories. The actual variable values f
 
 We recommend you start by printing the `eval_P.stl` file first, just to determine if the default slack/layer height
 configurations work for you. If parts are too tight/loose please take a look at
-[config/slack.scad](config/slack.scad). Please also adjust [config/printing.scad](config/printing.scad) to match your
+[config/slack.scad](config/slack.scad). Please also adjust [config/printing.scad](config/slicer.scad) to match your
 slicer settings.

@@ -3,5 +3,5 @@
 include <./dowel.scad>
 include <./magnet.scad>
 include <./slack.scad>
-include <./printing.scad>
+include <./slicer.scad>
 include <./rackFrame.scad>
