@@ -1,6 +1,6 @@
 /* Some common screw dimensions and helper functions/modules */
 
-include <../helper/common.scad>
+include <../config/common.scad>
 include <./math.scad>
 
 /********************************************************************************/
