@@ -2,8 +2,8 @@ include <../../helper/common.scad>
 include <../../config/common.scad>
 include <../sharedVariables.scad>
 
-mainRailHeatSetOnYBarDx = railSideMountThickness + 5;
-mainRailHeatSetOnYBarDy = railFrontThickness + 2;
+mainRailSlideHexOnYBarDx = railSideMountThickness + 5;
+mainRailSlideHexOnYBarDy = railFrontThickness + 2;
 
 module onYBarToMainRailNegative() {
 
@@ -14,7 +14,7 @@ module onYBarToMainRailNegative() {
     translate(v=[-slotZSlack/2, -slotSlack/2,0])
     cube(size = [railTotalWidth+slotZSlack, railTotalDepth + slotSlack, railFootThickness]);
 
-    translate(v = [mainRailHeatSetOnYBarDx, mainRailHeatSetOnYBarDy, -5])
+    translate(v = [mainRailSlideHexOnYBarDx, mainRailSlideHexOnYBarDy, -5])
     rotate(a=[-45,0,0])
     hexNutPocket_N("m3", openSide=false, backSpace=5);
   }
@@ -36,7 +36,7 @@ module onMainRailYBarConnectorNegative() {
 
 screwOffset = 9;
 
-  translate(v = [mainRailHeatSetOnYBarDx, mainRailHeatSetOnYBarDy + screwOffset, -5 + screwOffset])
+  translate(v = [mainRailSlideHexOnYBarDx, mainRailSlideHexOnYBarDy + screwOffset, -5 + screwOffset])
   rotate(a=[-45,0,0])
   counterSunkHead_N(rackFrameScrewType, screwExtension=inf50, headExtension=inf50);
 

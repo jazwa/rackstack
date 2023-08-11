@@ -4,7 +4,7 @@ include <../rack/sharedVariables.scad>
 use <./plateBase.scad>
 
 
-patchPanel(slots=2);
+*patchPanel(slots=2);
 
 module patchPanel (slots=8) {
     difference() {

@@ -22,7 +22,7 @@ _profileConfigs = [
     ["micro", [
       ["maxUnitWidth", 180],
       ["maxUnitDepth", 180],
-      ["numRailScrews", 18]
+      ["numRailScrews", 12]
     ]],
     ["mini", [
       ["maxUnitWidth", 205],
