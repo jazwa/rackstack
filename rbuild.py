@@ -4,19 +4,14 @@ import argparse
 import subprocess
 import os
 
-<<<<<<< HEAD
-PATH_TO_OPENSCAD = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
-=======
-PATH_TO_OPENSCAD = 'openscad'
-PATH_TO_OPENSCAD_NIGHTLY = 'path/to/nightly/build'
->>>>>>> 380dcb9 (update)
+PATH_TO_OPENSCAD = '/usr/bin/openscad'
+PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
 
 # For actual dimensions, please see profiles.scad.
 class BuildSizeConfig:
     NANO = 'nano'
     MINI = 'mini'
     MICRO = 'micro'
-
 
 RACK_BUILD_DIR = './rack/print'
 RACK_MOUNT_BUILD_DIR = './rack-mount/print'
@@ -25,6 +20,29 @@ BUILD_PARENT_DIR = './stl'
 
 RACK_BUILD_TARGET_SUB_DIR = 'rack'
 RACK_MOUNT_BUILD_TARGET_SUB_DIR = 'rack-mount'
+
+ASSEMBLY_GIF_DIR = './rack/assembly'
+ASSEMBLY_GIF_BUILD_DIR = './assembly-guide/gifs'
+ASSEMBLY_GIF_TEMP_DIR = ASSEMBLY_GIF_BUILD_DIR + '/tmp'
+BUILD_GIF_FROM_PNG_SCRIPT = './misc/animate.sh'
+
+ASSEMBLY_STEPS = [
+    ('slideHexNutsIntoYBar.scad', 16),
+    ('addMagnetsToMagnetModules.scad', 16),
+    ('addMagnetsToSideWall.scad', 16),
+    ('attachXBarWithYBar.scad', 16),
+    ('screwXBarAndYBar.scad', 16),
+    ('attachSideConnectorModulesToYBars.scad', 16),
+    ('connectXYTrayWithMainRails.scad', 16),
+    ('insertDowelsIntoSideWall.scad', 16),
+    ('propUpBottomXYTraywithSideWalls.scad', 16),
+    ('slideHexNutsIntoYBarXYPlate.scad', 16),
+    ('attachXYTrays.scad', 16),
+    ('slideHexNutToFeet.scad', 16),
+    ('insertFeet.scad', 16),
+    ('screwFeet.scad', 16),
+    ('attachXYPlates.scad', 16)
+]
 
 def main():
 
@@ -72,6 +90,12 @@ def main():
         help='Use openscad-nightly command. Should result in much faster build times.'
     )
 
+    parser.add_argument(
+        '--build_assembly_gifs',
+        action='store_true',
+        help='Generate the GIFS for the assembly guide.'
+    )
+
     args = parser.parse_args()
     run_build(args)
 
@@ -79,14 +103,19 @@ def main():
 def run_build(args):
 
     build_var = args.b
-
-    if build_var is None:
-        print("Please provide the build (-b) variable") # TODO redundant
-
     config_var = args.c
     target_var = args.t
     dz = args.dz
     nightly = args.nightly
+    build_gifs = args.build_assembly_gifs
+
+    if (build_var is not None) == (build_gifs is True):
+        print("Please either provide the build (-b) variable, or the build-gifs option (--build-assembly-gifs)")
+        quit()
+
+    if build_gifs:
+        build_assembly_gifs(config_var, dz, nightly)
+        quit()
 
     if target_var != "":
         final_target_directory_name = target_var
@@ -128,12 +157,34 @@ def build_single(build_dir, target_dir, filename, config, dz, nightly):
     openscad_args = construct_openscad_args(build_dir, target_dir, filename, config, dz)
     run_openscad(openscad_args, nightly)
 
+def build_assembly_gifs(config, dz, nightly):
+    print('Building assembly-gifs. Source Dir:', ASSEMBLY_GIF_DIR, ', Target:', ASSEMBLY_GIF_BUILD_DIR)
 
-def construct_openscad_args(build_dir, target_dir, filename, config, dz):
+    for (fileName, numSteps) in ASSEMBLY_STEPS:
+        print('Rendering', fileName)
+        openscad_args = construct_openscad_animation_args(
+            ASSEMBLY_GIF_DIR, ASSEMBLY_GIF_TEMP_DIR, fileName, config, dz, numSteps
+        )
+        run_openscad(openscad_args, nightly)
+
+        print("Building GIF for", fileName)
+        build_gif_from_png(fileName)
+        print("Done")
+
+def build_gif_from_png(fileName):
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    script_path = os.path.join(script_dir, BUILD_GIF_FROM_PNG_SCRIPT)
+    try:
+        subprocess.run(["bash", script_path, fileName], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error calling shell script: {e}")
+
+def construct_openscad_args(build_dir, target_dir, filename, config, dz, format='.stl'):
     source = os.path.join(build_dir, filename)
-    target = os.path.join(target_dir, os.path.splitext(filename)[0] + '.stl')
+    target = os.path.join(target_dir, os.path.splitext(filename)[0] + format)
 
-    openscad_args = ['-D', 'profileName=\"' + config + '\"']
+    openscad_args = ['--export-format', 'binstl']
+    openscad_args += ['-D', 'profileName=\"' + config + '\"']
 
     if dz != 0:
         openscad_args += ['-D', 'numRailScrews=' + dz]
@@ -144,6 +195,22 @@ def construct_openscad_args(build_dir, target_dir, filename, config, dz):
     openscad_args += ['-o', target, source]
 
     return openscad_args
+
+
+def construct_openscad_animation_args(build_dir, target_dir, filename, config, dz, steps):
+    source = os.path.join(build_dir, filename)
+    target = os.path.join(target_dir, os.path.splitext(filename)[0] + '.png')
+
+    openscad_args = []
+    openscad_args += ['--colorscheme', 'BeforeDawn']
+    openscad_args += ['--render']
+    openscad_args += ['--imgsize', '1920,1080']
+    openscad_args += ['--projection', 'o']
+    openscad_args += ['--animate', str(steps)]
+    openscad_args += ['-o', target, source]
+
+    return openscad_args
+
 
 
 def find_rack(filename):
@@ -178,17 +245,13 @@ def run_openscad(options, nightly):
     else:
         command = [PATH_TO_OPENSCAD]
 
-    command += ['--export-format', 'binstl'] + options
+    command += options
     try:
         subprocess.check_output(command, universal_newlines=True, stderr=subprocess.DEVNULL)
 
     except FileNotFoundError:
         print('OpenSCAD command not found! '
-<<<<<<< HEAD
-              'Please make sure that you have OpenSCAD installed and can run OpenSCAD CLI commands. '
-=======
               'Please make sure that you have the OpenSCAD binary configured in rbuild.py.'
->>>>>>> 380dcb9 (update)
               '(Currently needs Linux/Mac for this)')
 def assertOpenscadExists():
     return os.path.exists(PATH_TO_OPENSCAD)

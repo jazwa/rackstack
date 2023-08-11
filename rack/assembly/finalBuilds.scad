@@ -1,47 +1,43 @@
-include <../helper/common.scad>
-include <../config/common.scad>
-include <./mainRail.scad>
-include <./yBar.scad>
-include <./xBar.scad>
-include <./side/magnetModule.scad>
-include <./side/hingeModule.scad>
-include <./side/sideWallRight.scad>
-include <./side/sideWallLeft.scad>
-include <./stackEnds.scad>
-include <./xyPlate.scad>
+include <./common.scad>
 
-include <../rack-mount/side-rail/dualMount.scad>
+$vpt = [23,22,20];
+$vpr = [57,0,46];
+$vpd = 60;
 
 // TODO: this is completly broken. fix this and figure out a nice way to run this with cli commands
-assemblyInstructions();
+assemblyInstructions(stepNum=0);
 
-module assemblyInstructions () {
+module assemblyInstructions (stepNum=1) {
 
   screwMask = false;
   plasticMask = false;
   sideSupportRailMask = true;
 
-  // Instruction List (in order)
-  // render()
-  // addHeatSetInsertsYBar(at=$t);
-  // addMagnetsToMagnetModules(at=$t);
-  // addMagnetsToSideWall(at=$t);
-  // attachXBarWithYBar(at=$t);
-  // screwXBarAndYBar(at=$t);
-  // attachSideConnectorModulesToYBars(at=$t);
-  // connectXYTrayWithMainRails(at=1);
-  // insertDowelsIntoSideWall(at=$t);
-  // propUpBottomXYTraywithSideWalls(at=$t);
-  // attachXYTrays(at=$t);
-  // slideHexNutToFeet(at=$t);
-  // insertFeet(at=$t);
-  // screwFeet(at=$t);
-  // attachXYPlates(at=$t);
+  module pickStep(stepNum) {
+     children(stepNum);
+  }
+
+  pickStep(stepNum=stepNum) {
+    slideHexNutsIntoYBar(at = $t); // moved
+    addMagnetsToMagnetModules(at = $t); // moved
+    addMagnetsToSideWall(at = $t); // moved
+    attachXBarWithYBar(at = $t); // moved
+    screwXBarAndYBar(at=$t); // moved
+    attachSideConnectorModulesToYBars(at=$t); // moved
+    connectXYTrayWithMainRails(at=1); // moved
+    insertDowelsIntoSideWall(at=$t); // moved
+    propUpBottomXYTraywithSideWalls(at=$t); // moved
+    attachXYTrays(at=$t); // moved
+    slideHexNutToFeet(at=$t);
+    insertFeet(at=$t); // moved
+    screwFeet(at=$t); // moved
+    attachXYPlates(at=$t); // moved
+  }
 
 
   // Final builds:
   // render()
-   finalSingle();
+  // finalSingle();
   // finalDouble();
 
   // Features:
@@ -51,7 +47,9 @@ module assemblyInstructions () {
   // sideSwivel(at=$t);
 
 
-  module addHeatSetInsertsYBar(at=0) {
+  module slideHexNutsIntoYBar(at=0) {
+
+
     t = lerp(a=10,b=0.35,t=at); // non zero b for exposing the heatset gears for diagramming
 
     if (!plasticMask) {
@@ -65,7 +63,7 @@ module assemblyInstructions () {
       yBarSideModuleConnectorTrans;
 
     function mainRailHeatSetTrans(t=0) =
-      translate(v=[mainRailHeatSetOnYBarDx,mainRailHeatSetOnYBarDy,t-heatSetHeight]) *
+      translate(v=[mainRailSlideHexOnYBarDx,mainRailSlideHexOnYBarDy,t-heatSetHeight]) *
       yBarMainRailConnectorTrans;
 
     function xBarHeatSetTrans(t=0) =
@@ -134,10 +132,10 @@ module assemblyInstructions () {
 
     // assemble x-y bar trays
     multmatrix(translate(v = [0, 0, t]))
-    addHeatSetInsertsYBar(at=1);
+    slideHexNutsIntoYBar(at=1);
 
     multmatrix(translate(v = [0, 0, t])*xBarSpaceToYBarSpace*xBarMirrorOtherCornerTrans*yBarSpaceToXBarSpace)
-    addHeatSetInsertsYBar(at=1);
+    slideHexNutsIntoYBar(at=1);
 
     if (!plasticMask) {
       multmatrix(xBarSpaceToYBarSpace)
@@ -156,10 +154,10 @@ module assemblyInstructions () {
       translate(v=[27,xBarSideThickness + extension,6]) * rotate(a=[270,0,0]);
 
     // screw to connect x and y bars
-    addHeatSetInsertsYBar(at=1);
+    slideHexNutsIntoYBar(at=1);
 
     multmatrix(xBarSpaceToYBarSpace*xBarMirrorOtherCornerTrans*yBarSpaceToXBarSpace)
-    addHeatSetInsertsYBar(at=1);
+    slideHexNutsIntoYBar(at=1);
 
     multmatrix(xBarSpaceToYBarSpace)
     union() {
@@ -554,94 +552,5 @@ module assemblyInstructions () {
     finalSingle(r=r);
   }
 
-  xBarSpaceToYBarSpace =
-      yBarXBarConnectorTrans *
-      xBarConnectorToYBarConnectorTrans *
-    inv4x4(xBarYBarConnectorTrans);
-
-  yBarSpaceToXBarSpace =
-      xBarYBarConnectorTrans *
-      yBarConnectorToXBarConnectorTrans *
-    inv4x4(yBarXBarConnectorTrans);
-
-  upperXYTrayTrans =
-      yBarMainRailConnectorTrans *
-      mirrorMainRailOtherSideTrans *
-    inv4x4(yBarMainRailConnectorTrans);
-
-  function feetToYBarTrans(t=0) =
-      translate(v=[connectorRectWidth/2,connectorRectDepth/2,-t]) *
-      yBarStackConnectorTrans *
-    mirror(v=[0,1,0]);
-
-  function stackConnectorTrans(t=0) =
-      upperXYTrayTrans *
-      yBarStackConnectorTrans;
-
-  module mirrorAllTrayCornersFromYBarSpace() {
-    children(0);
-
-    multmatrix(yBarMirrorOtherCornerTrans)
-    children(0);
-
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans)
-    children(0);
-
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * yBarMirrorOtherCornerTrans)
-    children(0);
-  }
-
-  secondStackTrans = upperXYTrayTrans * mirror(v=[0,0,1]);
-
-
-  module caseScrewA() {
-    if (!screwMask) {
-      color([1, 1, 1]) {
-        difference() {
-          scale(v = [0.9, 0.9, 0.9])
-          counterSunkHead_N(rackFrameScrewType, screwExtension = 6, headExtension = 0.5);
-
-          cylinder($fn = 6, r = 1.5);
-        }
-      }
-    }
-  }
-
-  module caseScrewB() {
-    if (!screwMask) {
-      color([1, 1, 1]) {
-        difference() {
-          scale(v = [0.9, 0.9, 0.9])
-          counterSunkHead_N(rackFrameScrewType, screwExtension = 10, headExtension = 0.5);
-
-          cylinder($fn = 6, r = 1.5);
-        }
-      }
-    }
-  }
-
-  module hingeDowel() {
-    if (!screwMask) {
-      color([0, 1, 1])
-      cylinder(h = dowelPinH, r = dowelPinR);
-    }
-  }
-
-
-  module magnet() {
-    if (!screwMask) {
-      color([1, 1, 1])
-      cylinder(r = magnetR, h = magnetH);
-    }
-  }
-
-  module arrow(length) {
-    color([1,0,1]) {
-      translate(v = [0, 0, length-2])
-      cylinder(r1 = 2, r2 = 0.2, h = 2);
-
-      cylinder(r = 1, h = length-2);
-    }
-  }
 
 }

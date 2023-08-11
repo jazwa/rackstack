@@ -5,8 +5,8 @@ TODO this case has many many problems as it currently is. The following
   - no locking lid for case
 */
 
-include <../common.scad>
-
+include <../../../config/common.scad>
+include <../../../helper/common.scad>
 // All coordinates are in [x,y], or [x,y,z] format
 
 pcbDimensions = [56.0, 85.1]; // [x,y]
@@ -134,7 +134,7 @@ module cutoutProfile_N() {
     // front I/O
     mirror(v=[0,1,0])
       translate(v=[1, -eps*100, pcbThickness-4])
-      cube(size=[58.0 + 0.1, inf50,  19.0 + 0.1]);
+      cube(size=[58.0 + 0.1, inf50,  21 + 0.1]);
 
     // side I/O
     translate(v=[-48-3, (pcbDimensions[1]-54)-10, pcbThickness-4])

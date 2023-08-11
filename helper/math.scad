@@ -2,6 +2,7 @@
 
 $fn=64;
 eps=0.001;
+rh=1; // preview render helper :)
 inf10 = 10;
 inf50 = 50;
 inf1000 = 1000;

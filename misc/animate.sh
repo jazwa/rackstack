@@ -3,14 +3,29 @@
 
 name="anim"
 
-# Check if an argument is provided and update the variable if so
+# TODO provide through script
+png_dir="./assembly-guide/gifs/tmp"
+target_dir="./assembly-guide/gifs"
+
 if [ -n "$1" ]; then
     name="$1"
 fi
 
+if [ -n "$2" ]; then
+    png_dir="$2"
+fi
+
+if [ -n "$3" ]; then
+    target_dir="$3"
+fi
+
+echo "Current directory: $(pwd)"
+
 filename_without_extension="${name%.*}"
 
 # needs tomorrow night openscad theme
-convert -resize 20%  -delay 6 -loop 0 -transparent "#1d1f21"  -dispose  previous frame000*.png "$filename_without_extension".gif
+# convert -resize 20%  -delay 6 -loop 0 -transparent "#1d1f21"  -dispose  previous frame000*.png "$filename_without_extension".gif
 
-gifsicle -O3 --colors=64 --scale 0.5 -i "$filename_without_extension".gif -o "$filename_without_extension".gif
+convert -resize 20%  -delay 6 -loop 0 -dispose previous "$png_dir"/"$filename_without_extension"000*.png "$target_dir"/"$filename_without_extension".gif
+
+gifsicle -O3 --colors=64 --scale 0.5 -i "$target_dir"/"$filename_without_extension".gif -o "$target_dir"/"$filename_without_extension".gif
