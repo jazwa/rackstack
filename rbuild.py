@@ -158,18 +158,15 @@ def build_single(build_dir, target_dir, filename, config, dz, nightly):
     run_openscad(openscad_args, nightly)
 
 def build_assembly_gifs(config, dz, nightly):
-    print('Building assembly-gifs. Source Dir:', ASSEMBLY_GIF_DIR, ', Target:', ASSEMBLY_GIF_BUILD_DIR)
+    print('Building assembly-gifs. Source Dir:', ASSEMBLY_GIF_DIR, '| Target:', ASSEMBLY_GIF_BUILD_DIR)
 
     for (fileName, numSteps) in ASSEMBLY_STEPS:
-        print('Rendering', fileName)
+        print('Building GIF for', fileName)
         openscad_args = construct_openscad_animation_args(
             ASSEMBLY_GIF_DIR, ASSEMBLY_GIF_TEMP_DIR, fileName, config, dz, numSteps
         )
         run_openscad(openscad_args, nightly)
-
-        print("Building GIF for", fileName)
         build_gif_from_png(fileName)
-        print("Done")
 
 def build_gif_from_png(fileName):
     script_dir = os.path.dirname(os.path.abspath(__file__))
