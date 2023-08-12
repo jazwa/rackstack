@@ -54,13 +54,12 @@ module mirrorAllTrayCornersFromYBarSpace() {
 
 secondStackTrans = upperXYTrayTrans * mirror(v=[0,0,1]);
 
-
-module caseScrewA() {
+module caseScrewShort() {
   if (!screwMask) {
     color([1, 1, 1]) {
       difference() {
         scale(v = [0.9, 0.9, 0.9])
-          counterSunkHead_N(rackFrameScrewType, screwExtension = 10, headExtension = 0.5);
+          counterSunkHead_N(rackFrameScrewType, screwExtension = 8, headExtension = 0.5);
 
         cylinder($fn = 6, r = 1.5);
       }
@@ -68,12 +67,25 @@ module caseScrewA() {
   }
 }
 
-module caseScrewB() {
+module caseScrewMedium() {
   if (!screwMask) {
     color([1, 1, 1]) {
       difference() {
         scale(v = [0.9, 0.9, 0.9])
-          counterSunkHead_N(rackFrameScrewType, screwExtension = 14, headExtension = 0.5);
+          counterSunkHead_N(rackFrameScrewType, screwExtension = 12, headExtension = 0.5);
+
+        cylinder($fn = 6, r = 1.5);
+      }
+    }
+  }
+}
+
+module caseScrewLong() {
+  if (!screwMask) {
+    color([1, 1, 1]) {
+      difference() {
+        scale(v = [0.9, 0.9, 0.9])
+          counterSunkHead_N(rackFrameScrewType, screwExtension = 16, headExtension = 0.5);
 
         cylinder($fn = 6, r = 1.5);
       }

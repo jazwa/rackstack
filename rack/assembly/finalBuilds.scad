@@ -1,39 +1,12 @@
 include <./common.scad>
+include <./screwFeet.scad>
 
 $vpt = [23,22,20];
 $vpr = [57,0,46];
 $vpd = 60;
 
-// TODO: this is completly broken. fix this and figure out a nice way to run this with cli commands
-assemblyInstructions(stepNum=0);
-
-module assemblyInstructions (stepNum=1) {
-
-  screwMask = false;
-  plasticMask = false;
-  sideSupportRailMask = true;
-
-  module pickStep(stepNum) {
-     children(stepNum);
-  }
-
-  pickStep(stepNum=stepNum) {
-    slideHexNutsIntoYBar(at = $t); // moved
-    addMagnetsToMagnetModules(at = $t); // moved
-    addMagnetsToSideWall(at = $t); // moved
-    attachXBarWithYBar(at = $t); // moved
-    screwXBarAndYBar(at=$t); // moved
-    attachSideConnectorModulesToYBars(at=$t); // moved
-    connectXYTrayWithMainRails(at=1); // moved
-    insertDowelsIntoSideWall(at=$t); // moved
-    propUpBottomXYTraywithSideWalls(at=$t); // moved
-    attachXYTrays(at=$t); // moved
-    slideHexNutToFeet(at=$t);
-    insertFeet(at=$t); // moved
-    screwFeet(at=$t); // moved
-    attachXYPlates(at=$t); // moved
-  }
-
+// TODO fix this
+module finalBuilds () {
 
   // Final builds:
   // render()
@@ -45,384 +18,6 @@ module assemblyInstructions (stepNum=1) {
   // slideInNuts(at=$t);
   // stackable(at=$t); // recommended at least 32 frames for animation
   // sideSwivel(at=$t);
-
-
-  module slideHexNutsIntoYBar(at=0) {
-
-
-    t = lerp(a=10,b=0.35,t=at); // non zero b for exposing the heatset gears for diagramming
-
-    if (!plasticMask) {
-      yBar();
-    }
-
-    heatSetHeight = heatSetInsertSlotHeightSlacked(rackFrameScrewType) * 0.95;
-
-    function sideModuleHeatSetTrans(t=0) =
-      translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,t-(heatSetHeight+sideWallConnLugDepression)]) *
-      yBarSideModuleConnectorTrans;
-
-    function mainRailHeatSetTrans(t=0) =
-      translate(v=[mainRailSlideHexOnYBarDx,mainRailSlideHexOnYBarDy,t-heatSetHeight]) *
-      yBarMainRailConnectorTrans;
-
-    function xBarHeatSetTrans(t=0) =
-      translate(v=[t-heatSetHeight,27,6]) *
-      yBarXBarConnectorTrans *
-      rotate(a=[0,90,0]);
-
-    module heatSetInsertsOneCorner(t=0) {
-      multmatrix(sideModuleHeatSetTrans(t = t))
-      heatSetInsert(rackFrameScrewType);
-
-      multmatrix(mainRailHeatSetTrans(t = t))
-      heatSetInsert(rackFrameScrewType);
-
-      multmatrix(xBarHeatSetTrans(t = t))
-      heatSetInsert(rackFrameScrewType);
-    }
-
-    if (!screwMask) {
-      heatSetInsertsOneCorner(t = t);
-
-      multmatrix(yBarMirrorOtherCornerTrans)
-      heatSetInsertsOneCorner(t = t);
-    }
-
-  }
-
-  module addMagnetsToMagnetModules(at=0) {
-    t = lerp(a=8,b=0,t=at);
-
-    if (!plasticMask) {
-      magnetModule();
-    }
-
-    function insertMagnetTrans(t=0) =
-      translate(v=[sideWallConnW-(magnetFaceToSideWallConnOuterYEdge+magnetHSlacked) + t,
-                   magnetModuleMagnetMountDy,
-                   magnetModuleMagnetMountDz]) *
-      rotate(a=[0,90,0]);
-
-    multmatrix(insertMagnetTrans(t=t))
-    magnet();
-  }
-
-  module addMagnetsToSideWall(at=0) {
-    t = lerp(a=8,b=0,t=at);
-
-    if (!plasticMask) {
-      sideWallLeft();
-    }
-
-    function insertMagnetTrans(t=0) =
-      translate(v=[sideWallThickness+t, magnetMountToYBarFront, magnetMountToYBarTop-sideWallZHingeTotalClearance]) *
-      rotate(a=[0,90,0]);
-
-    multmatrix(insertMagnetTrans(t=t))
-    magnet();
-
-    multmatrix(translate(v=[0,0,sideWallZ - 2*(magnetMountToYBarTop- sideWallZHingeTotalClearance)]) * insertMagnetTrans(t=t))
-    magnet();
-  }
-
-  module attachXBarWithYBar(at=0) {
-
-    t = lerp(a=20, b=0, t=at);
-
-    // assemble x-y bar trays
-    multmatrix(translate(v = [0, 0, t]))
-    slideHexNutsIntoYBar(at=1);
-
-    multmatrix(translate(v = [0, 0, t])*xBarSpaceToYBarSpace*xBarMirrorOtherCornerTrans*yBarSpaceToXBarSpace)
-    slideHexNutsIntoYBar(at=1);
-
-    if (!plasticMask) {
-      multmatrix(xBarSpaceToYBarSpace)
-      xBar();
-
-      multmatrix(yBarMirrorOtherCornerTrans*xBarSpaceToYBarSpace)
-      xBar();
-    }
-  }
-
-  module screwXBarAndYBar(at=0) {
-    screwExtension = lerp(a=15, b=0, t=at);
-
-    // in x bar space
-    function xBarYBarScrewTrans(extension) =
-      translate(v=[27,xBarSideThickness + extension,6]) * rotate(a=[270,0,0]);
-
-    // screw to connect x and y bars
-    slideHexNutsIntoYBar(at=1);
-
-    multmatrix(xBarSpaceToYBarSpace*xBarMirrorOtherCornerTrans*yBarSpaceToXBarSpace)
-    slideHexNutsIntoYBar(at=1);
-
-    multmatrix(xBarSpaceToYBarSpace)
-    union() {
-
-      if (!plasticMask) { xBar(); }
-
-      multmatrix(xBarYBarScrewTrans(screwExtension))
-      caseScrewB();
-
-      multmatrix(xBarMirrorOtherCornerTrans * xBarYBarScrewTrans(screwExtension))
-      caseScrewB();
-    }
-
-    multmatrix(yBarMirrorOtherCornerTrans*xBarSpaceToYBarSpace)
-    union() {
-      if (!plasticMask) { xBar(); }
-
-      multmatrix(xBarYBarScrewTrans(screwExtension))
-      caseScrewB();
-
-      multmatrix(xBarMirrorOtherCornerTrans * xBarYBarScrewTrans(screwExtension))
-      caseScrewB();
-    }
-  }
-
-  module attachSideConnectorModulesToYBars(at=0) {
-    elevation = lerp(a=8, b=0, t=at);
-
-    // side module to front corner ybar
-    function sideModuleTrans(t=0) =
-        translate(v=[sideWallConnW,0,t-sideWallConnLugDepression])
-        * yBarSideModuleConnectorTrans
-      * mirror(v=[1,0,0]); // mirror for magnetModule
-
-    screwXBarAndYBar(at=1);
-
-    multmatrix(sideModuleTrans(elevation))
-    union() {
-      addMagnetsToMagnetModules(at=1);
-
-      translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
-      caseScrewA();
-    }
-
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * sideModuleTrans(elevation))
-    union() {
-      addMagnetsToMagnetModules(at=1);
-
-      translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
-      caseScrewA();
-    }
-
-    multmatrix(yBarMirrorOtherCornerTrans * sideModuleTrans(elevation))
-    union() {
-
-      if (!plasticMask) {
-        hingeModule();
-      }
-
-      translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
-      caseScrewA();
-    }
-
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * sideModuleTrans(elevation))
-    union() {
-      if (!plasticMask) {
-        hingeModule();
-      }
-
-      translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
-      caseScrewA();
-    }
-  }
-
-  module connectXYTrayWithMainRails(at=0) {
-
-    elevation = lerp(a=5, b=0, t=at);
-
-    attachSideConnectorModulesToYBars(at=1);
-
-    function mainRailTrans(elevation) = translate(v=[0,0,elevation]) * yBarMainRailConnectorTrans;
-
-    module railAndScrew(elevation) {
-
-      if (!plasticMask) {
-        mainRail();
-      }
-
-      translate(v=[railSideMountThickness + 5, railFrontThickness + 4,railFootThickness + 2*elevation])
-      caseScrewA();
-    }
-
-    multmatrix(mainRailTrans(elevation=elevation))
-    railAndScrew(elevation=elevation);
-
-    multmatrix(yBarMirrorOtherCornerTrans * mainRailTrans(elevation=elevation))
-    railAndScrew(elevation=elevation);
-
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * mainRailTrans(elevation=elevation))
-    railAndScrew(elevation=elevation);
-
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * mainRailTrans(elevation=elevation))
-    railAndScrew(elevation=elevation);
-  }
-
-  module insertDowelsIntoSideWall(at=0) {
-
-    t = lerp(a=10, b=0, t=at);
-
-    hingeHoleH = hingePoleH-sideWallConnLugDepression;
-
-    addMagnetsToSideWall(at=1);
-
-    translate(v=[hingePoleDx,hingePoleDy, (sideWallZ-hingeHoleH) + t])
-    hingeDowel();
-
-    translate(v=[hingePoleDx,hingePoleDy, (hingeHoleH-hingePoleH)-t])
-    hingeDowel();
-
-  }
-
-  module propUpBottomXYTraywithSideWalls(at=0, r=0) {
-
-    t = lerp(a=10,b=0,t=at);
-
-    function sideWallToYBarTrans(t=0,r=0) =
-        yBarMirrorOtherCornerTrans *
-        yBarSideModuleConnectorTrans * // bring to y bar space
-        mirror(v=[0,1,0]) *
-        translate(v=[0,0,t]) *
-        translate(v=[sideWallConnW/2.0, -hingePoleR, sideWallZHingeTotalClearance]) * // bring to side module space
-        rotate(a=[0,0,-r]) *
-        translate(v=[-hingePoleDx, -hingePoleDy, 0]);
-
-    connectXYTrayWithMainRails(at=1);
-
-    multmatrix(sideWallToYBarTrans(t=t, r=r))
-    insertDowelsIntoSideWall(at=1);
-
-    multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * sideWallToYBarTrans(t=t,r=r))
-    insertDowelsIntoSideWall(at=1);
-  }
-
-  module attachXYTrays(at=0,r=0) {
-
-    t = lerp(a=10,b=0,t=at);
-
-    module singleScrew(t=0) {
-      translate(v = [railSideMountThickness+5, railFrontThickness+4, railFootThickness + 2*t])
-      caseScrewA();
-    }
-
-    translate(v=[0,0,t])
-    multmatrix(upperXYTrayTrans) {
-      attachSideConnectorModulesToYBars(at=1);
-
-      mirrorAllTrayCornersFromYBarSpace()
-      multmatrix(yBarMainRailConnectorTrans)
-      singleScrew(t=t);
-    }
-
-    propUpBottomXYTraywithSideWalls(at=1,r=r);
-  }
-
-  module attachXYPlates(at=0,r=0) {
-
-    t = lerp(a=10,b=0,t=at);
-
-    // TODO fix xyPlate transformations
-    function xyPlateToYBarTrans() = translate(v=[6,6,0]) * yBarBasePlateConnectorTrans;
-
-    attachXYTrays(at=1,r=r);
-
-    multmatrix(xyPlateToYBarTrans())
-    xyPlateWithScrews(t=t);
-
-    multmatrix(upperXYTrayTrans * xyPlateToYBarTrans())
-    xyPlateWithScrews(t=t);
-
-    module xyPlateWithScrews(t=0) {
-
-      module screw(t=0) {
-        translate(v=[0,0,-t])
-        mirror(v=[0,0,1])
-        caseScrewA();
-      }
-
-      if (!plasticMask) {
-        translate(v = [0, 0, -t])
-        xyPlate();
-      }
-
-      screw(t=2*t);
-
-      translate(v=[xyPlateConnDx, 0,0])
-      screw(t=2*t);
-
-      translate(v=[0, xyPlateConnDy,0])
-      screw(t=2*t);
-
-      translate(v=[xyPlateConnDx, xyPlateConnDy,0])
-      screw(t=2*t);
-    }
-  }
-
-  module slideHexNutToFeet(at=0) {
-
-    t = lerp(a=8, b=0, t=at);
-
-    module slideNut() {
-      if (!screwMask) {
-        rotate(a = [0, 0, 90])
-        rotate(a = [90, 0, 0])
-        hexNut(rackFrameScrewType);
-      }
-    }
-
-    translate(v=[0,t,connectorBottomToScrew + 0.5]) // where does this come from again? slack?
-    slideNut();
-
-    translate(v=[stackConnectorDx,t,connectorBottomToScrew + 0.5]) // where does this come from again? slack?
-    slideNut();
-
-    if (!plasticMask) {
-      stackConnectorFeet();
-    }
-  }
-
-  module insertFeet(at=0,r=0) {
-
-    t = lerp(a=10,b=0,t=at);
-
-    attachXYPlates(at=1,r=r);
-
-    multmatrix(feetToYBarTrans(t=t))
-    slideHexNutToFeet(at=1);
-
-    multmatrix(yBarMirrorOtherCornerTrans * feetToYBarTrans(t=t))
-    slideHexNutToFeet(at=1);
-  }
-
-  module screwFeet(at=0,r=0) {
-
-    t = lerp(a=20, b=0, t=at);
-
-    function screwTrans(t=0) = translate(v=[-t - 9,0,connectorBottomToScrew]) * rotate(a=[0,-90,0]);
-    mirrorOtherFeetStackConnectorTrans = translate(v=[stackConnectorDx,0,0]) * mirror(v=[1,0,0]);
-
-
-    module screwToFeetModule() {
-      multmatrix(feetToYBarTrans(t = 0)*screwTrans(t = t))
-      caseScrewB(); // we might want a longer screw?
-
-      multmatrix(feetToYBarTrans(t = 0)*mirrorOtherFeetStackConnectorTrans*screwTrans(t = t))
-      caseScrewB();
-    }
-
-    screwToFeetModule();
-
-    multmatrix(yBarMirrorOtherCornerTrans)
-    screwToFeetModule();
-
-    insertFeet(at=1,r=r);
-  }
-
 
   module finalSingle(r=0) {
     screwFeet(at=1,r=r);
@@ -436,11 +31,11 @@ module assemblyInstructions (stepNum=1) {
         }
 
         rotate(a = [0, -90, 0])
-        caseScrewA();
+        caseScrewMedium();
 
         translate(v = [0, sideRailScrewMountDist, 0])
         rotate(a = [0, -90, 0])
-        caseScrewA();
+        caseScrewMedium();
       }
     }
 
@@ -453,11 +48,11 @@ module assemblyInstructions (stepNum=1) {
           sideSupportRailBase("lBracket");
         }
         rotate(a=[0,-90,0])
-        caseScrewA();
+        caseScrewMedium();
 
         translate(v=[0,sideRailScrewMountDist,0])
         rotate(a=[0,-90,0])
-        caseScrewA();
+        caseScrewMedium();
       }
     }
   }
@@ -522,7 +117,7 @@ module assemblyInstructions (stepNum=1) {
 
       mirrorAllTrayCornersFromYBarSpace()
       multmatrix(screwTrans)
-      caseScrewB();
+      caseScrewLong();
     }
 
     if (!plasticMask) {

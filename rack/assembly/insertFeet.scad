@@ -32,10 +32,10 @@ module screwFeet(at=0,r=0) {
 
   module screwToFeetModule() {
     multmatrix(feetToYBarTrans(t = 0)*screwTrans(t = t))
-      caseScrewB(); // we might want a longer screw?
+      caseScrewLong(); // we might want a longer screw?
 
     multmatrix(feetToYBarTrans(t = 0)*mirrorOtherFeetStackConnectorTrans*screwTrans(t = t))
-      caseScrewB();
+      caseScrewLong();
   }
 
   screwToFeetModule();

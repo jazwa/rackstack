@@ -23,10 +23,10 @@ module screwXBarAndYBar(at=0) {
       if (!plasticMask) { xBar(); }
 
       multmatrix(xBarYBarScrewTrans(screwExtension))
-        caseScrewB();
+        caseScrewLong();
 
       multmatrix(xBarMirrorOtherCornerTrans * xBarYBarScrewTrans(screwExtension))
-        caseScrewB();
+        caseScrewLong();
     }
 
   multmatrix(yBarMirrorOtherCornerTrans*xBarSpaceToYBarSpace)
@@ -34,9 +34,9 @@ module screwXBarAndYBar(at=0) {
       if (!plasticMask) { xBar(); }
 
       multmatrix(xBarYBarScrewTrans(screwExtension))
-        caseScrewB();
+        caseScrewLong();
 
       multmatrix(xBarMirrorOtherCornerTrans * xBarYBarScrewTrans(screwExtension))
-        caseScrewB();
+        caseScrewLong();
     }
 }

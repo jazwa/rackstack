@@ -27,17 +27,17 @@ ASSEMBLY_GIF_TEMP_DIR = ASSEMBLY_GIF_BUILD_DIR + '/tmp'
 BUILD_GIF_FROM_PNG_SCRIPT = './misc/animate.sh'
 
 ASSEMBLY_STEPS = [
-    ('slideHexNutsIntoYBar.scad', 16),
+    ('slideHexNutsIntoYBar.scad', 24),
     ('addMagnetsToMagnetModules.scad', 16),
     ('addMagnetsToSideWall.scad', 16),
     ('attachXBarWithYBar.scad', 16),
     ('screwXBarAndYBar.scad', 16),
     ('attachSideConnectorModulesToYBars.scad', 16),
-    ('connectXYTrayWithMainRails.scad', 16),
+    ('connectXYTrayWithMainRails.scad', 24),
     ('insertDowelsIntoSideWall.scad', 16),
     ('propUpBottomXYTraywithSideWalls.scad', 16),
     ('slideHexNutsIntoYBarXYPlate.scad', 16),
-    ('attachXYTrays.scad', 16),
+    ('attachXYTrays.scad', 24),
     ('slideHexNutToFeet.scad', 16),
     ('insertFeet.scad', 16),
     ('screwFeet.scad', 16),

@@ -25,7 +25,7 @@ module attachSideConnectorModulesToYBars(at=0) {
       addMagnetsToMagnetModules(at=1);
 
       translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
-        caseScrewA();
+        caseScrewShort();
     }
 
   multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * sideModuleTrans(elevation))
@@ -33,7 +33,7 @@ module attachSideConnectorModulesToYBars(at=0) {
       addMagnetsToMagnetModules(at=1);
 
       translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
-        caseScrewA();
+        caseScrewShort();
     }
 
   multmatrix(yBarMirrorOtherCornerTrans * sideModuleTrans(elevation))
@@ -44,7 +44,7 @@ module attachSideConnectorModulesToYBars(at=0) {
       }
 
       translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
-        caseScrewA();
+        caseScrewShort();
     }
 
   multmatrix(xBarSpaceToYBarSpace * xBarMirrorOtherCornerTrans * yBarSpaceToXBarSpace * yBarMirrorOtherCornerTrans * sideModuleTrans(elevation))
@@ -54,6 +54,6 @@ module attachSideConnectorModulesToYBars(at=0) {
       }
 
       translate(v=[yBarScrewHoleToOuterYEdge,yBarScrewHoleToFrontXEdge,sideWallConnLugDepression + 2*elevation])
-        caseScrewA();
+        caseScrewShort();
     }
 }
