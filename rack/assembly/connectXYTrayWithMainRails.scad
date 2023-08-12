@@ -28,8 +28,8 @@ module connectXYTrayWithMainRails(at=0) {
       multmatrix(
         translate(v = [mainRailSlideHexOnYBarDx, mainRailSlideHexOnYBarDy, -5])*
         rotate(a = [-45, 0, 0]))
-        translate(v = [0, 0, 14 + t2]) // length of caseScrewB
-          caseScrewB();
+        translate(v = [0, 0, 14 + t2]) // length of caseScrewLong
+          caseScrewLong();
     }
   }
 

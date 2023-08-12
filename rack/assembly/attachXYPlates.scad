@@ -28,7 +28,7 @@ module attachXYPlates(at=0,r=0) {
     module screw(t=0) {
       translate(v=[0,0,-t])
         mirror(v=[0,0,1])
-          caseScrewA();
+          caseScrewMedium();
     }
 
     if (!plasticMask) {

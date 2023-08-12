@@ -8,7 +8,7 @@ $vpf = 22.50;
 addMagnetsToMagnetModules(at=$t);
 
 module addMagnetsToMagnetModules(at=0) {
-  t = lerp(a=8,b=0,t=at);
+  t = lerp(a=6,b=0,t=at);
 
   if (!plasticMask) {
     magnetModule();

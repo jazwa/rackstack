@@ -2,9 +2,9 @@ include <./common.scad>
 use <./attachSideConnectorModulesToYBars.scad>
 use <./propUpBottomXYTraywithSideWalls.scad>
 
-$vpt = [71,123,88];
-$vpr = [44,0,47];
-$vpd = 450;
+$vpt = [115,58,113];
+$vpr = [98,0,17];
+$vpd = 620;
 $vpf = 22.50;
 
 attachXYTrays(at=$t);
@@ -17,8 +17,8 @@ module attachXYTrays(at=0,r=0) {
   module singleScrew() {
     translate(v = [mainRailSlideHexOnYBarDx, mainRailSlideHexOnYBarDy, -5])
       rotate(a=[-45,0,0])
-        translate(v=[0,0,14 + t2]) // length of caseScrewB
-      caseScrewA();
+        translate(v=[0,0,14 + t2]) // length of caseScrewLong
+      caseScrewMedium();
   }
 
   translate(v=[0,0,t1])
