@@ -1,6 +1,6 @@
 
 // Manually set this variable to toggle rack profile
-profileName = "nano";
+profileName = "micro";
 
 
 _profileConfigs = [
