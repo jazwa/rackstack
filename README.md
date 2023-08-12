@@ -6,7 +6,7 @@
 - ***Mount Anything:*** Perfect for organizing SBCs, mini PCs, small switches, power hubs, etc.
 - ***Fully customizable:*** Fully written in OpenSCAD. Everything, from the dimensions of the rack, to the roundness of the corners, can be modified with a simple code change.
 - ***Printable from home:*** Designed to be printed with conventional FDM printers. Requires minimal supports when printing, and final assembly needs only a few easy-to-source parts. 
-- ***No cage nuts!*** Sliding hex nut design for the front rails allows one to easily mount items without dealing with cage nuts.
+- ***No cage nuts!*** Sliding hex nut design for the front rails allows one to easily mount items, without dealing with cage nuts.
 - ***Stackable:*** Individual racks can be easily stacked and fastened together. Mix and match different color and design combinations!
 
 ## Assembly
@@ -51,9 +51,9 @@ Please see [the assembly README here](./assembly-guide)
 | [Feet](./rack/print/feet_P.scad) (optional)                  | 2        |
 
 
-
 #### Notes: 
-
+- Before printing the actual parts. It's recommended to print this evaluation part: [eval_P](./rack/print/eval_P.scad) to test tolerances. If you find the fits too tight/loose, you can adjust them [here](./config/slack.scad).
+- Please also adjust [this file](./config/slicer.scad) to match your slicer settings.
 - Omitted actual plastic for printing. Any conventional 3d printing plastic should do (PLA, PETG, ABS),
 but beware of PLA's thermal limits. Higher infill is recommended for all parts.
 - For joining two racks, you will need to print 4 [stackConnectorDuals](./rack/print/stackConnectorDual_P.scad), as well as 8 M3 hex nuts, and 8 M3x12 FHCS.
@@ -73,18 +73,10 @@ Generate all project files for the `micro` profile:
 
 `python3 rbuild.py -b all -c micro`
 
-This will build all the required STLs for a micro rack in the `stl/custom/` directory. 
+This will build all the parts defined in [rack/print](./rack/print), and put the STLs in [stl/micro](./stl/micro). 
 
 For generating a specific part: 
 
 `python3 rbuild.py -b yBar -c micro -t custom`
 
-Generated stls are put into the `stl/` directories. The actual variable values for different profiles can be found in 
-[rack/profiles.scad](config/rackFrame.scad).
-
 `rbuild.py` also support an optional `--nightly` flag, which means the build script will use the `openscad-nightly` command, instead of `openscad`.
-
-We recommend you start by printing the `eval_P.stl` file first, just to determine if the default slack/layer height
-configurations work for you. If parts are too tight/loose please take a look at
-[config/slack.scad](config/slack.scad). Please also adjust [config/printing.scad](config/slicer.scad) to match your
-slicer settings.
