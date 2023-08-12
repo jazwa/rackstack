@@ -3,7 +3,7 @@ include <../config/common.scad>
 include <../rack/sharedVariables.scad>
 include <./common.scad>
 
-sideSupportRailBase(u=2, double=true, top=true, baseThickness=1.5, sideThickness=4, backThickness=2, supportedZ=27.5, supportedY=101.5, supportedX=159);
+sideSupportRailBase(u=2, double=true, top=true, baseThickness=1.5, sideThickness=4, backThickness=2, supportedZ=27.2, supportedY=101.5, supportedX=159);
 
 // distance between front and back main rail screw mounts
 sideRailScrewMountDist = yBarDepth - 2*(frontScrewSpacing + railFrontThickness + railSlotToXZ);
@@ -13,18 +13,22 @@ module sideSupportRailBase(u=2, double=true, top=true, baseThickness=2, sideThic
   mountBlockHeight = 10;
   mountBlockDepth = 10;
   screwMountGlobalDz = screwDiff / 2.0; // vertical distance between local origin and main rail screw mount
-  railLength = max(sideRailScrewMountDist + frontScrewSpacing + mountBlockDepth, supportedY+backThickness);
+  sideRailScrewToMainRailFrontDx = frontScrewSpacing+railFrontThickness;
+  railLength = max(sideRailScrewMountDist + sideRailScrewToMainRailFrontDx + mountBlockDepth/2, supportedY+backThickness);
   railBaseThickness = baseThickness;
   railSideThickness = sideThickness;
   railBaseWidth = 15;
-  railSideHeight = supportedZ + railBaseThickness*2;
-  frontMountPad = frontScrewSpacing;
+  railSideHeight = supportedZ + railBaseThickness*2 + overhangSlack;
+
+  frontMountPad = (sideRailScrewToMainRailFrontDx-mountBlockDepth/2)-xySlack;
 
   applyMainRailMounts()
   sideSupportRailBase();
 
-  module applyMainRailMounts() {
+  echo(frontScrewSpacing);
+  echo(sideRailScrewToMainRailFrontDx);
 
+  module applyMainRailMounts() {
     mountBlockExtension = (railSupportsDx - supportedX)/2 - railSideThickness;
     assert(mountBlockExtension >= 10);
 
