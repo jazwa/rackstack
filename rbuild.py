@@ -4,8 +4,10 @@ import argparse
 import subprocess
 import os
 
+#------------- EDIT THESE VARIABLES WITH THE LOCATION OF YOUR OPENSCAD BINARIES
 PATH_TO_OPENSCAD = '/usr/bin/openscad'
 PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
+###############################################################################
 
 
 # For actual dimensions, please see profiles.scad.
@@ -15,6 +17,7 @@ class BuildSizeConfig:
     MICRO = 'micro'
 
 
+# TODO make this script work when running in different directories
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 RACK_BUILD_DIR = os.path.join(FILE_DIR, 'rack/print')
@@ -155,7 +158,7 @@ def run_build(args):
         build_single(RACK_BUILD_DIR, rackBuildDirFull, filename_rack, config_var, dz, nightly)
 
     if filename_rack_mount:
-        build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, filename_rack, config_var, dz, nightly)
+        build_single(RACK_MOUNT_BUILD_DIR, rackMountBuildDirFull, filename_rack_mount, config_var, dz, nightly)
 
 
 def build_single(build_dir, target_dir, filename, config, dz, nightly):
@@ -182,7 +185,9 @@ def build_gif_from_png(fileName):
     except subprocess.CalledProcessError as e:
         print(f"Error calling shell script: {e}")
 
+
 def construct_openscad_args(build_dir, target_dir, filename, config, dz, format='.stl'):
+    print(build_dir, target_dir, filename)
     source = os.path.join(build_dir, filename)
     target = os.path.join(target_dir, os.path.splitext(filename)[0] + format)
 
