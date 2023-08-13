@@ -7,7 +7,7 @@ stackConnectorDx = rackTotalWidth - 2*(connectorXEdgeToYBarXEdge + connectorRect
 stackConnectorDy = rackTotalDepth - 2*(connectorYEdgeToYBarYEdge + connectorRectDepth/2);
 stackConnectorDualSpacing = 0.5;
 
-module stackConnectorDual() {
+module rackJoiner() {
   translate(v=[0,0,stackConnectorDualSpacing/2])
   stackConnectorPlug();
 
@@ -19,7 +19,7 @@ module stackConnectorDual() {
   cube(size=[connectorRectWidth+connectorRectPlugSlack, connectorRectDepth+connectorRectPlugSlack, stackConnectorDualSpacing]);
 }
 
-module stackConnectorFeet() {
+module rackFeet() {
 
   bandThickness = 2;
   height = 18;

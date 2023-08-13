@@ -2,7 +2,7 @@
 
 ![display](media/renders/rackDisplayRounded.png)
 
-### A parametric 3d-printable mini rack system
+### A modular 3d-printable mini rack system
 - ***Mount Anything:*** Perfect for organizing SBCs, mini PCs, small switches, power hubs, etc.
 - ***Fully customizable:*** Fully written in OpenSCAD. Everything, from the dimensions of the rack, to the roundness of the corners, can be modified with a simple code change.
 - ***Printable from home:*** Designed to be printed with conventional FDM printers. Requires minimal supports when printing, and final assembly needs only a few easy-to-source parts. 
@@ -11,12 +11,12 @@
 
 ## Assembly
 
-Pre-generated STLs for roughly 200mm^3 (mini), 180mm^3 (micro), and 100mm^3 (nano) rack frames can be found in [stl](stl).
+Pre-generated STLs for roughly 200mm^3 (mini), 180mm^3 (micro), and 100mm^3 (nano) rack frames can be found in the [stl](stl) dir.
 These STLs are generated from the files in [rack/print](rack/print), and [rack-mount/print](rack-mount/print) - further information about printing these parts 
 (supports, orientation) can be found in these files.
 
 ### Assembly Instructions
-Please see [the assembly README here](./assembly-guide)
+Please see [the assembly guide](./assembly-guide).
 
 ### Required Tools:
 - 3d FDM Printer - build size requirements depend on configured rack profile
@@ -48,7 +48,7 @@ Please see [the assembly README here](./assembly-guide)
 | [Left Side Wall](./rack/print/sideWallLeft_P.scad)           | 1        |
 | [Right Side Wall](./rack/print/sideWallRight_P.scad)         | 1        |
 | [XY-Plate](./rack/print/xyPlate_P.scad)                      | 2        |
-| [Feet](./rack/print/feet_P.scad) (optional)                  | 2        |
+| [Feet](./rack/print/rackFeet_P.scad) (optional)                  | 2        |
 
 
 #### Notes: 
@@ -56,7 +56,7 @@ Please see [the assembly README here](./assembly-guide)
 - Please also adjust [this file](./config/slicer.scad) to match your slicer settings.
 - Omitted actual plastic for printing. Any conventional 3d printing plastic should do (PLA, PETG, ABS),
 but beware of PLA's thermal limits. Higher infill is recommended for all parts.
-- For joining two racks, you will need to print 4 [stackConnectorDuals](./rack/print/stackConnectorDual_P.scad), as well as 8 M3 hex nuts, and 8 M3x12 FHCS.
+- For joining two racks, you will need to print 4 [rackJoiners](./rack/print/rackJoiner_P.scad), as well as 8 M3 hex nuts, and 8 M3x12 FHCS.
 - Main front rails use M4 hex nuts and screws.
 - Side rails are mounted using M3 hex nuts and screws.
 
@@ -74,6 +74,7 @@ Generate all project files for the `micro` profile:
 `python3 rbuild.py -b all -c micro`
 
 This will build all the parts defined in [rack/print](./rack/print), and put the STLs in [stl/micro](./stl/micro). 
+You can also provide a `-dz {n}` parameter to adjust the height of the generated rack.
 
 For generating a specific part: 
 

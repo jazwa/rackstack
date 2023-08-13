@@ -131,41 +131,76 @@ module sideWallBase() {
   }
 }
 
-module sideWallVerticalRibs(numRibs, ribZ, ribYDiff, ribExtrusion=1) {
+module applySideWallDefaultVentilation(numVents) {
 
-  ribRampLength = 5;
-  ribWidth = 2;
+  r = 2; // vent roundness
+  ventLength = sideWallY - 2*sideWallDefaultVentilationToZEdge;
+  ventZDiff = (sideWallZ - 2*sideWallDefaultVentilationToYEdge)/(numVents-1);
 
-  intersection() {
-    for (i = [0:numRibs-1]) {
-
-      translate(v = [sideWallThickness, i*ribYDiff, (sideWallZ-ribZ)/2])
-      translate(v = [ribExtrusion-ribWidth, 0, 0])
-      verticalRib(ribExtend=4, ribWidth=ribWidth);
+  apply_n() {
+    for (i = [0:numVents-1]) {
+      translate(v = [0, sideWallDefaultVentilationToZEdge, i * ventZDiff + sideWallDefaultVentilationToYEdge])
+        vent();
     }
-
-    halfspace(vpos=[1,0,0], p=[0,0,0]);
+    children(0);
   }
 
-
-  module verticalRib(ribExtend, ribWidth) {
-
-    roundness = 0.5;
-
+  module vent() {
+    translate(v=[-inf/2,r,-sideWallDefaultVentilationWidth/2])
     minkowski() {
-      hull() {
-        translate(v=[0,0,roundness])
-        cube(size = [eps, ribWidth, eps]);
-
-        translate(v = [0, 0, ribRampLength])
-        cube(size = [ribExtend, ribWidth, ribZ-2*(ribRampLength+roundness)]);
-
-        translate(v = [0, 0, ribZ-roundness])
-        cube(size = [eps, ribWidth, eps]);
-      }
-
-      sphere(r=roundness);
+      rotate(a=[0,90,0])
+        cylinder(r=r,h=inf);
+      cube(size = [inf, max(eps, ventLength-2*r), max(eps,sideWallDefaultVentilationWidth-2*r)]);
     }
-
   }
 }
+
+module applySideWallBracing(numRibs) {
+
+  apply_p() {
+    // TODO add horizontal bracing
+    sideWallVerticalBracing(numRibs = numRibs);
+    children(0);
+  }
+
+  module sideWallVerticalBracing(numRibs, ribZ, ribExtrusion=1) {
+
+    ribRampLength = 5;
+    ribWidth = 2;
+    ribZ = sideWallZ;
+    ribYDiff = sideWallY - 2*sideWallDefaultVerticalBracingToZEdge;
+
+    translate(v=[0,sideWallDefaultVerticalBracingToZEdge,0])
+      intersection() {
+        for (i = [0:numRibs-1]) {
+
+          translate(v = [sideWallThickness, i*ribYDiff, (sideWallZ-ribZ)/2])
+            translate(v = [ribExtrusion-ribWidth, 0, 0])
+              verticalRib(ribExtend=4, ribWidth=ribWidth);
+        }
+
+        halfspace(vpos=[1,0,0], p=[0,0,0]);
+      }
+
+    module verticalRib(ribExtend, ribWidth) {
+
+      roundness = 0.5;
+      translate(v=[0,-ribWidth/2,0])
+        minkowski() {
+          hull() {
+            translate(v=[0,0,roundness])
+              cube(size = [eps, ribWidth, eps]);
+
+            translate(v = [0, 0, ribRampLength])
+              cube(size = [ribExtend, ribWidth, ribZ-2*(ribRampLength+roundness)]);
+
+            translate(v = [0, 0, ribZ-roundness])
+              cube(size = [eps, ribWidth, eps]);
+          }
+
+          sphere(r=roundness);
+        }
+    }
+  }
+}
+
