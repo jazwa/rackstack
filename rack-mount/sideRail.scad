@@ -10,6 +10,7 @@ sideRailScrewMountDist = yBarDepth - 2*(frontScrewSpacing + railFrontThickness +
 
 module sideSupportRailBase(u=2, double=true, top=true, baseThickness=2, sideThickness=2, backThickness=2, supportedZ=27.5, supportedY=101.5, supportedX=159) {
 
+  // TODO simplify this
   mountBlockHeight = 10;
   mountBlockDepth = 10;
   screwMountGlobalDz = screwDiff / 2.0; // vertical distance between local origin and main rail screw mount
@@ -106,7 +107,7 @@ module sideSupportRailBase(u=2, double=true, top=true, baseThickness=2, sideThic
         }
         translate(v=[0,supportedY+distanceFromSeparator+r+backThickness,boxDz])
         minkowski() {
-          cube(size = [sideThickness, 25, railSideHeight-2*boxDz]); // TODO calculate 22.5
+          cube(size = [sideThickness, 25, railSideHeight-2*boxDz]);
           sphere(r=r);
         }
 

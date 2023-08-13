@@ -65,3 +65,6 @@ xBarRoundness = baseRoundness;
 
 rackTotalWidth = 2*yBarWidth + xBarX;
 rackTotalDepth = yBarDepth;
+
+plateGap = 1; // distance between edge of xy plate and other parts
+assert(plateGap >= xySlack);

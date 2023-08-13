@@ -20,11 +20,11 @@ module xyPlate() {
   connPosY = basePlateScrewMountToYBarXZFace - connYBarCornerDy;
 
   module plateBody() {
-    plateBodyX = xBarX - xySlack;
-    plateBodyY = (yBarDepth - 2*xBarY) - xySlack;
+    plateBodyX = xBarX - 2*plateGap;
+    plateBodyY = (yBarDepth - 2*xBarY) - 2*plateGap;
     plateBodyH = xBarWallThickness;
 
-    translate(v=[xySlack/2, xySlack/2, 0]) {
+    translate(v=[plateGap, plateGap, 0]) {
       cube(size = [plateBodyX, plateBodyY, plateBodyH]);
 
       // bracing
@@ -86,12 +86,13 @@ module xyPlate() {
     module yBarConnector() {
       difference() {
         hull() {
+          // TODO: we don't need to heatset insert values anymore
           translate(v=[0,0,_baseConnRecession])
           roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType), length=5);
           roundCutSlice(radius = _baseConnY/2, length=15);
         }
-
-        cylinder(r=screwRadiusSlacked(rackFrameScrewType), h=inf, center=true);
+        mirror(v=[0,0,1])
+        counterSunkHead_N(rackFrameScrewType, headExtension = eps, screwExtension = inf10);
 
       }
     }
