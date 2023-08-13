@@ -1,10 +1,6 @@
 include <./common.scad>
 include <./screwFeet.scad>
 
-$vpt = [23,22,20];
-$vpr = [57,0,46];
-$vpd = 60;
-
 // TODO fix this
 module finalBuilds () {
 
@@ -16,7 +12,7 @@ module finalBuilds () {
   // Features:
   // render()
   // slideInNuts(at=$t);
-  // stackable(at=$t); // recommended at least 32 frames for animation
+  // stackable(at=$t);
   // sideSwivel(at=$t);
 
   module finalSingle(r=0) {
