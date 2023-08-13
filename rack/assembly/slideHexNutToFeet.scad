@@ -26,6 +26,6 @@ module slideHexNutToFeet(at=0) {
     slideNut();
 
   if (!plasticMask) {
-    stackConnectorFeet();
+    rackFeet();
   }
 }

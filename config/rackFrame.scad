@@ -1,9 +1,15 @@
-
 // Manually set this variable to toggle rack profile
 profileName = "micro";
 
-
 _profileConfigs = [
+    // You can introduce a custom profile like:
+    /*
+    ["custom", [
+      ["maxUnitWidth", 180],
+      ["maxUnitDepth", 120],
+      ["numRailScrews", 10]
+    ]],
+    */
     ["default", [
       ["maxUnitWidth", 180],
       ["maxUnitDepth", 180],
@@ -27,7 +33,7 @@ _profileConfigs = [
     ["mini", [
       ["maxUnitWidth", 205],
       ["maxUnitDepth", 205],
-      ["numRailScrews", 20]
+      ["numRailScrews", 16]
     ]]
   ];
 
