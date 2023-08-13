@@ -2,11 +2,10 @@ include <./common.scad>
 use <./rackEars.scad>
 
 
-module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, mountScrewType) {
+module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, mountScrewType, lipThickness=3) {
 
   frontLipHeight = 2;
   backLipHeight = 1; // also applies to sides
-  lipThickness = 3;
 
   rackEarSideThickness = 3;
   rackEarFrontThickness = 3;
@@ -62,12 +61,12 @@ module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, moun
 
     translate(v = [leftScrewGlobalX, 0, rackMountScrewZDist])
     rackEarModule(frontThickness = rackEarFrontThickness, sideThickness = rackEarSideThickness, frontWidth =
-        leftScrewDistToTray+rackMountScrewXDist+rackEarSideThickness, sideDepth = trayDepth-lipThickness, u = u);
+        leftScrewDistToTray+rackMountScrewXDist+rackEarSideThickness, sideDepth = trayDepth-lipThickness, u = u, backPlaneHeight=trayThickness+backLipHeight);
 
     translate(v = [rightScrewGlobalX, 0, rackMountScrewZDist])
     mirror(v = [1, 0, 0])
     rackEarModule(frontThickness = rackEarFrontThickness, sideThickness = rackEarSideThickness, frontWidth =
-       rightScrewGlobalX-trayWidth+rackMountScrewXDist+rackEarSideThickness, sideDepth = trayDepth-lipThickness, u = u);
+       rightScrewGlobalX-trayWidth+rackMountScrewXDist+rackEarSideThickness, sideDepth = trayDepth-lipThickness, u = u, backPlaneHeight=trayThickness+backLipHeight);
     }
 
 

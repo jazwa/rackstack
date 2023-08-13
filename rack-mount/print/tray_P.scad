@@ -2,8 +2,9 @@ use <../tray.scad>
 
 // Config variables
 trayWidth = 140;
-trayDepth = 85;
+trayDepth = 88;
 trayThickness = 3;
+trayLipThickness = 3;
 
 pointHoleRadius = screwRadiusSlacked("m3");
 pointHoleThickness = 2;
@@ -16,4 +17,4 @@ mountPoints = [ // [x,y,elevation,holeRadius,holeThickness]
 mountScrewType = "m3";
 
 // Rack mount tray that supports screws on the bottom of the rack-mount item
-bottomScrewTray(u=1, trayWidth=trayWidth, trayDepth=trayDepth, trayThickness=trayThickness, mountPoints=mountPoints, mountScrewType=mountScrewType);
+bottomScrewTray(u=1, trayWidth=trayWidth, trayDepth=trayDepth, trayThickness=trayThickness, mountPoints=mountPoints, mountScrewType=mountScrewType, lipThickness=trayLipThickness);

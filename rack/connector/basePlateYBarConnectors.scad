@@ -39,11 +39,12 @@ module onYBarBasePlateConnectorNegative() {
   hexNutPocket_N("m3", openSide=false, backSpace=5, bridgeBack=true);
 
   hull() {
+    // This has always been a pretty annoying to fit part. Increasing slack to 2*radiusXYSlack to compensate. TODO fix
     translate(v = [_heatSetX, _heatSetY, _baseConnRecession+overhangSlack])
-    roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType)+radiusXYSlack);
+    roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType)+2*radiusXYSlack);
 
     translate(v = [_heatSetX, _heatSetY, 0])
-    roundCutSlice(radius = _baseConnY/2 + radiusXYSlack);
+    roundCutSlice(radius = _baseConnY/2 + 2*radiusXYSlack);
   }
 
 }
