@@ -2,8 +2,6 @@
 # simple bash script to animate the frame dump from openscad
 
 name="anim"
-
-# TODO provide through script
 png_dir="./assembly-guide/gifs/tmp"
 target_dir="./assembly-guide/gifs"
 
