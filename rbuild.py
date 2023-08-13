@@ -17,7 +17,6 @@ class BuildSizeConfig:
     MICRO = 'micro'
 
 
-# TODO make this script work when running in different directories
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 RACK_BUILD_DIR = os.path.join(FILE_DIR, 'rack/print')
