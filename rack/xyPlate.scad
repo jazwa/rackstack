@@ -3,7 +3,7 @@ include <./connector/connectors.scad>
 
 *xyPlate();
 
-xyPlateConnDx = xBarX + 2*_heatSetX; // X distance between connectors
+xyPlateConnDx = xBarX + 2*basePlateYBarSlideNutDx; // X distance between connectors
 xyPlateConnDy = yBarDepth - 2*basePlateScrewMountToYBarXZFace; // Y distance between connectors
 
 module xyPlate() {
