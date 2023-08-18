@@ -18,7 +18,7 @@ These STLs are generated from the files in [rack/print](rack/print), and [rack-m
 ### Assembly Instructions
 Please see [the assembly guide](./assembly-guide).
 
-### Required Tools:
+### BOM - Required Tools:
 - 3d FDM Printer - build size requirements depend on configured rack profile
 - M3 Allen Key (for constructing the rack)
 - M4 Allen Key (for mounting rack-mount items)
@@ -48,7 +48,7 @@ Please see [the assembly guide](./assembly-guide).
 | [Left Side Wall](./rack/print/sideWallLeft_P.scad)           | 1        |
 | [Right Side Wall](./rack/print/sideWallRight_P.scad)         | 1        |
 | [XY-Plate](./rack/print/xyPlate_P.scad)                      | 2        |
-| [Feet](./rack/print/rackFeet_P.scad) (optional)                  | 2        |
+| [Feet](./rack/print/rackFeet_P.scad) (optional)              | 2        |
 
 
 #### Notes: 
