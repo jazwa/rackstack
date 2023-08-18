@@ -29,14 +29,12 @@ frontFaceWidth = railScrewHoleToInnerEdge + railScrewHoleToOuterEdge;
 railTotalWidth = frontFaceWidth;
 railTotalDepth = railFrontThickness+sideSupportDepth;
 
-
-// Side Wall variables:
+// Side Wall variables, cannot put in sideWallVariables due to dependency by ybar
 sideWallThickness = 2.5;
 
 sideWallSlotToOuterYEdge = 3;
-sideWallSlotToOuterXEdge = 3; // TODO rename to variables found in ybar;
+sideWallSlotToOuterXEdge = 3; // TODO rename to variables found in ybar
 sideWallConnectorSlotWidth = 7;
-
 
 // Y Bar variables:
 railSlotToXZ = 3;
@@ -66,5 +64,48 @@ xBarRoundness = baseRoundness;
 rackTotalWidth = 2*yBarWidth + xBarX;
 rackTotalDepth = yBarDepth;
 
+
+// Dimensions for the connector block, applied to y-bar
+yBarXYPlateBlockX = 12;
+yBarXYPlateBlockY = 14;
+yBarXYPlateBlockZ = 10;
+
+// Needed for y bar to align this connector to its inner Y edge
+yBarBasePlateConnectorWidth = yBarXYPlateBlockX;
+
+// x and y faces of the yBarBasePlateMount_P block
+plateBlockInnerXFaceToScrew = 6;
+plateBlockInnerYFaceToScrew = 8;
+plateBlockBaseConnRecession = 3;
+plateBlockBaseConnY = 8;
+
+basePlateYBarSlideNutDx = yBarXYPlateBlockX - plateBlockInnerXFaceToScrew;
+basePlateYBarSlideNutDy = yBarXYPlateBlockY - plateBlockInnerYFaceToScrew;
+
+basePlateScrewMountToYBarXZFace = basePlateYBarSlideNutDy + joinCornerDepth; // Distance to the nearest YBar XZ face
+basePlateScrewMountToYBarYZFace =  (yBarWidth+basePlateYBarSlideNutDx) - yBarBasePlateConnectorWidth;
+
+xyPlateConnDx = xBarX + 2*basePlateYBarSlideNutDx; // X distance between connectors
+xyPlateConnDy = yBarDepth - 2*basePlateScrewMountToYBarXZFace; // Y distance between connectors
 plateGap = 1; // distance between edge of xy plate and other parts
 assert(plateGap >= xySlack);
+
+
+connectorYEdgeToYBarYEdge = 5;
+connectorXEdgeToYBarXEdge = 5;
+
+connectorRectWidth = 10;
+connectorRectDepth = 10;
+connectorTotalHeight = 10;
+
+connectorSocketMagnetExtrudeHeight = 1;
+connectorTaperStartHeight = 3;
+connectorTopR = 3;
+connectorRectPlugSlack = -0.2;
+connectorRectSocketSlack = 0.2;
+connectorBottomToScrew = 6;
+// Distance from midpoint of stack connectors to each other
+stackConnectorDx = rackTotalWidth - 2*(connectorXEdgeToYBarXEdge + connectorRectWidth/2);
+stackConnectorDy = rackTotalDepth - 2*(connectorYEdgeToYBarYEdge + connectorRectDepth/2);
+stackConnectorDualSpacing = 0.5;
+

@@ -3,22 +3,6 @@ include <../../config/common.scad>
 include <../sharedVariables.scad>
 
 
-connectorYEdgeToYBarYEdge = 5;
-connectorXEdgeToYBarXEdge = 5;
-
-connectorRectWidth = 10;
-connectorRectDepth = 10;
-connectorTotalHeight = 10;
-connectorSocketMagnetExtrudeHeight = 1;
-connectorTaperStartHeight = 3;
-
-connectorTopR = 3;
-
-connectorRectPlugSlack = -0.2;
-connectorRectSocketSlack = 0.2;
-
-connectorBottomToScrew = 6;
-
 module stackConnectorBase(rectSlack, topSlack=0.0) {
 
   wSlacked = connectorRectWidth + rectSlack;

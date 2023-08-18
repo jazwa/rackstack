@@ -3,9 +3,6 @@ include <./connector/connectors.scad>
 
 *xyPlate();
 
-xyPlateConnDx = xBarX + 2*basePlateYBarSlideNutDx; // X distance between connectors
-xyPlateConnDy = yBarDepth - 2*basePlateScrewMountToYBarXZFace; // Y distance between connectors
-
 module xyPlate() {
 
   translate(v=-[connPosX,connPosY,0]) // center around one of the YBarConnector holes
@@ -87,9 +84,9 @@ module xyPlate() {
       difference() {
         hull() {
           // TODO: we don't need to heatset insert values anymore
-          translate(v=[0,0,_baseConnRecession])
+          translate(v=[0,0,plateBlockBaseConnRecession])
           roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType), length=5);
-          roundCutSlice(radius = _baseConnY/2, length=15);
+          roundCutSlice(radius = plateBlockBaseConnY/2, length=15);
         }
         mirror(v=[0,0,1])
         counterSunkHead_N(rackFrameScrewType, headExtension = eps, screwExtension = inf10);
