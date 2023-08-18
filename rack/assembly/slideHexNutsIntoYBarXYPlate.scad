@@ -21,7 +21,7 @@ module slideHexNutsIntoYBarXYPlate(at=0) {
 
   module plateHexNut(t) {
     multmatrix(yBarBasePlateConnectorTrans)
-      translate(v=[_heatSetX+t, _heatSetY, 4 + _baseConnRecession]) // TODO gotta rename these
+      translate(v=[basePlateYBarSlideNutDx+t, basePlateYBarSlideNutDy, 4 + _baseConnRecession]) // TODO gotta rename these
         hexNut(rackFrameScrewType);
   }
 

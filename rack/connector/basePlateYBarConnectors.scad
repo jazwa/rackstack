@@ -2,48 +2,48 @@ include <../../helper/common.scad>
 include <../../config/common.scad>
 include <../sharedVariables.scad>
 
-_mountX = 12;
-_mountY = 14;
-_mountZ = 10;
+// Dimensions for the connector block, applied to y-bar
+yBarXYPlateBlockX = 12;
+yBarXYPlateBlockY = 14;
+yBarXYPlateBlockZ = 10;
 
-// Needed for yBar to align this connector to its inner Y edge
-yBarBasePlateConnectorWidth = _mountX;
+// Needed for y bar to align this connector to its inner Y edge
+yBarBasePlateConnectorWidth = yBarXYPlateBlockX;
 
 // x and y faces of the yBarBasePlateMount_P block
 _innerXFaceToScrew = 6;
 _innerYFaceToScrew = 8;
-
 _baseConnRecession = 3;
 _baseConnY = 8;
 _baseConnOuterXFaceToScrew = 2;
 
-_heatSetX = _mountX - _innerXFaceToScrew;
-_heatSetY = _mountY - _innerYFaceToScrew;
+basePlateYBarSlideNutDx = yBarXYPlateBlockX - _innerXFaceToScrew;
+basePlateYBarSlideNutDy = yBarXYPlateBlockY - _innerYFaceToScrew;
 
 // TODO refactor this entire file
-basePlateScrewMountToYBarXZFace = _heatSetY + joinCornerDepth; // Distance to the nearest YBar XZ face
-basePlateScrewMountToYBarYZFace =  (yBarWidth+_heatSetX) - yBarBasePlateConnectorWidth;
+basePlateScrewMountToYBarXZFace = basePlateYBarSlideNutDy + joinCornerDepth; // Distance to the nearest YBar XZ face
+basePlateScrewMountToYBarYZFace =  (yBarWidth+basePlateYBarSlideNutDx) - yBarBasePlateConnectorWidth;
 
 module onYBarBasePlateConnectorPositive() {
   translate(v=[0,0,yBarWallThickness])
   intersection() {
-    cube(size = [_mountX, _mountY, _mountZ]);
-    halfspace(vpos=[0, -1, -1], p=[0, _mountY-1, _mountZ-1]);
+    cube(size = [yBarXYPlateBlockX, yBarXYPlateBlockY, yBarXYPlateBlockZ]);
+    halfspace(vpos=[0, -1, -1], p=[0, yBarXYPlateBlockY-1, yBarXYPlateBlockZ-1]);
   }
 }
 
 module onYBarBasePlateConnectorNegative() {
 
-  translate(v=[_heatSetX, _heatSetY, 4 + _baseConnRecession])
+  translate(v=[basePlateYBarSlideNutDx, basePlateYBarSlideNutDy, 4 + _baseConnRecession])
   mirror(v=[0,0,1])
   hexNutPocket_N("m3", openSide=false, backSpace=5, bridgeBack=true);
 
   hull() {
     // This has always been a pretty annoying to fit part. Increasing slack to 2*radiusXYSlack to compensate. TODO fix
-    translate(v = [_heatSetX, _heatSetY, _baseConnRecession+overhangSlack])
+    translate(v = [basePlateYBarSlideNutDx, basePlateYBarSlideNutDy, _baseConnRecession+overhangSlack])
     roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType)+2*radiusXYSlack);
 
-    translate(v = [_heatSetX, _heatSetY, 0])
+    translate(v = [basePlateYBarSlideNutDx, basePlateYBarSlideNutDy, 0])
     roundCutSlice(radius = _baseConnY/2 + 2*radiusXYSlack);
   }
 
