@@ -1,26 +1,15 @@
-/*
-TODO this case has many many problems as it currently is. The following
- should be addressed before it is printed again:
-  - risers are made of plastic and really easily break
-  - no locking lid for case
-*/
-
 include <../../../config/common.scad>
 include <../../../helper/common.scad>
-// All coordinates are in [x,y], or [x,y,z] format
 
+// All coordinates are in [x,y], or [x,y,z] format
 pcbDimensions = [56.0, 85.1]; // [x,y]
 pcbThickness = 1.42;
 
-
 // [+x, -x, +y, -y]
 pcbCaseSpace = [5, 2, 5, 2];
-
 pcbRise = 3;
 caseWallThickness = 2;
 caseBottomThickness = 2;
-
-
 mountPointDiameter = 5;
 mountPoints = [[3.65,23.30,0], [3.65,pcbDimensions[1]-3.65,0], [pcbDimensions[0]-3.65,23.30,0], [pcbDimensions[0]-3.65,pcbDimensions[1]-3.65,0]];
 
@@ -85,30 +74,6 @@ module cutoutProfileAirflow_N() {
   cube(size=[inf50, 80, 15]);
 }
 
-difference() {
-
-  union() {
-  pcbCaseWithRisers_();
-
-    // lugs
-    // -4
-    translate(v=[pcbDimensions[0]+caseWallThickness+pcbCaseSpace[0],-caseWallThickness-pcbCaseSpace[3],-pcbRise-caseBottomThickness])
-      cube(size=[2,5,5]);
-
-    // 87.1
-    translate(v=[pcbDimensions[0]+caseWallThickness+pcbCaseSpace[0],pcbDimensions[1]+pcbCaseSpace[2]-5+caseWallThickness,-pcbRise-caseBottomThickness])
-      cube(size=[2,5,5]);
-
-    // -> 87.1 + 4 = 91.1
-  }
-
-  union() {
-    cutoutProfile_N();
-    cutoutProfileAirflow_N();
-  }
-}
-//cutoutProfileAirflow_N();
-
 module mountPoints_N(cylHeight, cylRad1, cylRad2, cylFn, center) {
   for (i=[0:3]) {
     p = mountPoints[i];
@@ -116,15 +81,6 @@ module mountPoints_N(cylHeight, cylRad1, cylRad2, cylFn, center) {
     cylinder(r1=cylRad1, r2=cylRad2, h=cylHeight, $fn=cylFn, center=center);
   }
   
-}
-
-
-*difference() {
-  union () {
-    pcb();
-    mountPoints_N(7, mountPointDiameter/2.5, mountPointDiameter/2.5, 32, false);
-    mountPoints_N(5, mountPointDiameter, mountPointDiameter, 32, false);
-  }
 }
 
 // fucked up
@@ -143,6 +99,32 @@ module cutoutProfile_N() {
 
 }
 
-*cutoutProfile_N();
-//pcb();
 
+module mainCase() {
+  difference() {
+
+    union() {
+      pcbCaseWithRisers_();
+
+      // lugs
+      // -4
+      translate(v = [pcbDimensions[0]+caseWallThickness+pcbCaseSpace[0], -caseWallThickness-pcbCaseSpace[3], -pcbRise-
+        caseBottomThickness])
+        cube(size = [2, 5, 5]);
+
+      // 87.1
+      translate(v = [pcbDimensions[0]+caseWallThickness+pcbCaseSpace[0], pcbDimensions[1]+pcbCaseSpace[2]-5+
+        caseWallThickness, -pcbRise-caseBottomThickness])
+        cube(size = [2, 5, 5]);
+
+      // -> 87.1 + 4 = 91.1
+    }
+
+    union() {
+      cutoutProfile_N();
+      cutoutProfileAirflow_N();
+    }
+  }
+}
+
+mainCase();
