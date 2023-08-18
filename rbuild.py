@@ -4,7 +4,7 @@ import argparse
 import subprocess
 import os
 
-#------------- EDIT THESE VARIABLES WITH THE LOCATION OF YOUR OPENSCAD BINARIES
+# ------------- EDIT THESE VARIABLES WITH THE LOCATION OF YOUR OPENSCAD BINARIES
 PATH_TO_OPENSCAD = '/usr/bin/openscad'
 PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
 ###############################################################################
@@ -180,7 +180,8 @@ def build_assembly_gifs(config, dz, nightly):
 
 def build_gif_from_png(fileName):
     try:
-        subprocess.run(["bash", BUILD_GIF_FROM_PNG_SCRIPT, fileName, ASSEMBLY_GIF_TEMP_DIR, ASSEMBLY_GIF_BUILD_DIR], check=True)
+        subprocess.run(["bash", BUILD_GIF_FROM_PNG_SCRIPT, fileName, ASSEMBLY_GIF_TEMP_DIR, ASSEMBLY_GIF_BUILD_DIR],
+                       check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error calling shell script: {e}")
 

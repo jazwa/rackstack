@@ -1,9 +1,9 @@
 
 module sfxPowerSupply() {
-    // corsair sf450
-    length = 125.3;
-    width = 100.2;
-    height = 63.8;
+
+    length = 125.0;
+    width = 100.0;
+    height = 64;
     screwD = 3.5;
     
     eps = 0.001;
@@ -56,3 +56,5 @@ module sfxPowerSupply() {
 
     
 }
+
+sfxPowerSupply();
