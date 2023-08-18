@@ -67,9 +67,4 @@ module mainRail() {
       children(0);
     }
   }
-
 }
-
-// used in assembly
-mirrorMainRailOtherSideTrans = translate(v = [0, 0, railTotalHeight]) * mirror(v=[0,0,1]);
-

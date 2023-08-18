@@ -37,3 +37,6 @@ sideWallDefaultVerticalBracingToZEdge = 30;
 sideWallDefaultVentilationToZEdge = 40;
 sideWallDefaultVentilationToYEdge = 25;
 sideWallDefaultVentilationWidth = 6;
+
+magnetModuleMagnetMountDy = magnetMountToYBarFront - sideWallSlotToXZ;
+magnetModuleMagnetMountDz = magnetMountToYBarTop + sideWallConnLugDepression;

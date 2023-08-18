@@ -2,11 +2,6 @@ include <../helper/common.scad>
 include <./sharedVariables.scad>
 include <./connector/connectors.scad>
 
-// Distance from midpoint of stack connectors to each other
-stackConnectorDx = rackTotalWidth - 2*(connectorXEdgeToYBarXEdge + connectorRectWidth/2);
-stackConnectorDy = rackTotalDepth - 2*(connectorYEdgeToYBarYEdge + connectorRectDepth/2);
-stackConnectorDualSpacing = 0.5;
-
 module rackJoiner() {
   translate(v=[0,0,stackConnectorDualSpacing/2])
   stackConnectorPlug();

@@ -1,14 +1,14 @@
 include <../../helper/common.scad>
 include <../../config/common.scad>
-include <../mainRail.scad>
-include <../yBar.scad>
-include <../xBar.scad>
-include <../side/magnetModule.scad>
-include <../side/hingeModule.scad>
-include <../side/sideWallRight.scad>
-include <../side/sideWallLeft.scad>
-include <../stackEnds.scad>
-include <../xyPlate.scad>
+use <../mainRail.scad>
+use <../yBar.scad>
+use <../xBar.scad>
+use <../side/magnetModule.scad>
+use <../side/hingeModule.scad>
+use <../side/sideWallRight.scad>
+use <../side/sideWallLeft.scad>
+use <../stackEnds.scad>
+use <../xyPlate.scad>
 
 screwMask = false;
 plasticMask = false;

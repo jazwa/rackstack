@@ -2,28 +2,6 @@ include <../../helper/common.scad>
 include <../../config/common.scad>
 include <../sharedVariables.scad>
 
-// Dimensions for the connector block, applied to y-bar
-yBarXYPlateBlockX = 12;
-yBarXYPlateBlockY = 14;
-yBarXYPlateBlockZ = 10;
-
-// Needed for y bar to align this connector to its inner Y edge
-yBarBasePlateConnectorWidth = yBarXYPlateBlockX;
-
-// x and y faces of the yBarBasePlateMount_P block
-_innerXFaceToScrew = 6;
-_innerYFaceToScrew = 8;
-_baseConnRecession = 3;
-_baseConnY = 8;
-_baseConnOuterXFaceToScrew = 2;
-
-basePlateYBarSlideNutDx = yBarXYPlateBlockX - _innerXFaceToScrew;
-basePlateYBarSlideNutDy = yBarXYPlateBlockY - _innerYFaceToScrew;
-
-// TODO refactor this entire file
-basePlateScrewMountToYBarXZFace = basePlateYBarSlideNutDy + joinCornerDepth; // Distance to the nearest YBar XZ face
-basePlateScrewMountToYBarYZFace =  (yBarWidth+basePlateYBarSlideNutDx) - yBarBasePlateConnectorWidth;
-
 module onYBarBasePlateConnectorPositive() {
   translate(v=[0,0,yBarWallThickness])
   intersection() {
@@ -34,17 +12,17 @@ module onYBarBasePlateConnectorPositive() {
 
 module onYBarBasePlateConnectorNegative() {
 
-  translate(v=[basePlateYBarSlideNutDx, basePlateYBarSlideNutDy, 4 + _baseConnRecession])
+  translate(v=[basePlateYBarSlideNutDx, basePlateYBarSlideNutDy, 4 + plateBlockBaseConnRecession])
   mirror(v=[0,0,1])
   hexNutPocket_N("m3", openSide=false, backSpace=5, bridgeBack=true);
 
   hull() {
     // This has always been a pretty annoying to fit part. Increasing slack to 2*radiusXYSlack to compensate. TODO fix
-    translate(v = [basePlateYBarSlideNutDx, basePlateYBarSlideNutDy, _baseConnRecession+overhangSlack])
+    translate(v = [basePlateYBarSlideNutDx, basePlateYBarSlideNutDy, plateBlockBaseConnRecession+overhangSlack])
     roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType)+2*radiusXYSlack);
 
     translate(v = [basePlateYBarSlideNutDx, basePlateYBarSlideNutDy, 0])
-    roundCutSlice(radius = _baseConnY/2 + 2*radiusXYSlack);
+    roundCutSlice(radius = plateBlockBaseConnY/2 + 2*radiusXYSlack);
   }
 
 }

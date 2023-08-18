@@ -7,11 +7,7 @@ include <./mainRailYBarConnectors.scad>
 include <./sideModuleYBarConnectors.scad>
 include <./stackYBarConnectors.scad>
 include <./basePlateYBarConnectors.scad>
-
-mirror(v=[1,0,0])
-*connectorDebug(on="xBar", to="yBar", trans=identity);
-
-*connectorDebug(on="yBar", to="xBar", trans=identity);
+include <./transformations.scad>
 
 // Default is to apply the positive first
 module applyConnector(on, to, trans) {
@@ -27,7 +23,6 @@ module applyConnector(on, to, trans) {
   }
 }
 
-
 module connectorDebug(on, to, trans) {
 
   color([0,1,0])
@@ -37,9 +32,7 @@ module connectorDebug(on, to, trans) {
   color([1,0,0])
   multmatrix(trans)
   connectorNegative(on=on, to=to);
-
 }
-
 
 module applyConnectorDebug(on,to,trans) {
 
@@ -83,5 +76,4 @@ module connectorNegative(on, to) {
   } else if (on == "mainRail" && to == "yBar") {
     onMainRailYBarConnectorNegative();
   }
-
 }

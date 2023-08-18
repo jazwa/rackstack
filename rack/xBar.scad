@@ -45,7 +45,3 @@ module xBar() {
   }
 
 }
-
-xBarYBarConnectorTrans = rotate(a=[0,0,-90]);
-
-xBarMirrorOtherCornerTrans = translate(v = [0, xBarX, 0]) * mirror(v = [0, 1, 0]);
