@@ -1,8 +1,8 @@
 # Rack Assembly Instructions
 
 **Note**: Please see
-- [BOM](../README.md#bom---single-rack) for required materials, beyond the actual 3-d printed parts.
-- [Print BOM](../README.md#printing---single-rack) for all the required 3-d printed parts for a single rack.
+- [BOM](../README.md#bom---single-rack) for required materials, beyond the actual 3D printed parts.
+- [Print BOM](../README.md#printing---single-rack) for all the required 3D printed parts for a single rack.
 
 ## Instructions:
 Slide in M3 hex nuts into the Y-bars - 4 times. Each corner should have 3 hex nuts:
@@ -20,7 +20,7 @@ Insert top and bottom dowel rods into side walls - 2 times:
 Slide Y-bars into X-bars - 2 times:
 ![attachXBarWithYBar](./gifs/attachXBarWithYBar.gif)
 
-Screw together Y-bars and X-bars using 4 M3x12 FHCS screws (one screw per corner) - 2 times: 
+Screw together Y-bars and X-bars using 4 M3x16 FHCS screws (one screw per corner) - 2 times: 
 ![screwXBarAndYBar](./gifs/screwXBarAndYBar.gif)
 
 Screw in the side-modules with M3x8 FHCS screws. Orientation matters here. The magnets modules should be on the eventual front side, facing outwards, and the two hinge modules should be in the back. Do this 2 times (for both trays):
@@ -35,7 +35,7 @@ Prop us the side wall using the side modules. Make sure the dowels are inserted 
 Slide in the other (top) tray. Make sure the magnets and dowels align. Screw in the main rails with M3x16 FHCS screws:
 ![attachXYTrays](./gifs/attachXYTrays.gif)
 
-Attach the top and bottom plates with 4 M3x8 screws each:
+Attach the top and bottom plates with 4 M3x12 screws each:
 ![slideHexNutsIntoYBarXYPlate](./gifs/slideHexNutsIntoYBarXYPlate.gif)
 ![attachXYPlates](./gifs/attachXYPlates.gif)
 
