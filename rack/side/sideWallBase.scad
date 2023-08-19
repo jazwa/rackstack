@@ -3,8 +3,8 @@ include <../../config/common.scad>
 include <../sharedVariables.scad>
 include <./sideWallMagnetMount.scad>
 include <./sideWallVariables.scad>
-include <./magnetModule.scad>
-include <./hingeModule.scad>
+use <./magnetModule.scad>
+use <./hingeModule.scad>
 
 //translate(v = [hingePoleDx ,hingePoleDy, 10])
 //rotate(a=[0,0,-120])

@@ -1,5 +1,8 @@
 include <../../helper/common.scad>
 include <../../config/common.scad>
+include <../sharedVariables.scad>
+include <../side/sideWallVariables.scad>
+include <../connector/connectors.scad>
 use <../mainRail.scad>
 use <../yBar.scad>
 use <../xBar.scad>

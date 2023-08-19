@@ -1,0 +1,5 @@
+  basePlateConnYBarCornerDx = yBarWidth; // distance from a plate body corner and the nearest yBar corner
+  basePlateConnYBarCornerDy = xBarY; // distance from a plate body corner and the nearest yBar corner
+
+  basePlateConnPosX = basePlateScrewMountToYBarYZFace - basePlateConnYBarCornerDx; // distance between plateBody corner at (0,0,0) and the related corner
+  basePlateConnPosY = basePlateScrewMountToYBarXZFace - basePlateConnYBarCornerDy;

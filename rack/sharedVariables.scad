@@ -85,6 +85,12 @@ basePlateYBarSlideNutDy = yBarXYPlateBlockY - plateBlockInnerYFaceToScrew;
 basePlateScrewMountToYBarXZFace = basePlateYBarSlideNutDy + joinCornerDepth; // Distance to the nearest YBar XZ face
 basePlateScrewMountToYBarYZFace =  (yBarWidth+basePlateYBarSlideNutDx) - yBarBasePlateConnectorWidth;
 
+basePlateConnYBarCornerDx = yBarWidth; // distance from a plate body corner and the nearest yBar corner
+basePlateConnYBarCornerDy = xBarY; // distance from a plate body corner and the nearest yBar corner
+
+basePlateConnPosX = basePlateScrewMountToYBarYZFace - basePlateConnYBarCornerDx; // distance between plateBody corner at (0,0,0) and the related corner
+basePlateConnPosY = basePlateScrewMountToYBarXZFace - basePlateConnYBarCornerDy;
+
 xyPlateConnDx = xBarX + 2*basePlateYBarSlideNutDx; // X distance between connectors
 xyPlateConnDy = yBarDepth - 2*basePlateScrewMountToYBarXZFace; // Y distance between connectors
 plateGap = 1; // distance between edge of xy plate and other parts
@@ -109,3 +115,4 @@ stackConnectorDx = rackTotalWidth - 2*(connectorXEdgeToYBarXEdge + connectorRect
 stackConnectorDy = rackTotalDepth - 2*(connectorYEdgeToYBarYEdge + connectorRectDepth/2);
 stackConnectorDualSpacing = 0.5;
 
+feetProtrusionAngle = 40;
