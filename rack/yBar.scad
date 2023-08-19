@@ -3,7 +3,7 @@ include <../config/common.scad>
 include <./connector/connectors.scad>
 include <./sharedVariables.scad>
 
-*yBar();
+yBar();
 
 module yBar() {
 

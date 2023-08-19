@@ -1,20 +1,14 @@
 include <../helper/common.scad>
 include <./connector/connectors.scad>
 
-*xyPlate();
+xyPlate();
 
 module xyPlate() {
 
-  translate(v=-[connPosX,connPosY,0]) // center around one of the YBarConnector holes
+  translate(v=-[basePlateConnPosX,basePlateConnPosY,0]) // center around one of the YBarConnector holes
   applyVentilation()
-  applyYBarConnectors()
+  applyConnector(on="basePlate", to="yBar")
   plateBody();
-
-  connYBarCornerDx = yBarWidth; // distance from a plate body corner and the nearest yBar corner
-  connYBarCornerDy = xBarY; // distance from a plate body corner and the nearest yBar corner
-
-  connPosX = basePlateScrewMountToYBarYZFace - connYBarCornerDx; // distance between plateBody corner at (0,0,0) and the related corner
-  connPosY = basePlateScrewMountToYBarXZFace - connYBarCornerDy;
 
   module plateBody() {
     plateBodyX = xBarX - 2*plateGap;
@@ -57,42 +51,4 @@ module xyPlate() {
     }
   }
 
-  module applyYBarConnectors() {
-
-    apply_p() {
-      union() {
-        translate(v=[connPosX, connPosY, 0])
-        yBarConnector();
-
-        translate(v=[connPosX, connPosY+xyPlateConnDy, 0])
-        yBarConnector();
-
-        translate(v=[connPosX+xyPlateConnDx, connPosY, 0])
-        rotate(a=[0,0,180])
-        yBarConnector();
-
-        translate(v=[connPosX+xyPlateConnDx, connPosY+xyPlateConnDy, 0])
-        rotate(a=[0,0,180])
-        yBarConnector();
-
-      }
-
-      children(0);
-    }
-
-    module yBarConnector() {
-      difference() {
-        hull() {
-          // TODO: we don't need to heatset insert values anymore
-          translate(v=[0,0,plateBlockBaseConnRecession])
-          roundCutSlice(radius = heatSetInsertSlotRadiusSlacked(rackFrameScrewType), length=5);
-          roundCutSlice(radius = plateBlockBaseConnY/2, length=15);
-        }
-        mirror(v=[0,0,1])
-        counterSunkHead_N(rackFrameScrewType, headExtension = eps, screwExtension = inf10);
-
-      }
-    }
-
-  }
 }

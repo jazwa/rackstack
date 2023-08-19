@@ -1,6 +1,6 @@
 include <./sideWallBase.scad>
 
-*sideWallLeft();
+sideWallLeft();
 
 module sideWallLeft() {
 

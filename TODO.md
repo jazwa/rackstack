@@ -4,10 +4,8 @@
 
 - Finish refactoring files to use the application style, like in `yBar.scad`
 - Figure out why sidewall build is so slow
-- Standardize meaning of `U`
-- Standardize negative naming convention
 - Clean up `sharedVariables.scad`!!!
-- Implement instruction generation with rbuild.
+- Parallel builds with cli tool. 
 
 ### Ideas
 - Start using matrices for transformations. Enforce strict local/global hierarchy of matrix transformations.

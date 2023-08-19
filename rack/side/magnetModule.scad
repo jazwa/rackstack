@@ -3,8 +3,8 @@ include <../../config/common.scad>
 include <../sharedVariables.scad>
 include <./sideWallVariables.scad>
 
-translate(v=[10,-5,-(2+sideWallZHingeTotalClearance)])
-*magnetModule();
+
+magnetModule();
 
 module magnetModule() {
 

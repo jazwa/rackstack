@@ -18,7 +18,6 @@ module rackFeet() {
 
   bandThickness = 2;
   height = 18;
-  protrusionAngle = 30;
 
   translate(v = [stackConnectorDx/2, 0, 2])
   mirror(v=[0,0,1]) {
@@ -34,7 +33,6 @@ module rackFeet() {
   }
 
   module band() {
-
     intersection() {
       translate(v=[0,0,2])
       difference() {
@@ -44,9 +42,10 @@ module rackFeet() {
         roundedCube(rackTotalWidth-6, inf50, height-6, 3, center = true);
       }
 
-      halfspace(vpos=[0,1,-0.8],p=[0,-8,2]);
-      halfspace(vpos=[0,-1,0.75],p=[0,6,2]);
+      halfspace(vpos=[0,1,-tan(feetProtrusionAngle)],p=[0,-8,2]);
+      halfspace(vpos=[0,-1, tan(feetProtrusionAngle)],p=[0,6,2]);
 
+      // TODO make these edge deburrings more parametric
       halfspace(vpos=[0,-1,0],p=[0,16,2]);
       halfspace(vpos=[0,1,0],p=[0,-5,2]);
     }
