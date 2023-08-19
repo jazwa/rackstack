@@ -7,9 +7,11 @@
 - Clean up `sharedVariables.scad`.
 - Parallel builds with cli tool. 
 - Beef up rack-mount designs.
+- Make handles.
 
 ### Ideas
-- Start using matrices for transformations. Enforce strict local/global hierarchy of matrix transformations.
+- Start using matrices for transformations. Enforce strict local/global hierarchy of matrix transformations. (Kinda done)
+- GitHub CI for OpenSCAD stl building
 - Instead of using names like 'mainRailSlotToInnerYZFace', experiment with a central distance/dimension directory. Like:
 ```openscad
 // Define identifiers:
