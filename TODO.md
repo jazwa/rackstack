@@ -2,10 +2,11 @@
 
 ### Actual TODO
 
-- Finish refactoring files to use the application style, like in `yBar.scad`
-- Figure out why sidewall build is so slow
-- Clean up `sharedVariables.scad`!!!
+- Finish refactoring files to use the application style, like in `yBar.scad`.
+- Figure out why sidewall build is so slow.
+- Clean up `sharedVariables.scad`.
 - Parallel builds with cli tool. 
+- Beef up rack-mount designs.
 
 ### Ideas
 - Start using matrices for transformations. Enforce strict local/global hierarchy of matrix transformations.
