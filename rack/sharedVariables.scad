@@ -1,5 +1,7 @@
 include <../config/common.scad>
 
+// TODO: This rather unweildy config file is the result of multiple lazy and forgetful refactors. Clean it up.
+
 // Main rail variables:
 
 /* Small horizontal planes at the top and bottom of the main rails. Used so we can fasten the rail to the frame
