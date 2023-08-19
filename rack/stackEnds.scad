@@ -63,6 +63,58 @@ module rackFeet() {
   }
 }
 
-module stackConnectorHandle() {
+rackTopHandle();
 
+module rackTopHandle() {
+
+
+  handleWidth = 20;
+  handleHeight = 50;
+
+  handleTopThickness = 10;
+  handleBottomThickness = 10;
+  handleSideThickness = 10;
+
+  handleR = baseRoundness;
+
+  handleRing();
+
+  module handleRing() {
+
+    w = handleWidth - 2*handleR;
+    st = max(eps,handleSideThickness - 2*handleR);
+    bt = max(eps,handleBottomThickness - 2*handleR);
+    tt = max(eps,handleTopThickness - 2*handleR);
+
+    y =100;
+
+    minkowski() {
+
+      sphere(r=handleR);
+
+      ringFourHull() {
+        cube(size = [w, st, bt]);
+
+        translate(v = [0, y-handleSideThickness, 0])
+          cube(size = [w, st, bt]);
+
+        translate(v = [0, y-handleSideThickness, handleHeight-handleTopThickness])
+          cube(size = [w, st, tt]);
+
+        translate(v = [0, 0, handleHeight-handleTopThickness])
+          cube(size = [w, st, tt]);
+      }
+    }
+
+  }
+
+
+  module ringFourHull() {
+    union() {
+      hull() {children(0); children(1);}
+      hull() {children(1); children(2);}
+      hull() {children(2); children(3);}
+      hull() {children(3); children(0);}
+    }
+  }
 }
