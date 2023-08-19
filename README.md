@@ -52,7 +52,7 @@ Please see [the assembly guide](./assembly-guide).
 
 
 #### Notes: 
-- Before printing the actual parts. It's recommended to print this evaluation part: [eval_P](./rack/print/eval_P.scad) to test tolerances. If you find the fits too tight/loose, you can adjust them [here](./config/slack.scad).
+- Before printing the actual parts. It's recommended to print this evaluation part: [eval_P.scad](./rack/print/eval_P.scad) to test tolerances. If you find the fits too tight/loose, you can adjust them [here](./config/slack.scad).
 - Please also adjust [this file](./config/slicer.scad) to match your slicer settings.
 - Omitted actual plastic for printing. Any conventional 3d printing plastic should do (PLA, PETG, ABS),
 but beware of PLA's thermal limits. Higher infill is recommended for all parts.
@@ -61,11 +61,18 @@ but beware of PLA's thermal limits. Higher infill is recommended for all parts.
 - Side rails are mounted using M3 hex nuts and screws.
 
 
+## Trays, Boxes, etc
+
+Some parametric trays and support rails for your rack can be found in [rack-mount/print](./rack-mount/print).
+These files are currently pretty rough around the edges. However, they still make a great jumping off point for designing 
+rack-mount items.
+
 ## Configuring + Generating STLs
-A python script:  [rbuild.py](./rbuild.py) is provided to generate different project stls.
+A python script:  [rbuild.py](./rbuild.py) is provided to generate different project stls. **Before running the script**, please 
+configure the path to the OpenSCAD binary in [rbuild.py](./rbuild.py).
 
 Requirements:
-  - `openscad` cli (Currently only supported on Linux/Mac). Please configure the path to the OpenSCAD binary in [rbuild.py](./rbuild.py) 
+  - `openscad` cli command (Currently only supported on Linux/Mac). 
   - `python3`
 
 ### Examples:
@@ -74,10 +81,12 @@ Generate all project files for the `micro` profile:
 `python3 rbuild.py -b all -c micro`
 
 This will build all the parts defined in [rack/print](./rack/print), and put the STLs in [stl/micro](./stl/micro). 
-You can also provide a `-dz {n}` parameter to adjust the height of the generated rack.
+You can also provide a `-dz {n}` parameter to adjust the height of the generated rack. Configuring other rack
+variables can be done in [config/rackframe.scad](./config/rackFrame.scad).
 
 For generating a specific part: 
 
 `python3 rbuild.py -b yBar -c micro -t custom`
 
-`rbuild.py` also support an optional `--nightly` flag, which means the build script will use the `openscad-nightly` command, instead of `openscad`.
+`rbuild.py` also support an optional `--nightly` flag, which will run a nightly build of OpenSCAD. Please make sure the
+path to the nightly build is also configured in [rbuild.py](./rbuild.py).
