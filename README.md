@@ -75,6 +75,8 @@ Requirements:
   - `openscad` cli command (Currently only supported on Linux/Mac). 
   - `python3`
 
+For Windows, you'll most likely have to generate the STLs in [rack/print](./rack/print) manually. 
+
 ### Examples:
 Generate all project files for the `micro` profile:
 
