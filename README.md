@@ -52,8 +52,8 @@ Please see [the assembly guide](./assembly-guide).
 
 
 #### Notes: 
-- Before printing the actual parts. It's recommended to print this evaluation part: [eval_P.scad](./rack/print/eval_P.scad) to test tolerances. If you find the fits too tight/loose, you can adjust them [here](./config/slack.scad).
-- Please also adjust [this file](./config/slicer.scad) to match your slicer settings.
+- Before printing the actual parts. It's recommended to print this evaluation part: [eval_P.scad](./rack/print/eval_P.scad) to test tolerances. 
+  If you find the fits too tight/loose, you can adjust them [here](./config/print.scad). Please make sure also adjust the layer height in that file, too.
 - Omitted actual plastic for printing. Any conventional 3d printing plastic should do (PLA, PETG, ABS),
 but beware of PLA's thermal limits. Higher infill is recommended for all parts.
 - For joining two racks, you will need to print 4 [rackJoiners](./rack/print/rackJoiner_P.scad), as well as 8 M3 hex nuts, and 8 M3x12 FHCS.

@@ -1,5 +1,5 @@
 
-include <../config/slack.scad>
+include <../config/common.scad>
 
 // rj45 slot-to-slot keystone jack model and negative
 keystoneMainBodyWidth = 15.0;

@@ -3,7 +3,7 @@ use <../xBar.scad>
 use <../yBar.scad>
 use <../mainRail.scad>
 
-// Evaluation print for slack config, please see rackstack/config/slack.scad to configure tolerances
+// Evaluation print for slack config, please see rackstack/config/print.scad to configure tolerances
 // Too tight -> increase slacks values. Too loose -> decrease values
 
 intersection() {
