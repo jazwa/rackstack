@@ -1,4 +1,4 @@
-include <./slack.scad>
+include <./print.scad>
 
 // Dimensions for small cylindrical neodymium magnets that I bought off Amazon
 magnetR = 3;
