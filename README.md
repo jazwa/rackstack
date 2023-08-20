@@ -92,3 +92,7 @@ For generating a specific part:
 
 `rbuild.py` also support an optional `--nightly` flag, which will run a nightly build of OpenSCAD. Please make sure the
 path to the nightly build is also configured in [rbuild.py](./rbuild.py).
+
+## Designing rack-mount items
+
+Some useful variables for designing your own rack-mount items can be found in [rack-mount/dimensionHelper.scad](./rack-mount/dimensionHelper.scad).
