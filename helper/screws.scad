@@ -5,7 +5,7 @@ include <./math.scad>
 
 /********************************************************************************/
 // M3 dimensions
-m3HoleRadiusSlack = 0.4; // higher slack for not-so straight heat set inserts
+m3HoleRadiusSlack = xySlack;
 m3Diameter = 3.0;
 m3Radius = m3Diameter / 2.0;
 m3RadiusSlacked = m3Radius + m3HoleRadiusSlack;
@@ -17,18 +17,9 @@ m3HexNutWidthAcrossFlats = 5.41;
 m3HexNutWidthAcrossCorners = FtoG(m3HexNutWidthAcrossFlats);
 m3HexNutThickness = 2.2;
 
-m3HeatSetInsertSlotRadiusSlack = -0.1;
-m3HeatSetInsertSlotHeightSlack = 0.5;
-
-m3HeatSetInsertSlotRadius = 2.3;
-m3HeatSetInsertSlotHeight = 5.7;
-
-m3HeatSetInsertSlotRadiusSlacked = m3HeatSetInsertSlotRadius+m3HeatSetInsertSlotRadiusSlack;
-m3HeatSetInsertSlotHeightSlacked = m3HeatSetInsertSlotHeight+m3HeatSetInsertSlotHeightSlack;
-
 /********************************************************************************/
 // M4 dimensions
-m4HoleRadiusSlack = 0.15;
+m4HoleRadiusSlack = xySlack;
 m4Diameter = 4.0;
 m4Radius = m4Diameter / 2.0;
 m4RadiusSlacked = m4Radius + m4HoleRadiusSlack;
@@ -41,31 +32,6 @@ m4HexNutWidthAcrossCorners = FtoG(m4HexNutWidthAcrossFlats);
 m4HexNutThickness = 3.07;
 
 /********************************************************************************/
-
-module heatSetInsertSlot_N(screwType, topExtension=inf50) {
-  if (screwType == "m3") {
-    union() {
-      // actual slot for insert
-      cylinder(h = m3HeatSetInsertSlotHeightSlacked, r = m3HeatSetInsertSlotRadiusSlacked);
-
-      // extra space above slot to help with insertion
-      translate(v=[0, 0, m3HeatSetInsertSlotHeightSlacked])
-      cylinder(h = topExtension, r = m3HeatSetInsertSlotRadiusSlacked);
-    }
-  } else {
-    error("Unsupported screw type");
-  }
-}
-
-function heatSetInsertSlotRadiusSlacked(screwType) =
-  (screwType == "m3")
-  ? m3HeatSetInsertSlotRadiusSlacked
-  : error("Unsupported screw type");
-
-function heatSetInsertSlotHeightSlacked(screwType) =
-  (screwType == "m3")
-  ? m3HeatSetInsertSlotHeightSlacked
-  : error("Unsupported screw type");
 
 function screwRadiusSlacked(screwType) =
   (screwType == "m3")
@@ -128,28 +94,6 @@ module hexNut(screwType, center=true) {
   } else {
     error("Unsupported screw type");
   }
-}
-
-module heatSetInsert(screwType) {
-  color([0, 1, 1])
-  if (screwType == "m3") {
-    difference() {
-      union() {
-        cylinder(h = m3HeatSetInsertSlotHeight, r = m3HeatSetInsertSlotRadius);
-
-        // teeth
-        for (i=[0:8]) {
-          rotate(a=[0,0,360/8 * i])
-          cube(size = [2.5, 0.5, m3HeatSetInsertSlotHeight]);
-        }
-      }
-
-      cylinder(h = inf10, r = m3Radius);
-    }
-  }
-
-
-
 }
 
 module hexNutPocket_N(screwType, openSide=true, backSpace=inf10, bridgeFront=false, bridgeBack=false ) {
