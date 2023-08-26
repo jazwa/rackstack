@@ -3,9 +3,20 @@ include <./common.scad>
 // Rack ear modules.
 // To be used either by itself if the item supports it, or within another module
 
-rackEarModule(frontThickness=3,sideThickness=3,frontWidth=30, sideDepth=50, u=4, support=true);
+rackEarModule(u=4, frontThickness=3, sideThickness=3, frontWidth=20, sideDepth=50, backPlaneHeight, support=true);
 
-module rackEarModule(frontThickness, sideThickness, frontWidth, sideDepth, u, backPlaneHeight=3, support=true) {
+module rackEarModule(
+  u,
+  frontThickness,
+  sideThickness,
+  frontWidth,
+  sideDepth,
+  backPlaneHeight,
+  support=true
+) {
+
+  // check frontWidth is wide enough
+  assert(frontWidth-sideThickness >= rackMountScrewXDist+railScrewHoleToInnerEdge);
 
   earHeight = u*uDiff + 2*rackMountScrewZDist;
 
@@ -23,9 +34,13 @@ module rackEarModule(frontThickness, sideThickness, frontWidth, sideDepth, u, ba
       }
 
       if (support) {
+        defaultExtraSpacing = 1;
+        extraSpacing = frontWidth-(rackMountScrewXDist+railScrewHoleToInnerEdge+sideThickness) > defaultExtraSpacing
+          ? defaultExtraSpacing
+          : 0; // don't include extra spacing for support, if tray itself is too large
+
         hull() {
-          extraSpacing = 1;
-          translate(v= [rackMountScrewXDist+railScrewHoleToOuterEdge+extraSpacing,frontThickness,0])
+          translate(v= [rackMountScrewXDist+railScrewHoleToInnerEdge+extraSpacing,frontThickness,0])
             cube(size = [sideThickness, eps, earHeight]);
 
           backSegmentPlane();
@@ -43,10 +58,10 @@ module rackEarModule(frontThickness, sideThickness, frontWidth, sideDepth, u, ba
 
   module rackMountHoles() {
     rotate(a=[90,0,0])
-      cylinder(r=screwRadiusSlacked(mainRailScrewType), h=frontThickness*2, center=true);
+      cylinder(r=screwRadiusSlacked(mainRailScrewType), h=inf, center=true);
 
     translate(v=[0,0,u*uDiff])
       rotate(a=[90,0,0])
-        cylinder(r=screwRadiusSlacked(mainRailScrewType), h=frontThickness*2, center=true);
+        cylinder(r=screwRadiusSlacked(mainRailScrewType), h=inf, center=true);
   }
 }

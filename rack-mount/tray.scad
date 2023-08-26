@@ -1,14 +1,16 @@
 include <./common.scad>
 use <./rackEars.scad>
 
+/*
+  Parametric rack-mount tray -
+  Please see print/tray_P.scad for configuring/printing
 
-module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, mountScrewType, lipThickness=3) {
+  Please also make sure that the correct rack frame preset is set in rackFrame.scad.
+*/
 
-  frontLipHeight = 2;
-  backLipHeight = 1; // also applies to sides
+module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, mountPointElevation, mountPointType, frontThickness, sideThickness, frontLipHeight, backLipHeight, trayLeftPadding, sideSupport=true) {
 
-  rackEarSideThickness = 3;
-  rackEarFrontThickness = 3;
+  lipThickness = sideThickness;
 
   screwDx = rackMountScrewWidth; // x dist between the mount holes
   screwDz = uDiff * u;
@@ -16,82 +18,66 @@ module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, moun
   plateLength = screwDx + 2*rackMountScrewXDist;
   plateHeight = screwDz + 2*rackMountScrewZDist;
 
-  minScrewToTraySpacing = 8;
+  minScrewToTraySpacing = railScrewHoleToInnerEdge;
 
-  // TODO: toggle this based on left/right/middle alignment
-  leftScrewDistToTray = minScrewToTraySpacing + 2 + 10;
+  leftScrewDistToTray = minScrewToTraySpacing + trayLeftPadding;
 
   leftScrewGlobalX = -leftScrewDistToTray;
   rightScrewGlobalX = screwDx + leftScrewGlobalX;
 
-  points=mountPoints;
+  // check (tray width)+(configured extra space) fits within the rack
+  assert(trayWidth <= screwDx-(2*minScrewToTraySpacing + trayLeftPadding));
 
   difference() {
-    applyMountHoles(points)
-    translate(v = [-rackEarSideThickness, -rackEarFrontThickness, -trayThickness])
+    applyMountHoles()
+    translate(v = [-sideThickness, -frontThickness, -trayThickness])
     body();
-
-    // hack
-    *union() {
-      translate(v = [-20, 18, 15])
-      rotate(a = [0, 90, 0])
-      cylinder(r = 10, h = inf);
-
-      translate(v = [-20, 40, 13])
-      rotate(a = [0, 90, 0])
-      cylinder(r = 7, h = inf);
-    }
   }
 
   module body() {
 
+    // base
     cube(size = [trayWidth, trayDepth, trayThickness]);
 
+    // front lip
     translate(v = [0, 0, trayThickness])
     cube(size = [trayWidth, lipThickness, frontLipHeight]);
 
+    // back lip
     translate(v = [0, trayDepth-lipThickness, trayThickness])
     cube(size = [trayWidth, lipThickness, backLipHeight]);
 
-    translate(v = [0, 0, trayThickness])
-    cube(size = [lipThickness, trayDepth, backLipHeight]);
-
-    translate(v = [trayWidth-lipThickness, 0, trayThickness])
-    cube(size = [lipThickness, trayDepth, backLipHeight]);
-
     translate(v = [leftScrewGlobalX, 0, rackMountScrewZDist])
-    rackEarModule(frontThickness = rackEarFrontThickness, sideThickness = rackEarSideThickness, frontWidth =
-        leftScrewDistToTray+rackMountScrewXDist+rackEarSideThickness, sideDepth = trayDepth-lipThickness, u = u, backPlaneHeight=trayThickness+backLipHeight);
+    rackEarModule(frontThickness = frontThickness, sideThickness = sideThickness, frontWidth =
+        leftScrewDistToTray+rackMountScrewXDist+sideThickness, sideDepth = trayDepth-lipThickness, u = u, backPlaneHeight=trayThickness+backLipHeight, support=sideSupport);
 
     translate(v = [rightScrewGlobalX, 0, rackMountScrewZDist])
     mirror(v = [1, 0, 0])
-    rackEarModule(frontThickness = rackEarFrontThickness, sideThickness = rackEarSideThickness, frontWidth =
-       rightScrewGlobalX-trayWidth+rackMountScrewXDist+rackEarSideThickness, sideDepth = trayDepth-lipThickness, u = u, backPlaneHeight=trayThickness+backLipHeight);
+    rackEarModule(frontThickness = frontThickness, sideThickness = sideThickness, frontWidth =
+       rightScrewGlobalX-trayWidth+rackMountScrewXDist+sideThickness, sideDepth = trayDepth-lipThickness, u = u, backPlaneHeight=trayThickness+backLipHeight, support=sideSupport);
     }
 
 
-  module applyMountHoles(points) {
+  module applyMountHoles() {
 
+    mountPointPosThickness = 2;
 
     apply_pn() {
-      for (i = [0:len(points)-1]) {
-        p = points[i];
-        x = p[0];
-        y = p[1];
-        elevation = p[2];
-        hR = p[3];
-        hT = p[4];
+      for (i = [0:len(mountPoints)-1]) {
+        x = mountPoints[i][0];
+        y = mountPoints[i][1];
+
         translate(v=[x, y, 0])
-        cylinder(r=hR+hT, h=elevation);
+        cylinder(r=screwRadiusSlacked(mountPointType)+mountPointPosThickness, h=mountPointElevation);
       }
-      for (i = [0:len(points)-1]) {
-        p = points[i];
-        x = p[0];
-        y = p[1];
-        hR = p[3];
-        hT = p[4];
-        translate(v=[x, y, 0])
-        cylinder(r=hR, h=inf50, center=true);
+
+      for (i = [0:len(mountPoints)-1]) {
+        x = mountPoints[i][0];
+        y = mountPoints[i][1];
+
+        translate(v=[x, y, -trayThickness])
+        mirror(v=[0,0,1])
+        counterSunkHead_N(mountPointType, inf, inf);
       }
       children(0);
     }
