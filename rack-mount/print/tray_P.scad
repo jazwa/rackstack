@@ -1,20 +1,55 @@
 use <../tray.scad>
 
-// Config variables
-trayWidth = 140;
-trayDepth = 88;
-trayThickness = 3;
-trayLipThickness = 3;
+/*
+  Parametric rack-mount tray -
+  Dimensions can be adjusted using the variables below. You can also add mounting holes to fasten things that have
+  screw holes at the bottom.
 
-pointHoleRadius = screwRadiusSlacked("m3");
-pointHoleThickness = 2;
-pointMountElevation = 1;
-mountPoints = [ // [x,y,elevation,holeRadius,holeThickness]
-   [(27.5),34, pointMountElevation, pointHoleRadius, pointHoleThickness],
-   [(27.5)+79.5,34, pointMountElevation, pointHoleRadius, pointHoleThickness]
+  !!! Please also make sure that the correct rack frame preset is set in rackFrame.scad !!!
+*/
+
+// begin config ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+trayU = 2;
+
+baseWidth = 145;
+baseDepth = 100;
+
+baseThickness = 3; // tray bottom thickness
+frontThickness = 3; // front plate thickness
+sideThickness = 3;
+
+backLipHeight = 2;
+frontLipHeight = 2;
+
+sideSupport = true;
+trayLeftPadding = 10; // extra space between the left rail and tray. configure this to move the tray left/right.
+
+mountPointType = "m3";
+mountPointElevation = 1; // basically standoff height
+
+// add/config standoff coordinates here. Format is [[x,y]]
+mountPoints = [
+    [30,10],
+    [30+75,10],
+    [30,10+75],
+    [30+75,10+75],
 ];
+// end config //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-mountScrewType = "m3";
 
-// Rack mount tray that supports screws on the bottom of the rack-mount item
-bottomScrewTray(u=1, trayWidth=trayWidth, trayDepth=trayDepth, trayThickness=trayThickness, mountPoints=mountPoints, mountScrewType=mountScrewType, lipThickness=trayLipThickness);
+bottomScrewTray(
+  u=trayU,
+  trayWidth=baseWidth,
+  trayDepth=baseDepth,
+  trayThickness=baseThickness,
+  frontLipHeight=frontLipHeight,
+  backLipHeight=backLipHeight,
+  mountPoints=mountPoints,
+  frontThickness=frontThickness,
+  sideThickness=sideThickness,
+  mountPointElevation=mountPointElevation,
+  mountPointType=mountPointType,
+  sideSupport=sideSupport,
+  trayLeftPadding=trayLeftPadding
+);

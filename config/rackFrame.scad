@@ -10,10 +10,10 @@ _profileConfigs = [
       ["numRailScrews", 10]
     ]],
     */
-    ["default", [
+    ["default", [ // Default config. Will be overwritten by any other profiles
       ["maxUnitWidth", 180],
       ["maxUnitDepth", 180],
-      ["numRailScrews", 18],
+      ["numRailScrews", 12],
       ["screwDiff", 10],
       ["mainRailScrewType", "m4"],
       ["mainRailSideMountScrewType", "m4"],

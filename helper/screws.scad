@@ -32,6 +32,10 @@ m4HoleRadiusSlack = 0.15;
 m4Diameter = 4.0;
 m4Radius = m4Diameter / 2.0;
 m4RadiusSlacked = m4Radius + m4HoleRadiusSlack;
+
+m4CounterSunkHeadRadius = 4;
+m4CounterSunkHeadLength = 2.3;
+
 m4HexNutWidthAcrossFlats = 6.89;
 m4HexNutWidthAcrossCorners = FtoG(m4HexNutWidthAcrossFlats);
 m4HexNutThickness = 3.07;
@@ -81,7 +85,7 @@ function hexNutThickness(screwType) =
 module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
 
   if (screwType == "m3") {
-    translate(v=[0,0,-m3CounterSunkHeadLength])
+    translate(v = [0, 0, -m3CounterSunkHeadLength])
     union() {
       cylinder(r1 = m3RadiusSlacked, r2 = m3CounterSunkHeadRadius, h = m3CounterSunkHeadLength);
 
@@ -90,6 +94,17 @@ module counterSunkHead_N(screwType, screwExtension=0, headExtension=0) {
 
       translate(v = [0, 0, m3CounterSunkHeadLength])
       cylinder(r = m3CounterSunkHeadRadius, h = headExtension);
+    }
+  } else if (screwType == "m4") {
+    translate(v = [0, 0, -m4CounterSunkHeadLength])
+    union() {
+      cylinder(r1 = m4RadiusSlacked, r2 = m4CounterSunkHeadRadius, h = m4CounterSunkHeadLength);
+
+      translate(v = [0, 0, -screwExtension])
+      cylinder(r = m4RadiusSlacked, h = screwExtension);
+
+      translate(v = [0, 0, m4CounterSunkHeadLength])
+      cylinder(r = m4CounterSunkHeadRadius, h = headExtension);
     }
   } else {
     error("Unsupported screw type");
