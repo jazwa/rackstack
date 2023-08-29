@@ -1,7 +1,7 @@
 use <../tray.scad>
 
 /*
-  Parametric rack-mount tray -
+  Parametric rack-mount tray:
   Dimensions can be adjusted using the variables below. You can also add mounting holes to fasten things that have
   screw holes at the bottom.
 
