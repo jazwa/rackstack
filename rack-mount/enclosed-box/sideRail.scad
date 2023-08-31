@@ -1,33 +1,20 @@
-include <../helper/common.scad>
-include <../config/common.scad>
-include <../rack/sharedVariables.scad>
-include <./common.scad>
+include <../common.scad>
+include <./helper.scad>
 
 //sideSupportRailBase(top=true, defaultThickness=1.5, supportedZ=27.2, supportedY=101.5, supportedX=159);
 
-// distance between front and back main rail screw mounts
-sideRailScrewMountDist = yBarDepth - 2*(frontScrewSpacing + railFrontThickness + railSlotToXZ);
 
-module sideSupportRailBase(top=true, supportedZ, supportedY, supportedX, zOrientation="middle", defaultThickness=2) {
+module sideSupportRailBase(top=true, supportedZ, supportedY, supportedX, zOrientation="middle", defaultThickness=2, railSideThickness=4) {
 
-  mountBlockHeight = 10;
   mountBlockDepth = 10;
   screwMountGlobalDz = screwDiff / 2.0; // vertical distance between local origin and main rail screw mount
   sideRailScrewToMainRailFrontDx = frontScrewSpacing+railFrontThickness;
   railLength = max(sideRailScrewMountDist + sideRailScrewToMainRailFrontDx + mountBlockDepth/2, supportedY+defaultThickness);
   railBaseThickness = defaultThickness; // default thickness value
-  railSideThickness = 4;
   railBackThickness = 3;
-  railBaseWidth = 15;
   // Minimum U to enclose box, while also have a minimum defaultThickness for top and bottom.
-  minU = max(1, ceil((supportedZ + 2*railBaseThickness) / uDiff)-1);
-
-  railBottomThickness =
-    (zOrientation == "middle")
-    ? (((minU+1) * uDiff) - supportedZ)/2
-    : (zOrientation == "bottom")
-    ? railBaseThickness
-    : railBaseThickness;
+  u = findU(supportedZ, railBaseThickness);
+  railBottomThickness = railBottomThickness(u, supportedZ, railBaseThickness, zOrientation);
 
   assert(supportedX <= maxUnitWidth);
   assert (zOrientation == "middle" || zOrientation == "bottom", "Z-Orientation not supported");
@@ -43,7 +30,7 @@ module sideSupportRailBase(top=true, supportedZ, supportedY, supportedX, zOrient
   module applyMainRailMounts() {
 
     mountBlockExtension = (railSupportsDx - supportedX)/2 - railSideThickness;
-    minHexNutPocketToXYDist = mountBlockHeight/2;
+    minHexNutPocketToXYDist = sideRailLowerMountPointToBottom;
     minHexNutPocketToXZDist = mountBlockDepth/2;
     minHexNutPocketToYZDist = 4;
     screwU = floor((railSideHeight) / uDiff)-1;
@@ -92,22 +79,22 @@ module sideSupportRailBase(top=true, supportedZ, supportedY, supportedX, zOrient
 
     difference () {
       union() {
-        cube(size = [railBaseWidth, railLength, railBottomThickness]);
+        cube(size = [sideRailBaseWidth, railLength, railBottomThickness]);
 
         cube(size = [railSideThickness, railLength, railSideHeight]);
 
         // back support
         translate(v = [0, max(railLength-railBackThickness, supportedY), 0])
-        cube(size = [railBaseWidth, railBackThickness, railSideHeight]);
+        cube(size = [sideRailBaseWidth, railBackThickness, railSideHeight]);
 
         // back support for box
         translate(v = [0, supportedY, 0])
-        cube(size = [railBaseWidth, railBackThickness, railSideHeight]);
+        cube(size = [sideRailBaseWidth, railBackThickness, railSideHeight]);
 
         // top support
         if (top) {
           translate(v = [0, 0, railSideHeight-railBaseThickness])
-          cube(size = [railBaseWidth, railLength, railBaseThickness]);
+          cube(size = [sideRailBaseWidth, railLength, railBaseThickness]);
         }
       }
 
@@ -140,7 +127,7 @@ module sideSupportRailBase(top=true, supportedZ, supportedY, supportedX, zOrient
             }
         }
 
-        cylindricalFiletNegative(p0=[railBaseWidth,0,0],p1=[railBaseWidth,0,inf], n=[1,-1,0],r=r);
+        cylindricalFiletNegative(p0=[sideRailBaseWidth,0,0],p1=[sideRailBaseWidth,0,inf], n=[1,-1,0],r=r);
       }
     }
   }
