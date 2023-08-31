@@ -1,4 +1,4 @@
-use <../tray.scad>
+use <./tray.scad>
 
 /*
   Parametric rack-mount tray:

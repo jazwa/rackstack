@@ -12,7 +12,7 @@
 ## Assembly
 
 Pre-generated STLs for roughly 200mm^3 (mini), 180mm^3 (micro), and 100mm^3 (nano) rack frames can be found in the [stl](stl) dir.
-These STLs are generated from the files in [rack/print](rack/print), and [rack-mount/print](rack-mount/print) - further information about printing these parts 
+These STLs are generated from the files in [rack/print](rack/print) - further information about printing these parts 
 (supports, orientation) can be found in these files.
 
 ### Assembly Instructions
@@ -63,9 +63,12 @@ but beware of PLA's thermal limits. Higher infill is recommended for all parts.
 
 ## Trays, Boxes, etc
 
-Some parametric trays and support rails for your rack can be found in [rack-mount/print](./rack-mount/print).
-These files are currently pretty rough around the edges. However, they still make a great jumping off point for designing 
-rack-mount items.
+Some parametric rack mount items can be found in [rack-mount](./rack-mount). The following rack-mount systems 
+are currently supported:
+- [Enclosed Box](./rack-mount/enclosed-box/entry.scad): For mounting box-shaped objects, without the need for any mounting holes on the box.
+- [Tray](./rack-mount/tray/entry.scad): Simple tray mounted using only the front rails. Can be configured to have screw mounts at the bottom of the tray.
+- [Patch Panel](./rack-mount/patch-panel/entry.scad): Linear patch panel array. Number of keystone slots can be configured.
+
 
 ## Configuring + Generating STLs
 A python script:  [rbuild.py](./rbuild.py) is provided to generate different project stls. **Before running the script**, please 

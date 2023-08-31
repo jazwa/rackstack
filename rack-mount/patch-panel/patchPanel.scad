@@ -1,9 +1,12 @@
-include <../config/common.scad>
-include <../helper/common.scad>
-include <../rack/sharedVariables.scad>
-use <./plateBase.scad>
+include <../common.scad>
+use <../plateBase.scad>
 
+/*
+  Parametric patch panel -
+  Please see ./entry.scad for configuring/printing
 
+  Please also make sure that the correct rack frame preset is set in rackFrame.scad.
+*/
 *patchPanel(slots=2);
 
 module patchPanel (slots=8) {

@@ -1,9 +1,9 @@
-include <./common.scad>
-use <./rackEars.scad>
+include <../common.scad>
+use <../rackEars.scad>
 
 /*
   Parametric rack-mount tray -
-  Please see print/tray_P.scad for configuring/printing
+  Please see ./entry.scad for configuring/printing
 
   Please also make sure that the correct rack frame preset is set in rackFrame.scad.
 */

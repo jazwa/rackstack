@@ -17,7 +17,6 @@ screwMask = false;
 plasticMask = false;
 sideSupportRailMask = true;
 
-
 xBarSpaceToYBarSpace =
     yBarXBarConnectorTrans *
     xBarConnectorToYBarConnectorTrans *
