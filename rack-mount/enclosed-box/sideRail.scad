@@ -4,7 +4,7 @@ include <./helper.scad>
 //sideSupportRailBase(top=true, defaultThickness=1.5, supportedZ=27.2, supportedY=101.5, supportedX=159);
 
 
-module sideSupportRailBase(top=true, supportedZ, supportedY, supportedX, zOrientation="middle", defaultThickness=2, railSideThickness=4) {
+module sideSupportRailBase(top=true, recess=false, supportedZ, supportedY, supportedX, zOrientation="middle", defaultThickness=2, railSideThickness=4) {
 
   mountBlockDepth = 10;
   screwMountGlobalDz = screwDiff / 2.0; // vertical distance between local origin and main rail screw mount
@@ -16,12 +16,14 @@ module sideSupportRailBase(top=true, supportedZ, supportedY, supportedX, zOrient
   u = findU(supportedZ, railBaseThickness);
   railBottomThickness = railBottomThickness(u, supportedZ, railBaseThickness, zOrientation);
 
-  assert(supportedX <= maxUnitWidth);
+  assert(supportedX <= maxUnitWidth, "Configured supported width is too high for rack profile");
   assert (zOrientation == "middle" || zOrientation == "bottom", "Z-Orientation not supported");
   assert(railBottomThickness >= railBaseThickness);
+  // require recessed rail if supportedX is close to maxUnitWidth
+  assert(recess || (supportedX+2*railSideThickness <= maxUnitWidth), "Configured supported width requires recessed side rail.");
 
   railSideHeight = supportedZ + railBaseThickness + railBottomThickness + overhangSlack;
-  frontMountPad = (sideRailScrewToMainRailFrontDx-mountBlockDepth/2)-xySlack;
+  frontMountPad = (sideRailScrewToMainRailFrontDx-mountBlockDepth/2);
 
   translate(v=[-railSideThickness, 0, -railBottomThickness])
   applyMainRailMounts()
@@ -127,7 +129,12 @@ module sideSupportRailBase(top=true, supportedZ, supportedY, supportedX, zOrient
             }
         }
 
-        cylindricalFiletNegative(p0=[sideRailBaseWidth,0,0],p1=[sideRailBaseWidth,0,inf], n=[1,-1,0],r=r);
+        frontCutTrans = recess ? translate(v=[0,frontMountPad,0]): translate(v=[0,xySlack,0]);
+        multmatrix(frontCutTrans) {
+          cylindricalFiletNegative(p0=[sideRailBaseWidth,0,0],p1=[sideRailBaseWidth,0,inf], n=[1,-1,0],r=r);
+          halfspace(vpos=[0,-1,0], p=[0,0,0]);
+        }
+
       }
     }
   }
