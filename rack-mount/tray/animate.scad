@@ -16,5 +16,5 @@ module animateTraySystem(at=$t) {
   dx = abs(lerp(a=-40, b=40, t=at));
   dy = abs(lerp(a=-30, b=30, t=at));
 
-  traySystem(trayU=trayU, baseWidth=x+dx, baseDepth=y+dy, mountPoints=[]);
+  traySystem(trayU=trayU, baseWidth=x+dx, baseDepth=y+dy, mountPoints=[], backLipHeight=8);
 }

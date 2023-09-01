@@ -63,11 +63,11 @@ but beware of PLA's thermal limits. Higher infill is recommended for all parts.
 
 ## Trays, Boxes, etc
 
-Some parametric rack mount items can be found in [rack-mount](./rack-mount). The following rack-mount systems 
+Some parametric rack mount systems can be found in [rack-mount](./rack-mount). The following rack-mount systems 
 are currently supported:
-- [Enclosed Box](./rack-mount/enclosed-box/entry.scad): For mounting box-shaped objects, without the need for any mounting holes on the box.
-- [Tray](./rack-mount/tray/entry.scad): Simple tray mounted using only the front rails. Can be configured to have screw mounts at the bottom of the tray.
-- [Patch Panel](./rack-mount/patch-panel/entry.scad): Linear patch panel array. Number of keystone slots can be configured.
+- [Enclosed Box](./rack-mount/enclosed-box): For mounting box-shaped objects, without the need for any mounting holes on the box.
+- [Tray](./rack-mount/tray): Simple tray mounted using only the front rails. Can be configured to have screw mounts at the bottom of the tray.
+- [Patch Panel](./rack-mount/patch-panel): Linear patch panel array. Number of keystone slots can be configured.
 
 
 ## Configuring + Generating STLs

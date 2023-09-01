@@ -7,6 +7,6 @@
 !/stl/micro/
 !/stl/nano/
 
-/assembly-guide/gifs/tmp
+**/tmp/
 
 .DS_Store
