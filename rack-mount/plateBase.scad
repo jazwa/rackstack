@@ -20,7 +20,7 @@ module plateBase(U, plateThickness, screwType, screwToXEdge=4.5, screwToYEdge=4.
 
         mirror4XY(p=[screwToXEdge, screwToYEdge], dx=screwDx, dy=screwDy)
         translate(v=[0,0,plateThickness])
-        cylinder(r=screwRadiusSlacked(screwType), h=plateThickness*2, center=true);
+        cylinder(r=screwRadiusSlacked(screwType), h=inf, center=true);
     }
 
     module base() {

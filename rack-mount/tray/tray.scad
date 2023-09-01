@@ -62,23 +62,28 @@ module bottomScrewTray(u, trayWidth, trayDepth, trayThickness, mountPoints, moun
 
     mountPointPosThickness = 2;
 
-    apply_pn() {
-      for (i = [0:len(mountPoints)-1]) {
-        x = mountPoints[i][0];
-        y = mountPoints[i][1];
+    if (len(mountPoints) > 0) {
+      apply_pn() {
+        for (i = [0:len(mountPoints)-1]) {
+          x = mountPoints[i][0];
+          y = mountPoints[i][1];
 
-        translate(v=[x, y, 0])
-        cylinder(r=screwRadiusSlacked(mountPointType)+mountPointPosThickness, h=mountPointElevation);
+          translate(v = [x, y, 0])
+          cylinder(r = screwRadiusSlacked(mountPointType)+mountPointPosThickness, h = mountPointElevation);
+        }
+
+        for (i = [0:len(mountPoints)-1]) {
+          x = mountPoints[i][0];
+          y = mountPoints[i][1];
+
+          translate(v = [x, y, -trayThickness])
+          mirror(v = [0, 0, 1])
+          counterSunkHead_N(mountPointType, inf, inf);
+        }
+
+        children(0);
       }
-
-      for (i = [0:len(mountPoints)-1]) {
-        x = mountPoints[i][0];
-        y = mountPoints[i][1];
-
-        translate(v=[x, y, -trayThickness])
-        mirror(v=[0,0,1])
-        counterSunkHead_N(mountPointType, inf, inf);
-      }
+    } else {
       children(0);
     }
 

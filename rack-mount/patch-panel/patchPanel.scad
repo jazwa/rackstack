@@ -7,12 +7,9 @@ use <../plateBase.scad>
 
   Please also make sure that the correct rack frame preset is set in rackFrame.scad.
 */
-*patchPanel(slots=2);
 
-module patchPanel (slots=8) {
+module patchPanel (slots=8, plateThickness=3, keystoneSpacing=19) {
     difference() {
-        plateThickness = 3;
-        keystoneSpacing = 19;
         supportPlateThickness = 5.9;
         supportPlateHeight = 29;
         supportPlateEdgeSpacing = 3;
