@@ -115,7 +115,7 @@ def run_build(args):
     target_var = args.t
     dz = args.dz
     nightly = args.nightly
-    build_gifs = args.build_assembly_gifs
+    build_gifs = args.build_gifs
 
     if (build_var is not None) == (build_gifs is True):
         print("Please either provide the build (-b) variable, or the build-gifs option (--build-gifs)")

@@ -5,7 +5,7 @@ include <./math.scad>
 
 /********************************************************************************/
 // M3 dimensions
-m3HoleRadiusSlack = xySlack;
+m3HoleRadiusSlack = radiusXYSlack;
 m3Diameter = 3.0;
 m3Radius = m3Diameter / 2.0;
 m3RadiusSlacked = m3Radius + m3HoleRadiusSlack;
@@ -19,7 +19,7 @@ m3HexNutThickness = 2.2;
 
 /********************************************************************************/
 // M4 dimensions
-m4HoleRadiusSlack = xySlack;
+m4HoleRadiusSlack = radiusXYSlack;
 m4Diameter = 4.0;
 m4Radius = m4Diameter / 2.0;
 m4RadiusSlacked = m4Radius + m4HoleRadiusSlack;
