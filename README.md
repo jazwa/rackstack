@@ -52,7 +52,7 @@ Please see [the assembly guide](./assembly-guide).
 
 
 #### Notes: 
-- Before printing the actual parts. It's recommended to print this evaluation part: [eval_P.scad](./rack/print/eval_P.scad) to test tolerances. 
+- ⚠️ Before printing the actual parts. It's recommended to print this evaluation part: [eval_P.scad](./rack/print/eval_P.scad) to test tolerances. 
   If you find the fits too tight/loose, you can adjust them [here](./config/print.scad). Please make sure also adjust the layer height in that file, too.
 - Omitted actual plastic for printing. Any conventional 3d printing plastic should do (PLA, PETG, ABS),
 but beware of PLA's thermal limits. Higher infill is recommended for all parts.
@@ -95,6 +95,11 @@ For generating a specific part:
 
 `rbuild.py` also support an optional `--nightly` flag, which will run a nightly build of OpenSCAD. Please make sure the
 path to the nightly build is also configured in [rbuild.py](./rbuild.py).
+
+
+### ⚠️ Important:
+Before committing to a full print, please try printing an evaluation print: [eval_P.scad](./rack/print/eval_P.scad) to test tolerances.
+It is very likely you will need to edit the default tolerances in [print.scad](./config/print.scad) for a nice fit.
 
 ## Designing rack-mount items
 
