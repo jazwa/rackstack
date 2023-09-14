@@ -75,10 +75,8 @@ A python script:  [rbuild.py](./rbuild.py) is provided to generate different pro
 configure the path to the OpenSCAD binary in [rbuild.py](./rbuild.py).
 
 Requirements:
-  - `openscad` cli command (Currently only supported on Linux/Mac). 
+  - `openscad` CLI binary
   - `python3`
-
-For Windows, you'll most likely have to generate the STLs in [rack/print](./rack/print) manually. 
 
 ### Examples:
 Generate all project files for the `micro` profile:
@@ -89,7 +87,7 @@ This will build all the parts defined in [rack/print](./rack/print), and put the
 You can also provide a `-dz {n}` parameter to adjust the height of the generated rack. Configuring other rack
 variables can be done in [config/rackframe.scad](./config/rackFrame.scad).
 
-For generating a specific part: 
+For generating a specific part, and putting it into a new `stl/custom` target directory: 
 
 `python3 rbuild.py -b yBar -c micro -t custom`
 

@@ -5,8 +5,17 @@ import subprocess
 import os
 
 # ------------- EDIT THESE VARIABLES WITH THE LOCATION OF YOUR OPENSCAD BINARIES
+
+# Linux Example
 PATH_TO_OPENSCAD = '/usr/bin/openscad'
 PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
+
+# Mac Example
+# PATH_TO_OPENSCAD = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
+
+# Windows Example
+# PATH_TO_OPENSCAD = r'C:\Program Files\OpenSCAD\openscad.exe'
+
 ###############################################################################
 
 
