@@ -3,20 +3,42 @@
 import argparse
 import subprocess
 import os
+import sys
 
-# ------------- EDIT THESE VARIABLES WITH THE LOCATION OF YOUR OPENSCAD BINARIES
 
-# Linux Example
-PATH_TO_OPENSCAD = '/usr/bin/openscad'
-PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
+# Function to check if the binary exists
+def binary_exists(path):
+    return os.path.exists(path) or subprocess.call(['which', path], stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
 
-# Mac Example
-# PATH_TO_OPENSCAD = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
+# Attempt to automatically set the path based on the operating system
+# If this doesn't work, modify the variables for your OS to the correct location.
+if os.name == "posix":
+    # Further check for macOS specifically
+    if 'darwin' in sys.platform:
+        print("Operating System: macOS")
+        PATH_TO_OPENSCAD = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
+    else:  # Assume Linux if not macOS
+        print("Operating System: Linux")
+        PATH_TO_OPENSCAD = '/usr/bin/openscad'
+        PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
 
-# Windows Example
-# PATH_TO_OPENSCAD = r'C:\Program Files\OpenSCAD\openscad.exe'
+    if binary_exists(PATH_TO_OPENSCAD):
+        print(f"Binary found at {PATH_TO_OPENSCAD}")
+    else:
+        print(f"Binary not found at {PATH_TO_OPENSCAD}")
 
-###############################################################################
+elif os.name == "nt":  # Windows
+    print("Operating System: Windows")
+    PATH_TO_OPENSCAD = r'C:\Program Files\OpenSCAD\openscad.exe'
+    
+    if binary_exists(PATH_TO_OPENSCAD):
+        print(f"Binary found at {PATH_TO_OPENSCAD}")
+    else:
+        print(f"Binary not found at {PATH_TO_OPENSCAD}")
+
+else:
+    print("Unsupported OS")
+    exit(1)
 
 
 # For actual dimensions, please see profiles.scad.
