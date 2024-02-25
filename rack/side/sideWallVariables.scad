@@ -34,6 +34,7 @@ hingePoleDx = sideWallSlotToOuterYEdge + sideWallConnW/2.0;
 hingePoleDy = sideWallY - (sideWallSlotToOuterXEdge + (hingePoleR+radiusXYSlack));
 
 sideWallDefaultVerticalBracingToZEdge = 30;
+sideWallDefaultHorizontalBracingToZEdge = sideWallDefaultVerticalBracingToZEdge;
 sideWallDefaultVentilationToZEdge = 40;
 sideWallDefaultVentilationToYEdge = 25;
 sideWallDefaultVentilationWidth = 6;
