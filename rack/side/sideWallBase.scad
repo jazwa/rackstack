@@ -14,6 +14,7 @@ use <./hingeModule.scad>
 module sideWallBase() {
 
   applyHingeConnector()
+  applySideWallBracing(numVerticalRibs=2)
   applyMagnetConnector()
   applyHandle()
   sideWallBase();
@@ -135,13 +136,18 @@ module applySideWallDefaultVentilation(numVents) {
 
   r = 2; // vent roundness
   ventLength = sideWallY - 2*sideWallDefaultVentilationToZEdge;
-  ventZDiff = (sideWallZ - 2*sideWallDefaultVentilationToYEdge)/(numVents-1);
+  ventZDiff = numVents == 1
+    ? 0 // TODO kinda ugly
+    : (sideWallZ - 2*sideWallDefaultVentilationToYEdge)/(numVents-1);
 
   apply_n() {
-    for (i = [0:numVents-1]) {
-      translate(v = [0, sideWallDefaultVentilationToZEdge, i * ventZDiff + sideWallDefaultVentilationToYEdge])
-        vent();
+    if (numVents > 0) {
+      for (i = [0:numVents-1]) {
+        translate(v = [0, sideWallDefaultVentilationToZEdge, i*ventZDiff+sideWallDefaultVentilationToYEdge])
+          vent();
+      }
     }
+
     children(0);
   }
 
@@ -155,51 +161,66 @@ module applySideWallDefaultVentilation(numVents) {
   }
 }
 
-module applySideWallBracing(numRibs) {
+module applySideWallBracing(numVerticalRibs) {
 
   apply_p() {
     // TODO add horizontal bracing
-    sideWallVerticalBracing(numRibs = numRibs);
+    union() {
+      sideWallVerticalBracing(numRibs = numVerticalRibs);
+      sideWallHorizontalBracing();
+    }
     children(0);
   }
 
-  module sideWallVerticalBracing(numRibs, ribZ, ribExtrusion=1) {
+  module sideWallVerticalBracing(numRibs) {
 
-    ribRampLength = 5;
-    ribWidth = 2;
-    ribZ = sideWallZ;
     ribYDiff = sideWallY - 2*sideWallDefaultVerticalBracingToZEdge;
 
     translate(v=[0,sideWallDefaultVerticalBracingToZEdge,0])
       intersection() {
         for (i = [0:numRibs-1]) {
-
-          translate(v = [sideWallThickness, i*ribYDiff, (sideWallZ-ribZ)/2])
-            translate(v = [ribExtrusion-ribWidth, 0, 0])
-              verticalRib(ribExtend=4, ribWidth=ribWidth);
+          translate(v = [0, i*ribYDiff, 0])
+              verticalRib();
         }
 
         halfspace(vpos=[1,0,0], p=[0,0,0]);
       }
 
-    module verticalRib(ribExtend, ribWidth) {
+    module verticalRib(height=4, thickness=3, rampLength=0) {
 
-      roundness = 0.5;
-      translate(v=[0,-ribWidth/2,0])
-        minkowski() {
-          hull() {
-            translate(v=[0,0,roundness])
-              cube(size = [eps, ribWidth, eps]);
+      translate(v=[sideWallThickness-eps,-thickness/2,0])
+        hull() {
+          cube(size = [eps, thickness, eps]);
 
-            translate(v = [0, 0, ribRampLength])
-              cube(size = [ribExtend, ribWidth, ribZ-2*(ribRampLength+roundness)]);
+          translate(v = [0, 0, rampLength])
+            cube(size = [height, thickness, sideWallZ-2*rampLength]);
 
-            translate(v = [0, 0, ribZ-roundness])
-              cube(size = [eps, ribWidth, eps]);
-          }
-
-          sphere(r=roundness);
+          translate(v = [0, 0, sideWallZ])
+            cube(size = [eps, thickness, eps]);
         }
+    }
+  }
+
+  module sideWallHorizontalBracing() {
+
+    ribThickness = 2.5;
+
+    horizontalRib(thickness=ribThickness);
+
+    translate(v=[0,0,sideWallZ-ribThickness])
+      horizontalRib(thickness=ribThickness);
+
+    module horizontalRib(height=4, thickness=3, rampLength=5) {
+
+      ribLength = sideWallY + rampLength - sideWallDefaultHorizontalBracingToZEdge;
+
+      translate(v = [sideWallThickness-eps, sideWallY-ribLength, 0])
+      hull() {
+        cube(size = [height, ribLength, thickness]);
+
+        translate(v=[0,-rampLength,0])
+          cube(size=[eps, eps, thickness]);
+      }
     }
   }
 }

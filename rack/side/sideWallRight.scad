@@ -4,10 +4,9 @@ sideWallRight();
 
 module sideWallRight() {
 
-  numVentsCustom = ceil((sideWallZ - 2*sideWallDefaultVentilationToYEdge)/10);
+  numVentsCustom = sideWallVentilation? ceil((sideWallZ - 2*sideWallDefaultVentilationToYEdge)/10): 0;
 
   mirror(v=[1,0,0])
-  applySideWallBracing(numRibs=2)
   applySideWallDefaultVentilation(numVents=numVentsCustom)
   sideWallBase();
 }
