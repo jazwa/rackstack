@@ -101,9 +101,9 @@ module hexNutPocket_N(screwType, openSide=true, backSpace=inf10, bridgeFront=fal
   heightSlack = bridgeFront || bridgeBack ? overhangSlack: xySlack;
 
   if (screwType == "m3") {
-    hexNutPocketHelper_N(m3RadiusSlacked, m3HexNutWidthAcrossCorners / 2 + 0.3, m3HexNutThickness + heightSlack, openSide=openSide, backSpace=backSpace, bridgeFront=bridgeFront, bridgeBack=bridgeBack);
+    hexNutPocketHelper_N(m3RadiusSlacked, (m3HexNutWidthAcrossCorners+xySlack) / 2, m3HexNutThickness + heightSlack, openSide=openSide, backSpace=backSpace, bridgeFront=bridgeFront, bridgeBack=bridgeBack);
   } else if (screwType == "m4") {
-    hexNutPocketHelper_N(m4RadiusSlacked, m4HexNutWidthAcrossCorners / 2 + 0.1, m4HexNutThickness + heightSlack, openSide=openSide, backSpace=backSpace, bridgeFront=bridgeFront, bridgeBack=bridgeBack);
+    hexNutPocketHelper_N(m4RadiusSlacked, (m4HexNutWidthAcrossCorners+xySlack) / 2, m4HexNutThickness + heightSlack, openSide=openSide, backSpace=backSpace, bridgeFront=bridgeFront, bridgeBack=bridgeBack);
   } else {
     error("Unsupported screw type");
   }
