@@ -14,7 +14,7 @@
     - Values are signed. Positive values can be interpreted as how much to remove from the socket along some dimension.
     - These values depend on print orientation and it's assumed parts are printed in their recommended orientations.
 */
-xySlack = 0.3;
+xySlack = 0.25;
 
 radiusXYSlack = xySlack/2;
 
