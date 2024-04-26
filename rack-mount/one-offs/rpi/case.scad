@@ -11,8 +11,14 @@ pcbRise = 3;
 caseWallThickness = 2;
 caseBottomThickness = 2;
 mountPointDiameter = 5;
-// TODO use actual reference doc for this
-mountPoints = [[3.65,23.30,0], [3.65,pcbDimensions[1]-3.65,0], [pcbDimensions[0]-3.65,23.30,0], [pcbDimensions[0]-3.65,pcbDimensions[1]-3.65,0]];
+
+mountPoints = [
+    [3.65, 23.3,0],
+    [3.65 + 49, 23.3,0],
+    [3.65, 23.3 + 58,0],
+    [3.65 + 49, 23.3 + 58,0]
+];
+
 
 module pcb() {
   cube(size=[pcbDimensions[0], pcbDimensions[1], pcbThickness]);
