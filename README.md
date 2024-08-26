@@ -61,15 +61,6 @@ but beware of PLA's thermal limits. Higher infill is recommended for all parts.
 - Side rails are mounted using M3 hex nuts and screws.
 
 
-## Trays, Boxes, etc
-
-Some parametric rack mount systems can be found in [rack-mount](./rack-mount). The following rack-mount systems 
-are currently supported:
-- [Enclosed Box](./rack-mount/enclosed-box): For mounting box-shaped objects, without the need for any mounting holes on the box.
-- [Tray](./rack-mount/tray): Simple tray mounted using only the front rails. Can be configured to have screw mounts at the bottom of the tray.
-- [Patch Panel](./rack-mount/patch-panel): Linear patch panel array. Number of keystone slots can be configured.
-
-
 ## Configuring + Generating STLs
 A python script:  [rbuild.py](./rbuild.py) is provided to generate different project stls. **Before running the script**, please 
 configure the path to the OpenSCAD binary in [rbuild.py](./rbuild.py).
@@ -98,6 +89,20 @@ path to the nightly build is also configured in [rbuild.py](./rbuild.py).
 ### ⚠️ Important:
 Before committing to a full print, please try printing an evaluation print: [eval_P.scad](./rack/print/eval_P.scad) to test tolerances.
 It is very likely you will need to edit the default tolerances in [print.scad](./config/print.scad) for a nice fit.
+
+
+## Trays, Boxes, etc
+
+Some parametric rack mount systems can be found in [rack-mount](./rack-mount). The following rack-mount systems 
+are currently supported:
+- [Enclosed Box](./rack-mount/enclosed-box): For mounting box-shaped objects, without the need for any mounting holes on the box.
+- [Tray](./rack-mount/tray): Simple tray mounted using only the front rails. Can be configured to have screw mounts at the bottom of the tray.
+- [Patch Panel](./rack-mount/patch-panel): Linear patch panel array. Number of keystone slots can be configured.
+
+## Rack Mount Catalog
+
+There is a small catalog of various pre-configured rack-mountable parts in the [catalog](./rack-mount/catalog) directory. Please feel free to add anything even remotely
+useful!
 
 ## Designing rack-mount items
 
