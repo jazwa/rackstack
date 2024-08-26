@@ -24,7 +24,8 @@ difference () {
         );
 
 
-    // perforations for airflow    translate(v=[-4, 5, 18]) {
+    // perforations for airflow
+    translate(v=[-4, 5, 18]) {
         rotate(a=[0,90,0])
             rotate(a=[0,0,45])
             cube(size=[18, 18, 135]);
