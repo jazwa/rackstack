@@ -52,6 +52,10 @@ module connectorPositive(on, to) {
     onYBarToXBarPositive();
   } else if (on == "yBar" && to == "basePlate") {
     onYBarBasePlateConnectorPositive();
+  } else if (on == "yBar" && to == "magnetModule") {
+    onYBarMagnetModulePositive();
+  } else if (on == "yBar" && to == "hingeModule") {
+    onYBarHingeModulePositive();
   } else if (on == "basePlate" && to == "yBar") {
     onBasePlateToYBarConnectorPositive();
   } else if (on == "xBar" && to == "yBar") {
@@ -69,6 +73,8 @@ module connectorNegative(on, to) {
     onXBarToYBarNegative();
   } else if (on == "yBar" && to == "sideModule") {
     onYBarSideModuleNegative();
+  } else if (on == "yBar" && to == "hingeModule") {
+    onYBarHingeModuleNegative();
   } else if (on == "yBar" && to == "mainRail") {
     onYBarToMainRailNegative();
   } else if (on == "yBar" && to == "stackConnector") {

@@ -4,20 +4,19 @@ include <../sharedVariables.scad>
 include <./sideWallVariables.scad>
 
 
-magnetModule();
+module magnetModule(fixed=false) {
 
-module magnetModule() {
-
-  applyYBarScrewMount()
+  applyYBarScrewMount(fixed)
   applyMagnetMount()
   base();
 
-  connW = sideWallConnW;
-  connD = sideWallConnD;
-
   module base() {
 
+    connW = sideWallConnW;
+    connD = sideWallConnD;
+
     intersection() {
+    
       cube(size = [connW, connD, sideWallConnLugDepression]);
 
       // TODO: pattern for this? beef up mirror4XY?
@@ -29,10 +28,14 @@ module magnetModule() {
     }
   }
 
-  module applyYBarScrewMount() {
+  module applyYBarScrewMount(fixed=false) {
+  
     apply_n() {
-      translate(v = [yBarScrewHoleToOuterYEdge, yBarScrewHoleToFrontXEdge, sideWallConnLugDepression])
-      counterSunkHead_N(rackFrameScrewType, headExtension = eps, screwExtension = inf10);
+
+      if (!fixed) {
+        translate(v = [yBarScrewHoleToOuterYEdge, yBarScrewHoleToFrontXEdge, sideWallConnLugDepression])
+           counterSunkHead_N(rackFrameScrewType, headExtension = eps, screwExtension = inf10);
+      }
 
       children(0);
     }

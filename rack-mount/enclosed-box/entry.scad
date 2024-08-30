@@ -21,9 +21,9 @@ visualize = false,
 zOrientation = "middle", // ["middle" | "bottom"]
 recessSideRail = false,
 
-boxWidth = 170,
+boxWidth = 200,
 boxHeight = 27,
-boxDepth = 100,
+boxDepth = 120,
 
 railDefaultThickness = 1.5,
 railSideThickness = 3,

@@ -3,18 +3,18 @@ include <../../config/common.scad>
 include <../sharedVariables.scad>
 include <./sideWallVariables.scad>
 
-hingeModule();
 
-module hingeModule() {
+module hingeModule(fixed=false) {
 
   applyHingePole()
-  applyYBarScrewMount()
+  applyYBarScrewMount(fixed)
   base();
 
-  connW = sideWallConnW;
-  connD = sideWallConnD;
-
   module base() {
+      
+    connW = sideWallConnW;
+    connD = sideWallConnD;
+
     intersection() {
 
       union() {
@@ -57,10 +57,13 @@ module hingeModule() {
   }
 
 
-  module applyYBarScrewMount() {
+  module applyYBarScrewMount(fixed=false) {
     apply_n() {
-      translate(v = [yBarScrewHoleToOuterYEdge, yBarScrewHoleToFrontXEdge, sideWallConnLugDepression])
-      counterSunkHead_N(rackFrameScrewType, headExtension = eps, screwExtension = inf10);
+
+      if (!fixed) {
+        translate(v = [yBarScrewHoleToOuterYEdge, yBarScrewHoleToFrontXEdge, sideWallConnLugDepression])
+           counterSunkHead_N(rackFrameScrewType, headExtension = eps, screwExtension = inf10);
+      }
 
       children(0);
     }

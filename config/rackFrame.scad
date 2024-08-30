@@ -1,5 +1,7 @@
 // Manually set this variable to toggle rack profile
-profileName = "micro";
+profileName = "default";
+
+fixedSideModules = true;
 
 _profileConfigs = [
     // You can introduce a custom profile like:
@@ -35,7 +37,7 @@ _profileConfigs = [
       ["maxUnitWidth", 205],
       ["maxUnitDepth", 205],
       ["numRailScrews", 16]
-    ]]
+            ]]
   ];
 
 function _getConfigValueRaw(profile, varName) = profile[search([varName], profile)[0]][1];
