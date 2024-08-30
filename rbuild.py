@@ -253,7 +253,7 @@ def construct_openscad_animation_args(build_dir, target_dir, filename, config, d
     target = os.path.join(target_dir, os.path.splitext(filename)[0] + '.png')
 
     openscad_args = []
-    openscad_args += ['--colorscheme', 'BeforeDawn']
+    openscad_args += ['--colorscheme', 'Tomorrow Night']
     openscad_args += ['--render']
     openscad_args += ['--imgsize', '1920,1080']
     openscad_args += ['--projection', 'o']
@@ -286,7 +286,7 @@ def find_scad_file(directory, filename):
 
 def run_openscad(options, nightly):
     if nightly:
-        command = [PATH_TO_OPENSCAD_NIGHTLY, '--enable', 'all']
+        command = [PATH_TO_OPENSCAD_NIGHTLY, '--enable', 'fast-csg', '--enable', 'manifold']
     else:
         command = [PATH_TO_OPENSCAD]
 

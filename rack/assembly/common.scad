@@ -56,6 +56,14 @@ module mirrorAllTrayCornersFromYBarSpace() {
 
 secondStackTrans = upperXYTrayTrans * mirror(v=[0,0,1]);
 
+
+
+yBarToMagnetModuleTrans =
+    translate(v=[13,0,sideWallConnLugDepression]) *
+    inv4x4(yBarSideModuleConnectorTrans) *
+    mirror(v=[1,0,0]);
+
+
 module caseScrewShort() {
   if (!screwMask) {
     color([1, 1, 1]) {
