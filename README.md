@@ -95,6 +95,7 @@ are currently supported:
 - [Enclosed Box](./rack-mount/enclosed-box): For mounting box-shaped objects, without the need for any mounting holes on the box.
 - [Tray](./rack-mount/tray): Simple tray mounted using only the front rails. Can be configured to have screw mounts at the bottom of the tray.
 - [Patch Panel](./rack-mount/patch-panel): Linear patch panel array. Number of keystone slots can be configured.
+- [Angle Brackets](./rack-mount/angle-bracket): Simple Angle Bracket mounting system. Derived from the Enclosed Box system.
 
 ## Rack Mount Catalog
 
