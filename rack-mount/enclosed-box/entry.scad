@@ -21,7 +21,7 @@ visualize = false,
 zOrientation = "middle", // ["middle" | "bottom"]
 recessSideRail = false,
 
-boxWidth = 200,
+boxWidth = 160,
 boxHeight = 27,
 boxDepth = 120,
 

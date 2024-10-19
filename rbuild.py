@@ -81,7 +81,8 @@ ASSEMBLY_STEPS = [
 MOUNT_ANIMATIONS = [
     ('enclosed-box', 32),
     ('tray', 32),
-    ('patch-panel', 32)
+    ('patch-panel', 32),
+    ('angle-bracket', 32)
 ]
 
 def main():
