@@ -32,8 +32,11 @@ module slideHexNutsIntoYBar(at=0)
     rotate(a=[0,90,0]);
 
   module slideHexNutsOneCorner(t=0) {
-    multmatrix(sideModuleTrans(t = t))
-      hexNut(rackFrameScrewType);
+
+      if (!fixedSideModules) {
+          multmatrix(sideModuleTrans(t = t))
+              hexNut(rackFrameScrewType);
+      }
 
     multmatrix(mainRailTrans(t = t))
       hexNut(rackFrameScrewType);

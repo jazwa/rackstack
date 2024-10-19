@@ -1,4 +1,5 @@
 include <./common.scad>
+use <./slideHexNutsIntoYBar.scad>
 
 $vpt = [21,-15,20];
 $vpr = [65,0,40];
@@ -10,8 +11,16 @@ addMagnetsToMagnetModules(at=$t);
 module addMagnetsToMagnetModules(at=0) {
   t = lerp(a=6,b=0,t=at);
 
+  
   if (!plasticMask) {
-    magnetModule();
+
+      if (fixedSideModules) {
+          multmatrix(yBarToMagnetModuleTrans)
+          slideHexNutsIntoYBar(at=1);
+      }
+      else {
+          magnetModule();
+      }
   }
 
   function insertMagnetTrans(t=0) =
@@ -20,6 +29,9 @@ module addMagnetsToMagnetModules(at=0) {
       magnetModuleMagnetMountDz]) *
     rotate(a=[0,90,0]);
 
-  multmatrix(insertMagnetTrans(t=t))
-    magnet();
+
+
+   multmatrix(insertMagnetTrans(t=t))
+     magnet();
+
 }
