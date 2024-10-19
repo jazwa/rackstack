@@ -27,28 +27,25 @@ Please see [the assembly guide](./assembly-guide).
 
 | Item                                                          | Name                      | Quantity | Comment                                                                                                                          |
 |---------------------------------------------------------------|---------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------|
-| <img src="media/bom/fhcs_short.gif"  height="60" width="72">  | M3x8 FHCS                 | 8        | Extras are useful and inexpensive. If you plan on eventually stacking multiple racks together, don't hesitate to get a lot more. |
-| <img src="media/bom/fhcs_medium.gif"  height="60" width="72"> | M3x12 FHCS                | 12       | ☝️                                                                                                                               |
-| <img src="media/bom/fhcs_long.gif"  height="60" width="72">   | M3x16 FHCS                | 16       | ☝️                                                                                                                               |
-| <img src="media/bom/hex_nut.gif"  height="60" width="72">     | M3 hex nut                | 36       | ☝️                                                                                                                               |
+| <img src="media/bom/fhcs_medium.gif"  height="60" width="72"> | M3x12 FHCS                | 12       | Extras are useful and inexpensive. If you plan on eventually stacking multiple racks together, don't hesitate to get a lot more. |
+| <img src="media/bom/fhcs_long.gif"  height="60" width="72">   | M3x16 FHCS                | 16       | ☝️                                                                                                                                |
+| <img src="media/bom/hex_nut.gif"  height="60" width="72">     | M3 hex nut                | 28       | ☝️                                                                                                                                |
 | <img src="media/bom/dowel.gif"  height="60" width="72">       | 3x10 steel dowel pin      | 4        | 3mm diameter, 10mm height                                                                                                        |
 | <img src="media/bom/magnet.gif"  height="60" width="72">      | 6x2 neodymium disc magnet | 8        | 6mm diameter, 2mm height                                                                                                         |
 | <img src="media/bom/glue.gif"  height="60" width="72">        | super glue                | \>= 2ml  | Used to glue magnets to plastic                                                                                                  |
 
 
 ### Printing - Single Rack:
-| Part                                                         | Quantity |
-|--------------------------------------------------------------|----------|
-| [Y-Bar](./rack/print/yBar_P.scad)                            | 4        |
-| [X-Bar](./rack/print/xBar_P.scad)                            | 4        |
-| [Main Rail](./rack/print/mainRail_P.scad)                    | 4        |
-| [Left Magnet Module](./rack/print/magnetModuleLeft_P.scad)   | 2        |
-| [Right Magnet Module](./rack/print/magnetModuleRight_P.scad) | 2        |
-| [Hinge Module](./rack/print/hingeModule.scad)                | 4        |
-| [Left Side Wall](./rack/print/sideWallLeft_P.scad)           | 1        |
-| [Right Side Wall](./rack/print/sideWallRight_P.scad)         | 1        |
-| [XY-Plate](./rack/print/xyPlate_P.scad)                      | 2        |
-| [Feet](./rack/print/rackFeet_P.scad) (optional)              | 2        |
+| Part                                                 | Quantity |
+|------------------------------------------------------|----------|
+| [Left Y-Bar](./rack/print/yBarLeft_P.scad)           | 2        |
+| [Right Y-Bar](./rack/print/yBarRight_P.scad)         | 2        |
+| [X-Bar](./rack/print/xBar_P.scad)                    | 4        |
+| [Main Rail](./rack/print/mainRail_P.scad)            | 4        |
+| [Left Side Wall](./rack/print/sideWallLeft_P.scad)   | 1        |
+| [Right Side Wall](./rack/print/sideWallRight_P.scad) | 1        |
+| [XY-Plate](./rack/print/xyPlate_P.scad)              | 2        |
+| [Feet](./rack/print/rackFeet_P.scad) (optional)      | 2        |
 
 
 #### Notes: 
