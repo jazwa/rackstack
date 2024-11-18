@@ -14,7 +14,6 @@ difference () {
         trayThickness = 3,
         frontLipHeight = 3,
         backLipHeight = 5,
-        /*mountPoints = [[20, 70], [20+95.25, 70]],*/
         frontThickness = 3,
         sideThickness = 3,
         mountPointElevation = 1,
