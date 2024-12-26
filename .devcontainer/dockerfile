@@ -1,0 +1,6 @@
+FROM mcr.microsoft.com/devcontainers/base:bookworm
+
+RUN wget -qO- https://files.openscad.org/OBS-Repository-Key.pub | sudo tee /etc/apt/trusted.gpg.d/obs-openscad-nightly.asc \
+    && echo "deb https://download.opensuse.org/repositories/home:/t-paul/Debian_12/ ./" >> /etc/apt/sources.list.d/openscad.list \
+    && apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends openscad openscad-nightly

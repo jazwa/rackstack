@@ -20,12 +20,20 @@ if os.name == "posix":
     else:  # Assume Linux if not macOS
         print("Operating System: Linux")
         PATH_TO_OPENSCAD = '/usr/bin/openscad'
-        PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
+        
+        if binary_exists(PATH_TO_OPENSCAD):
+            print(f"Binary found at {PATH_TO_OPENSCAD}")
+        else:
+            print(f"Binary not found at {PATH_TO_OPENSCAD}")
 
-    if binary_exists(PATH_TO_OPENSCAD):
-        print(f"Binary found at {PATH_TO_OPENSCAD}")
-    else:
-        print(f"Binary not found at {PATH_TO_OPENSCAD}")
+        if binary_exists('/snap/bin/openscad-nightly'):
+            print("Nightly binary found at /snap/bin/openscad-nightly")
+            PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
+        elif binary_exists('/usr/bin/openscad-nightly'):
+            print("Nightly binary found at /usr/bin/openscad-nightly")
+            PATH_TO_OPENSCAD_NIGHTLY = '/usr/bin/openscad-nightly'
+        else:
+            print('Nightly binary not installed')
 
 elif os.name == "nt":  # Windows
     print("Operating System: Windows")
