@@ -27,10 +27,10 @@ if os.name == "posix":
             print(f"Binary not found at {PATH_TO_OPENSCAD}")
 
         if binary_exists('/snap/bin/openscad-nightly'):
-            print(f"Nightly binary found at {PATH_TO_OPENSCAD}")
+            print("Nightly binary found at /snap/bin/openscad-nightly")
             PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
         elif binary_exists('/usr/bin/openscad-nightly'):
-            print(f"Nightly binary found at {PATH_TO_OPENSCAD}")
+            print("Nightly binary found at /usr/bin/openscad-nightly")
             PATH_TO_OPENSCAD_NIGHTLY = '/usr/bin/openscad-nightly'
         else:
             print('Nightly binary not installed')
