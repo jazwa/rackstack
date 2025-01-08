@@ -8,9 +8,12 @@
 			"version": "latest"
 		}
 	},
-	
+
 	"customizations": {
 	},
 
-	"remoteUser": "vscode"
+	"remoteUser": "vscode",
+	"mounts": [
+      "source=rackstack-bashhistory,target=/commandhistory,type=volume"
+  ]
 }
