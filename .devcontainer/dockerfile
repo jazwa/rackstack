@@ -4,3 +4,10 @@ RUN wget -qO- https://files.openscad.org/OBS-Repository-Key.pub | sudo tee /etc/
     && echo "deb https://download.opensuse.org/repositories/home:/t-paul/Debian_12/ ./" >> /etc/apt/sources.list.d/openscad.list \
     && apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends openscad openscad-nightly
+
+RUN apt-get -y install --no-install-recommends imagemagick
+
+RUN curl -sL http://www.lcdf.org/gifsicle/gifsicle-1.91.tar.gz | tar -zx \
+    && cd gifsicle-1.91 \
+    && ./configure --disable-gifview \
+    && make install
