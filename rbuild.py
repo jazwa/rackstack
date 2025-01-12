@@ -26,13 +26,18 @@ if os.name == "posix":
         else:
             print(f"Binary not found at {PATH_TO_OPENSCAD}")
 
-        if binary_exists('/snap/bin/openscad-nightly'):
-            print(f"Nightly binary found at {PATH_TO_OPENSCAD}")
-            PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
-        elif binary_exists('/usr/bin/openscad-nightly'):
-            print(f"Nightly binary found at {PATH_TO_OPENSCAD}")
-            PATH_TO_OPENSCAD_NIGHTLY = '/usr/bin/openscad-nightly'
-        else:
+        POSSIBLE_PATH_LOCATIONS_FOR_OPENSCAD_NIGHTLY = [
+            '/snap/bin/openscad-nightly', #Path when installed using the snap tooling
+            '/usr/bin/openscad-nightly' #Path when installed using apt (also used in dockerfile)
+        ]
+
+        PATH_TO_OPENSCAD_NIGHTLY = ''
+        for LOCATION in POSSIBLE_PATH_LOCATIONS_FOR_OPENSCAD_NIGHTLY:
+            if binary_exists(LOCATION):
+                print(f"Nightly binary found at {LOCATION}")
+                PATH_TO_OPENSCAD_NIGHTLY = LOCATION
+
+        if PATH_TO_OPENSCAD_NIGHTLY == '':
             print('Nightly binary not installed')
 
 elif os.name == "nt":  # Windows
