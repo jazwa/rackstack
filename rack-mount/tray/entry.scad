@@ -14,6 +14,8 @@ module traySystem (
 
 trayU = 2,
 
+// these dimensions are the total base width including padding not usable space. 
+// e.g. 145 baseWidth and 3 sideThickness = 145-(3*2) = 139mm useable space.
 baseWidth = 145,
 baseDepth = 100,
 
