@@ -14,13 +14,14 @@ module patchPanelSystem (
 
 numSlots = 8,
 plateThickness = 3,
-keystoneSpacing = 19
+keystoneSpacing = 19,
+center = false
 
 // end config //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ) {
   mirror(v = [0, 0, 1])
-    patchPanel(slots = numSlots);
+    patchPanel(slots = numSlots, center=center);
 }
 
 patchPanelSystem();
