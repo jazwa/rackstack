@@ -20,12 +20,25 @@ if os.name == "posix":
     else:  # Assume Linux if not macOS
         print("Operating System: Linux")
         PATH_TO_OPENSCAD = '/usr/bin/openscad'
-        PATH_TO_OPENSCAD_NIGHTLY = '/snap/bin/openscad-nightly'
+        
+        if binary_exists(PATH_TO_OPENSCAD):
+            print(f"Binary found at {PATH_TO_OPENSCAD}")
+        else:
+            print(f"Binary not found at {PATH_TO_OPENSCAD}")
 
-    if binary_exists(PATH_TO_OPENSCAD):
-        print(f"Binary found at {PATH_TO_OPENSCAD}")
-    else:
-        print(f"Binary not found at {PATH_TO_OPENSCAD}")
+        POSSIBLE_PATH_LOCATIONS_FOR_OPENSCAD_NIGHTLY = [
+            '/snap/bin/openscad-nightly', #Path when installed using the snap tooling
+            '/usr/bin/openscad-nightly' #Path when installed using apt (also used in dockerfile)
+        ]
+
+        PATH_TO_OPENSCAD_NIGHTLY = ''
+        for LOCATION in POSSIBLE_PATH_LOCATIONS_FOR_OPENSCAD_NIGHTLY:
+            if binary_exists(LOCATION):
+                print(f"Nightly binary found at {LOCATION}")
+                PATH_TO_OPENSCAD_NIGHTLY = LOCATION
+
+        if PATH_TO_OPENSCAD_NIGHTLY == '':
+            print('Nightly binary not installed')
 
 elif os.name == "nt":  # Windows
     print("Operating System: Windows")
