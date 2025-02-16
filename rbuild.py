@@ -122,7 +122,7 @@ def main():
         default=BuildSizeConfig.MICRO,
         choices=[BuildSizeConfig.NANO, BuildSizeConfig.MINI, BuildSizeConfig.MICRO],
         help='Build size config profile. This will determine the size of the rack you wish to generate. '
-             'For actual dimensions, please see profiles.scad.'
+             'For actual dimensions, please see rackFrame.scad.'
     )
 
     parser.add_argument(
