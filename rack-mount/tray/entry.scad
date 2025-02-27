@@ -8,43 +8,77 @@ use <./tray.scad>
   !!! Please also make sure that the correct rack frame preset is set in rackFrame.scad !!!
 */
 
-module traySystem (
+/* [Tray Basic Dimensions] */
+// Height of the tray in rack units (U)
+trayU = 2; // [1:0.5:4]
 
-// begin config ////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Total base width including padding (mm)
+baseWidth = 145; // [100:1:200]
 
-trayU = 2,
+// Total depth of the tray (mm)
+baseDepth = 100; // [50:1:300]
 
-// these dimensions are the total base width including padding not usable space. 
-// e.g. 145 baseWidth and 3 sideThickness = 145-(3*2) = 139mm useable space.
-baseWidth = 145,
-baseDepth = 100,
+/* [Thickness Settings] */
+// Thickness of tray bottom (mm)
+baseThickness = 3; // [1:0.5:5]
 
-baseThickness = 3, // tray bottom thickness
-frontThickness = 3, // front plate thickness
-sideThickness = 3,
+// Thickness of front plate (mm)
+frontThickness = 3; // [1:0.5:5]
 
-backLipHeight = 2,
-frontLipHeight = 2,
+// Thickness of side walls (mm)
+sideThickness = 3; // [1:0.5:5]
 
-sideSupport = true,
-trayLeftPadding = 10, // extra space between the left rail and tray. configure this to move the tray left/right.
+/* [Lip Settings] */
+// Height of back lip (mm)
+backLipHeight = 2; // [0:0.5:10]
 
-mountPointType = "m3",
-mountPointElevation = 1, // basically standoff height
+// Height of front lip (mm)
+frontLipHeight = 2; // [0:0.5:10]
 
-// add/config standoff coordinates here. Format is [[x,y]]
-mountPoints = [
-    [30,10],
-    [30+75,10],
-    [30,10+75],
-    [30+75,10+75],
-]
+/* [Support Settings] */
+// Enable side support
+sideSupport = true;
 
-// end config //////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Extra space between left rail and tray (mm)
+trayLeftPadding = 10; // [0:1:50]
 
-) {
+/* [Mount Point Settings] */
+// Type of mounting holes
+mountPointType = "m3"; // [m3:M3, m4:M4, m5:M5]
 
-  bottomScrewTray (
+// Standoff height for mounting points (mm)
+mountPointElevation = 1; // [0:0.5:5]
+
+/* [Mount Points] */
+// Enable mount points
+enableMountPoints = true;
+// First mount point X coordinate
+mp1x = 30; // [0:1:200]
+// First mount point Y coordinate
+mp1y = 10; // [0:1:200]
+// Second mount point X coordinate
+mp2x = 105; // [0:1:200]
+// Second mount point Y coordinate
+mp2y = 10; // [0:1:200]
+// Third mount point X coordinate
+mp3x = 30; // [0:1:200]
+// Third mount point Y coordinate
+mp3y = 85; // [0:1:200]
+// Fourth mount point X coordinate
+mp4x = 105; // [0:1:200]
+// Fourth mount point Y coordinate
+mp4y = 85; // [0:1:200]
+
+// Mount point coordinates
+mountPoints = enableMountPoints ? [
+  [mp1x, mp1y],
+  [mp2x, mp2y],
+  [mp3x, mp3y],
+  [mp4x, mp4y],
+] : [];
+
+module traySystem() {
+  bottomScrewTray(
     u = trayU,
     trayWidth = baseWidth,
     trayDepth = baseDepth,

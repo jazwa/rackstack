@@ -12,29 +12,51 @@ use <./frontBoxHolder.scad>
 
   !!! Please also make sure that the correct rack frame preset is set in rackFrame.scad !!!
 */
+
+/* [Visualization] */
+// Show box preview
+visualize = false;
+// Vertical position of the box
+zOrientation = "middle"; // [middle,bottom]
+// Recess the side rails
+recessSideRail = false;
+
+/* [Box Dimensions] */
+// Width of the box in mm
+boxWidth = 160; // [100:1:300]
+// Height of the box in mm
+boxHeight = 27; // [20:1:100]
+// Depth of the box in mm
+boxDepth = 120; // [80:1:250]
+
+/* [Rail Settings] */
+// Default thickness of the rails
+railDefaultThickness = 1.5; // [1:0.5:5]
+// Thickness of rail sides
+railSideThickness = 3; // [2:0.5:6]
+
+/* [Front Plate Settings] */
+// Thickness of the front plate
+frontPlateThickness = 3; // [2:0.5:6]
+// Vertical space between box and cutout
+frontPlateCutoutYSpace = 3; // [1:0.5:10]
+// Horizontal space between box and cutout
+frontPlateCutoutXSpace = 5; // [1:0.5:15]
+
 module enclosedBoxSystem (
-
-// begin config ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Does not affect any part dimensions. Set this to true to visualize how a box would be mounted.
-visualize = false,
-zOrientation = "middle", // ["middle" | "bottom"]
-recessSideRail = false,
-
-boxWidth = 160,
-boxHeight = 27,
-boxDepth = 120,
-
-railDefaultThickness = 1.5,
-railSideThickness = 3,
-
-frontPlateThickness = 3,
-frontPlateCutoutYSpace = 3,
-frontPlateCutoutXSpace = 5,
-
-// end config //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+  visualize = visualize,
+  zOrientation = zOrientation,
+  recessSideRail = recessSideRail,
+  boxWidth = boxWidth,
+  boxHeight = boxHeight,
+  boxDepth = boxDepth,
+  railDefaultThickness = railDefaultThickness,
+  railSideThickness = railSideThickness,
+  frontPlateThickness = frontPlateThickness,
+  frontPlateCutoutYSpace = frontPlateCutoutYSpace,
+  frontPlateCutoutXSpace = frontPlateCutoutXSpace
 ) {
+  // Rest of your code remains the same
   leftRailTrans = identity;
   rightRailTrans = visualize
     ? translate(v = [boxWidth, 0, 0])*mirror(v = [1, 0, 0])
