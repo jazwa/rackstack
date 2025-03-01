@@ -21,7 +21,7 @@ center = false
 
 ) {
   mirror(v = [0, 0, 1])
-    patchPanel(slots = numSlots, center=center);
+    patchPanel(slots = numSlots, plateThickness = 3, keystoneSpacing = 19, center=center);
 }
 
 patchPanelSystem();
