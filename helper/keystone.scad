@@ -1,47 +1,41 @@
-
 include <../config/common.scad>
 
-// rj45 slot-to-slot keystone jack model and negative
-keystoneMainBodyWidth = 15.0;
-keystoneMainBodyHeight = 16.90;
-keystoneMainBodyDepth = 32.90;
+//   These all constants are obtained by measuring rj45 keystone modules
+// in hand. frontToRearDepth and rearPanelThickness are adjusted after testing.
+// Before printing the Patch Panel, print a keystone(outerWidth = 19,
+// outerHeight = 27) to test if it fits.
+frontWidth = 14.5;
+frontHeight = 16.2;
 
-heightWithHookBody = 20.2;
-heightWithHookCatch = 21.30;
-widthWithSideLugs = 15.96;
-sideLugWidth = (widthWithSideLugs - keystoneMainBodyWidth) / 2.0;
+frontToRearDepth = 8.2 + 0.2; // Slack
 
-heightWithBottomLug = 17.5;
+rearWidth = frontWidth;
+rearHeight = 19.55;
+rearPanelThickness = 1.5; // Should be 2, set to 1.5 because of supporting
 
-frontToHookCatch = 8.35;
-frontToBottomLugBack = 8.23;
-frontToSideLugFront = 10.63;
+maximumWidth = frontWidth;
+maximumHeight = 22.15;
 
-module rj45Keystone() {
-    // main keystone body (no hooks or lugs)
-    cube(size=[keystoneMainBodyWidth + xySlack, keystoneMainBodyDepth + xySlack, keystoneMainBodyHeight]);
+module keystone(plateThickness = 1, outerWidth, outerHeight) {
+    assert(outerWidth > maximumWidth);
+    assert(outerHeight > maximumHeight);
 
-    // slot for top hook
-    translate(v=[0,frontToHookCatch,0])
-    cube(size=[keystoneMainBodyWidth + xySlack, keystoneMainBodyDepth-frontToHookCatch + xySlack, heightWithHookBody]);
+    difference() {
+        // Outer cube
+        translate([-outerWidth / 2, -outerHeight / 2, 0])
+        cube([outerWidth, outerHeight, frontToRearDepth + rearPanelThickness]);
 
-    cube(size=[keystoneMainBodyWidth + xySlack, frontToHookCatch + xySlack, heightWithHookCatch]);
+        // Front panel hole
+        translate([-(frontWidth + xySlack) / 2, -(frontHeight + xySlack) / 2, 0])
+        cube([frontWidth + xySlack, frontHeight + xySlack, plateThickness]);
 
-    // slots for side lugs
-    translate(v=[-sideLugWidth, frontToSideLugFront,0])
-    cube(size=[widthWithSideLugs + xySlack, keystoneMainBodyDepth-frontToSideLugFront + xySlack, keystoneMainBodyHeight]);
+        // Middle cavity
+        translate([-(maximumWidth + xySlack) / 2, -(outerHeight + 10) / 2, plateThickness])
+        cube([rearWidth + xySlack, outerHeight + 20, frontToRearDepth - plateThickness]);
 
-    // slots for bottom lugs
-    translate(v=[0,0,-(heightWithBottomLug-keystoneMainBodyHeight)])
-    cube(size=[keystoneMainBodyWidth + xySlack, frontToBottomLugBack + xySlack, keystoneMainBodyHeight]);
-
-}
-
-module rj45KeystoneJack_N() {
-    translate(v=[0,-4,0.5]) // why?
-    intersection() {
-        translate(v=[-2.5,4,-4])
-        cube(size=[20,6,28]);
-        rj45Keystone();
+        // Rear panel hole
+        translate([-(rearWidth + xySlack) / 2, -(frontHeight + xySlack) / 2, frontToRearDepth])
+        cube([rearWidth + xySlack, rearHeight + xySlack, rearPanelThickness]);
     }
 }
+
