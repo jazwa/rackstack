@@ -19,10 +19,4 @@ module animatePatchPanel(at=$t) {
   render()
   patchPanelSystem(numSlots = slots, plateThickness=plateThickness, keystoneSpacing=keystoneSpacing);
 
-  // keystone visualization
-  for (i = [0:slots-1]) {
-    translate(v=[keystoneSpacing*i + 12, 0,0,]) // hardcoded offset
-    %rj45Keystone();
-  }
-
 }
