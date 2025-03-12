@@ -16,6 +16,8 @@ rearPanelThickness = 1.5; // Should be 2, set to 1.5 because of supporting
 maximumWidth = frontWidth;
 maximumHeight = 22.15;
 
+lugHeight = 1.3;
+
 module keystone(plateThickness = 1, outerWidth, outerHeight) {
     assert(outerWidth > maximumWidth);
     assert(outerHeight > maximumHeight);
@@ -30,12 +32,11 @@ module keystone(plateThickness = 1, outerWidth, outerHeight) {
         cube([frontWidth + xySlack, frontHeight + xySlack, plateThickness]);
 
         // Middle cavity
-        translate([-(maximumWidth + xySlack) / 2, -(outerHeight + 10) / 2, plateThickness])
-        cube([rearWidth + xySlack, outerHeight + 20, frontToRearDepth - plateThickness]);
+        translate([-(maximumWidth + xySlack) / 2, -frontHeight / 2 - lugHeight - xySlack / 2, plateThickness])
+        cube([rearWidth + xySlack, outerHeight + 1000, frontToRearDepth - plateThickness]);
 
         // Rear panel hole
         translate([-(rearWidth + xySlack) / 2, -(frontHeight + xySlack) / 2, frontToRearDepth])
         cube([rearWidth + xySlack, rearHeight + xySlack, rearPanelThickness]);
     }
 }
-
