@@ -2,23 +2,23 @@ include <../config/common.scad>
 
 //   These all constants are obtained by measuring rj45 keystone modules
 // in hand. frontToRearDepth and rearPanelThickness are adjusted after testing.
-// Before printing the Patch Panel, print a keystone(outerWidth = 19,
+// Before printing the Patch Panel, print a keystone2(outerWidth = 19,
 // outerHeight = 27) to test if it fits.
 frontWidth = 14.5;
 frontHeight = 16.2;
 
-frontToRearDepth = 8.2 + 0.2; // Slack
+frontToRearDepth = 8.4;
 
 rearWidth = frontWidth;
 rearHeight = 19.55;
-rearPanelThickness = 1.5; // Should be 2, set to 1.5 because of supporting
+rearPanelThickness = 2 - supportedOverhangSlack;
 
 maximumWidth = frontWidth;
 maximumHeight = 22.15;
 
 lugHeight = 1.3;
 
-module keystone(plateThickness = 1, outerWidth, outerHeight) {
+module keystone2(plateThickness = 1, outerWidth, outerHeight) {
     assert(outerWidth > maximumWidth);
     assert(outerHeight > maximumHeight);
 

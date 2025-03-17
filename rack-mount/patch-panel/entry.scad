@@ -12,7 +12,10 @@ module patchPanelSystem (
 
 // begin config ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-numSlots = 8,
+// 1 for the original keystone, 2 for the new keystone,
+// 3 for a cube with the height of plateThickness,
+// 4 and 5 for cubes with the same height as keystone1 and 2
+slots = [1, 2, 3, 4, 5],
 plateThickness = 3,
 keystoneSpacing = 19,
 center = false
@@ -21,7 +24,7 @@ center = false
 
 ) {
   mirror(v = [0, 0, 1])
-    patchPanel(slots = numSlots, plateThickness = 3, keystoneSpacing = 19, center=center);
+    patchPanel(slots = slots, plateThickness = 3, keystoneSpacing = 19, center=center);
 }
 
 patchPanelSystem();
