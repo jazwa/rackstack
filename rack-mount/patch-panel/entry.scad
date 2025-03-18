@@ -8,17 +8,21 @@ use <./patchPanel.scad>
   TODO add support for 2d arrays
 */
 
+/* [Patch Panel Settings] */
+// Number of keystone slots
+numSlots = 8; // [1:1:24]
+// Thickness of the panel plate
+plateThickness = 3; // [1:0.5:5]
+// Spacing between keystones
+keystoneSpacing = 19; // [15:0.5:25]
+// Center the panel
+center = false; // [true,false]
+
 module patchPanelSystem (
-
-// begin config ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-numSlots = 8,
-plateThickness = 3,
-keystoneSpacing = 19,
-center = false
-
-// end config //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    numSlots = numSlots,
+    plateThickness = plateThickness,
+    keystoneSpacing = keystoneSpacing,
+    center = center
 ) {
   mirror(v = [0, 0, 1])
     patchPanel(slots = numSlots, center=center);
