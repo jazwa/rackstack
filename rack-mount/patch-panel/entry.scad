@@ -12,10 +12,11 @@ module patchPanelSystem (
 
 // begin config ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// 1 for the original keystone, 2 for the new keystone,
+// 1 for the original keystone mount design, 2 for a visually cleaner keystone mount
+// but where the keystone is a bit harder to remove
 // 3 for a cube with the height of plateThickness,
 // 4 and 5 for cubes with the same height as keystone1 and 2
-slots = [1, 2, 3, 4, 5],
+slots = [2, 2, 2, 2, 2, 2, 2, 5, 2],
 plateThickness = 3,
 keystoneSpacing = 19,
 center = false
