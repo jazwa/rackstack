@@ -12,11 +12,12 @@ module animatePatchPanel(at=$t) {
 
   plateThickness = 3;
   keystoneSpacing = 19;
-  slots = max(1,ceil(at*8));
+  allSlots = [2, 2, 2, 2, 2, 2, 2, 5, 2];
+  numSlots = max(1,ceil(at*8));
+  slots = [each [for (i=[1:numSlots]) allSlots[i]]];
 
   rotate(a=[90,0,0])
-  mirror(v=[0,0,1])
   render()
-  patchPanelSystem(numSlots = slots, plateThickness=plateThickness, keystoneSpacing=keystoneSpacing);
+  patchPanelSystem(slots = slots, plateThickness=plateThickness, keystoneSpacing=keystoneSpacing);
 
 }
