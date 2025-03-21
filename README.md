@@ -105,3 +105,7 @@ useful!
 ## Designing rack-mount items
 
 Some useful variables for designing your own rack-mount items can be found in [rack-mount/dimensionHelper.scad](./rack-mount/dimensionHelper.scad).
+
+## plan your rack mount
+
+A skeleton is pre assamble here for the micro rack if you whant to plan your rack mounts. You can use ad CAD tool to add and place you generated stl files and preview cables and congestion of your stuff.
