@@ -12,17 +12,12 @@ module animatePatchPanel(at=$t) {
 
   plateThickness = 3;
   keystoneSpacing = 19;
-  slots = max(1,ceil(at*8));
+  allSlots = [2, 2, 2, 2, 2, 2, 2, 5, 2];
+  numSlots = max(1,ceil(at*8));
+  slots = [each [for (i=[1:numSlots]) allSlots[i]]];
 
   rotate(a=[90,0,0])
-  mirror(v=[0,0,1])
   render()
-  patchPanelSystem(numSlots = slots, plateThickness=plateThickness, keystoneSpacing=keystoneSpacing);
-
-  // keystone visualization
-  for (i = [0:slots-1]) {
-    translate(v=[keystoneSpacing*i + 12, 0,0,]) // hardcoded offset
-    %rj45Keystone();
-  }
+  patchPanelSystem(slots = slots, plateThickness=plateThickness, keystoneSpacing=keystoneSpacing);
 
 }
