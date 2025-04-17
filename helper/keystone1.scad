@@ -1,4 +1,3 @@
-
 include <../config/common.scad>
 
 // rj45 slot-to-slot keystone jack model and negative
@@ -43,5 +42,17 @@ module rj45KeystoneJack_N() {
         translate(v=[-2.5,4,-4])
         cube(size=[20,6,28]);
         rj45Keystone();
+    }
+}
+
+module keystone1(outerWidth, outerHeight) {
+    rotate([0, 0, 180]) // To keep the same direction with keystone2
+    difference() {
+        translate([0, 0, 5.9 / 2])
+        cube([outerWidth, outerHeight, 5.9], center = true);
+
+        translate([-(keystoneMainBodyWidth + xySlack) / 2, (heightWithHookCatch + heightWithBottomLug - keystoneMainBodyHeight) / 2, 0])
+        rotate([90, 0, 0])
+        rj45KeystoneJack_N();
     }
 }
