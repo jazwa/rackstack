@@ -5,10 +5,10 @@
 // - Honeycomb subtraction fixed: keeps walls, removes hex cores
 //
 // Keep your project structure so `use <entry.scad>` resolves correctly.
-use <entry.scad>;
+use <bracket.scad>;
 
 // ---------------- User Parameters ----------------
-boxWidth        = 145;
+boxWidth        = 203;
 boxDepth        = 145;
 base_thickness  = 3.0;   // tray plate thickness
 wall_thickness  = 1.0;   // forwarded to entry.scad's thickness
@@ -22,7 +22,7 @@ rim_width  = 3.0;
 
 // Vertical and bonding tweaks
 baseZ      = -1.0;     // Z of tray (align with rail bottoms, -1.0 puts it on print bed)
-bondOverlapX = 3.0;   // extend tray under rails in X (each side)
+bondOverlapX = 0.0;   // extend tray under rails in X (each side)
 bondOverlapY = 0.0;   // extend slightly front/back in Y if desired
 
 // ---------------- Honeycomb Helpers ----------------
