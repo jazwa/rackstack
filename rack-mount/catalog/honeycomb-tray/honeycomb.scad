@@ -8,7 +8,7 @@
 use <entry.scad>;
 
 // ---------------- User Parameters ----------------
-boxWidth        = 203;
+boxWidth        = 145;
 boxDepth        = 145;
 base_thickness  = 3.0;   // tray plate thickness
 wall_thickness  = 1.0;   // forwarded to entry.scad's thickness

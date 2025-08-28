@@ -2,7 +2,7 @@
 # Angle Bracket System
 
 
-![demo](./animate.gif)
+<img src="./honeycomb.png">
 
 Please see [honeycomb.scad](./honeycomb.scad) for config and building. Make sure the correct rack profile is configured in [rackFrame.scad](../../config/rackFrame.scad).
 

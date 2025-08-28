@@ -1,6 +1,6 @@
-include <../common.scad>
+include <../../common.scad>
 
-use <../enclosed-box/sideRail.scad>
+use <../../enclosed-box/sideRail.scad>
 
 
 /*
