@@ -4,7 +4,7 @@
 
 <img src="./honeycomb_frame.png">
 
-Please see [honeycomb.scad](./honeycomb.scad) for config and building. Make sure the correct rack profile is configured in [rackFrame.scad](../../config/rackFrame.scad).
+Please see [entry.scad](./entry.scad) for config and building. Make sure the correct rack profile is configured in [rackFrame.scad](../../../config/rackFrame.scad).
 
 This uses the [angle brackets](./entry.scad) for the sides, but creates a full honeycomb tray spanning boxWidth and boxDepth for more stability, ventilation and less print material.
 
