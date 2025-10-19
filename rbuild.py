@@ -4,6 +4,8 @@ import argparse
 import subprocess
 import os
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from multiprocessing import cpu_count
 
 
 # Function to check if the binary exists
@@ -151,6 +153,14 @@ def main():
         help='Generate the GIFS for the assembly guide, as well as various rack-mount systems.'
     )
 
+    parser.add_argument(
+        '-j',
+        '--jobs',
+        type=int,
+        default=cpu_count(),
+        help=f'Number of parallel build jobs. Defaults to CPU count ({cpu_count()}).'
+    )
+
     args = parser.parse_args()
     run_build(args)
 
@@ -162,6 +172,7 @@ def run_build(args):
     dz = args.dz
     nightly = args.nightly
     build_gifs = args.build_gifs
+    jobs = args.jobs
 
     if (build_var is not None) == (build_gifs is True):
         print("Please either provide the build (-b) variable, or the build-gifs option (--build-gifs)")
@@ -183,9 +194,8 @@ def run_build(args):
         os.makedirs(rackBuildDirFull)
 
     if build_var == 'all':
-        for dir_file in os.listdir(RACK_BUILD_DIR):
-            build_single(RACK_BUILD_DIR, rackBuildDirFull, dir_file, config_var, dz, nightly)
-
+        files_to_build = [f for f in os.listdir(RACK_BUILD_DIR)]
+        build_parallel(RACK_BUILD_DIR, rackBuildDirFull, files_to_build, config_var, dz, nightly, jobs)
         return
 
     filename_rack = find_rack(build_var)
@@ -196,6 +206,28 @@ def run_build(args):
 
     if filename_rack:
         build_single(RACK_BUILD_DIR, rackBuildDirFull, filename_rack, config_var, dz, nightly)
+
+def build_parallel(build_dir, target_dir, filenames, config, dz, nightly, jobs):
+    """Build multiple files in parallel using a thread pool."""
+    print(f'Building {len(filenames)} files using {jobs} parallel jobs')
+
+    with ThreadPoolExecutor(max_workers=jobs) as executor:
+        # Submit all build tasks
+        future_to_file = {
+            executor.submit(build_single, build_dir, target_dir, filename, config, dz, nightly): filename
+            for filename in filenames
+        }
+
+        # Process completed builds
+        completed = 0
+        for future in as_completed(future_to_file):
+            filename = future_to_file[future]
+            try:
+                future.result()
+                completed += 1
+                print(f'Progress: {completed}/{len(filenames)} completed')
+            except Exception as exc:
+                print(f'Error building {filename}: {exc}')
 
 def build_single(build_dir, target_dir, filename, config, dz, nightly):
     print('Building:', filename, 'from', build_dir, 'to', target_dir)
