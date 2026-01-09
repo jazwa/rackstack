@@ -1,0 +1,66 @@
+name: Build OpenSCAD STLs and GIFs
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common wget imagemagick
+
+      - name: Install OpenSCAD Nightly
+        run: |
+          sudo add-apt-repository ppa:openscad/releases -y
+          sudo apt-get update
+          sudo apt-get install -y openscad-nightly
+
+      - name: Verify OpenSCAD install
+        run: |
+          which openscad-nightly
+          openscad-nightly --version
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Build NANO rack
+        run: python rbuild.py -b all -c nano --nightly
+
+      - name: Build MINI rack
+        run: python rbuild.py -b all -c mini --nightly
+
+      - name: Build MICRO rack
+        run: python rbuild.py -b all -c micro --nightly
+
+      - name: Build assembly and rack-mount GIFs
+        run: python rbuild.py --build_gifs --nightly
+
+      - name: Upload STL artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rackstack-stl
+          path: stl/
+
+      - name: Upload assembly GIFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: rackstack-assembly-gifs
+          path: assembly-guide/gifs/
+
+      - name: Upload rack-mount GIFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: rackstack-rackmount-gifs
+          path: rack-mount/**/animate.gif
