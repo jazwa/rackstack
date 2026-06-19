@@ -1,0 +1,60 @@
+name: Build OpenSCAD STLs
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install OpenSCAD
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openscad
+      
+      - name: Verify OpenSCAD install
+        run: |
+          which openscad
+          openscad --version
+      
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      
+      - name: Build NANO rack
+        run: python rbuild.py -b all -c nano
+      
+      - name: Build MINI rack
+        run: python rbuild.py -b all -c mini
+      
+      - name: Build MICRO rack
+        run: python rbuild.py -b all -c micro
+      
+      - name: Create STL archive
+        run: |
+          cd stl
+          zip -r ../rackstack-stl.zip .
+          cd ..
+      
+      - name: Upload STL artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rackstack-stl
+          path: stl/
+      
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: rackstack-stl.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
