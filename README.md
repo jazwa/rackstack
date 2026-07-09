@@ -105,3 +105,7 @@ useful!
 ## Designing rack-mount items
 
 Some useful variables for designing your own rack-mount items can be found in [rack-mount/dimensionHelper.scad](./rack-mount/dimensionHelper.scad).
+
+## Completed Builds
+
+Check out builds from the community in the [completed builds gallery](./completed-builds).
